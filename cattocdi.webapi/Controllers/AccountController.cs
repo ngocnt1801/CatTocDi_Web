@@ -1,4 +1,6 @@
 ﻿using cattocdi.Service.Constant;
+using cattocdi.Service.Interface;
+using cattocdi.Service.ViewModel;
 using cattocdi.webapi.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -13,12 +15,17 @@ using System.Web.Http;
 namespace cattocdi.webapi.Controllers
 {
     [RoutePrefix("api/Account")]
-    public class AccountController : ApiController
-    {                
+    public class AccountController : ApiController       
+    {
+        private ISalonServices _salonService;
+        public AccountController(ISalonServices salonService)
+        {
+            _salonService = salonService;
+        }
         [Route("User/Register")]
         [HttpPost]
         [AllowAnonymous]
-        public IdentityResult Register(UserAccountModel model)
+        public IdentityResult UserRegister(UserAccountModel model)
         {
             var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
             var manager = new UserManager<ApplicationUser>(userStore);
@@ -33,21 +40,51 @@ namespace cattocdi.webapi.Controllers
             };
             IdentityResult result = manager.Create(user, model.Password);
             if (result.Succeeded && model.Role != null)
-            {
-                manager.AddToRole(user.Id, model.Role);
-                if (model.Role == RoleConstant.SALON)
-                {
+            {              
 
-                }
-                else if (model.Role == RoleConstant.USER)
-                {
-
-                }
-                else
-                {
-
-                }
             }                   
+            return result;
+        }
+
+        [Route("Salon/Register")]
+        [HttpPost]
+        [AllowAnonymous]
+        public IdentityResult SalonRegister(SalonAccountModel model)
+        {
+            IdentityResult result = null;
+            try
+            {
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var manager = new UserManager<ApplicationUser>(userStore);
+                var user = new ApplicationUser()
+                {
+                    UserName = model.UserName,
+                    Email = model.Email
+                };
+                manager.PasswordValidator = new PasswordValidator()
+                {
+                    RequiredLength = 3
+                };
+                result = manager.Create(user, model.Password);
+                if (result.Succeeded && model.Role != null)
+                {
+                    var newSalon = new SalonViewModel
+                    {
+                        SalonName = model.SalonName,
+                        Address = model.Address,
+                        AccountId = user.Id,
+                        IsForMen = model.IsForMen,
+                        IsForWomen = model.IsForWomen,
+                        RatingAvarage = 0
+                    };
+                    _salonService.RegisterSalonAccount(newSalon);
+                    manager.AddToRole(user.Id, model.Role);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error IN Salon Registter " + ex.Message);
+            }          
             return result;
         }
 

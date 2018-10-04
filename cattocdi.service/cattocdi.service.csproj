@@ -40,7 +40,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constant\RoleConstant.cs" />
+    <Compile Include="Implement\SalonServices.cs" />
+    <Compile Include="Interface\ISalonServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\SalonViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\cattocdi.entity\cattocdi.entity.csproj">
+      <Project>{D4E5D94A-2C9A-473B-9D1E-26D3AB28B5C2}</Project>
+      <Name>cattocdi.entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\cattocdi.repository\cattocdi.repository.csproj">
+      <Project>{BE9A8F9B-B0AB-48C2-A3D0-B232E2E21E08}</Project>
+      <Name>cattocdi.repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

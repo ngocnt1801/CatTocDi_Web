@@ -29,7 +29,7 @@ namespace cattocdi.entity
         public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<TimeSlot> TimeSlots { get; set; } 
+        public virtual DbSet<TimeSlot> TimeSlots { get; set; }
         public virtual DbSet<Voucher> Vouchers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

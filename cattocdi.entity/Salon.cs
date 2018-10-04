@@ -18,7 +18,6 @@ namespace cattocdi.entity
             Vouchers = new HashSet<Voucher>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int SalonId { get; set; }
 
         [StringLength(100)]

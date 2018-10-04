@@ -68,6 +68,7 @@
     <Compile Include="CatTocDiContext.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="C__MigrationHistory.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Salon.cs" />
     <Compile Include="SalonRegistration.cs" />
