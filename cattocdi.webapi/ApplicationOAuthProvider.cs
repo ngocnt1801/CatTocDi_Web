@@ -37,8 +37,11 @@ namespace cattocdi.webapi
                 var additionalData = new AuthenticationProperties(new Dictionary<string, string> {
                     {
                         "role", Newtonsoft.Json.JsonConvert.SerializeObject(userRoles)
+                    },
+                    {
+                        "id" , "Hello"
                     }
-                });
+                });                
                 var token = new AuthenticationTicket(identity, additionalData);
                 context.Validated(token);
             }

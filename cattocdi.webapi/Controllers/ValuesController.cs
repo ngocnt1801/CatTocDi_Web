@@ -6,7 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 
 namespace cattocdi.webapi.Controllers
-{
+{       
+    [Authorize(Roles = "Admin")]
     public class ValuesController : ApiController
     {
         // GET api/values
