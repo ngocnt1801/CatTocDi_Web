@@ -18,31 +18,49 @@ namespace cattocdi.webapi.Controllers
     public class AccountController : ApiController       
     {
         private ISalonServices _salonService;
-        public AccountController(ISalonServices salonService)
+        private ICustomerService _customerService; 
+        public AccountController(ISalonServices salonService, ICustomerService customerService)
         {
             _salonService = salonService;
+            _customerService = customerService;
         }
         [Route("User/Register")]
         [HttpPost]
         [AllowAnonymous]
         public IdentityResult UserRegister(UserAccountModel model)
         {
-            var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
-            var manager = new UserManager<ApplicationUser>(userStore);
-            var user = new ApplicationUser()
+            IdentityResult result = null;
+            try
             {
-                UserName = model.UserName,
-                Email = model.Email
-            };
-            manager.PasswordValidator = new PasswordValidator()
+                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var manager = new UserManager<ApplicationUser>(userStore);
+                var user = new ApplicationUser()
+                {
+                    UserName = model.UserName,
+                    Email = model.Email
+                };
+                manager.PasswordValidator = new PasswordValidator()
+                {
+                    RequiredLength = 3
+                };
+                result = manager.Create(user, model.Password);
+                if (result.Succeeded && model.Role != null)
+                {
+                    var newCustomer = new CustomerViewModel
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        AccountId = user.Id,
+                        Gender = model.Gender
+                    };
+                    _customerService.CreateCustomerAccount(newCustomer);
+                    manager.AddToRole(user.Id, model.Role);
+                }
+            }
+            catch(Exception ex)
             {
-                RequiredLength = 3
-            };
-            IdentityResult result = manager.Create(user, model.Password);
-            if (result.Succeeded && model.Role != null)
-            {              
-
-            }                   
+                Console.WriteLine("Error IN Customer Registter " + ex.Message);
+            }           
             return result;
         }
 

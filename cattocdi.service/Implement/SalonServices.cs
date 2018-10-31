@@ -30,10 +30,10 @@ namespace cattocdi.Service.Implement
                     Address = newSalon.Address,
                     RatingAverage = 0,
                     IsForMen = newSalon.IsForMen,
-                    IsForWomen = newSalon.IsForWomen                    
+                    IsForWomen = newSalon.IsForWomen
                 };
                 _salonRepo.Insert(salon);
-                _salonRepo.Save();
+                _unitOfWork.SaveChanges();
             }
         }
     }
