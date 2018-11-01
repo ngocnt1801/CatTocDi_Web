@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cattocdi.repository", "catt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cattocdi.webapi", "cattocdi.webapi\cattocdi.webapi.csproj", "{FA0F61CB-A903-49D3-82E9-68028B671F53}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cattocdi.userapi", "cattocdi.userapi\cattocdi.userapi.csproj", "{579D2755-0410-4B9F-BB4A-34CDDD0B21EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{FA0F61CB-A903-49D3-82E9-68028B671F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA0F61CB-A903-49D3-82E9-68028B671F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA0F61CB-A903-49D3-82E9-68028B671F53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{579D2755-0410-4B9F-BB4A-34CDDD0B21EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{579D2755-0410-4B9F-BB4A-34CDDD0B21EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{579D2755-0410-4B9F-BB4A-34CDDD0B21EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{579D2755-0410-4B9F-BB4A-34CDDD0B21EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
