@@ -44,7 +44,6 @@ namespace cattocdi.webapi
             container.RegisterType<CatTocDiContext>(new ContainerControlledLifetimeManager());
             container.RegisterType<IUnitOfWork, UnitOfWork>();
             container.RegisterType(typeof(IRepository<>), typeof(Repository<>));
-
             // Services
             container.RegisterType<ISalonServices, SalonServices>();
             container.RegisterType<ICustomerService, CustomerService>();

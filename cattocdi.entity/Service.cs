@@ -15,13 +15,11 @@ namespace cattocdi.entity
             SalonServices = new HashSet<SalonService>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ServiceId { get; set; }
+        public int Id { get; set; }
 
+        [Required]
         [StringLength(250)]
         public string Name { get; set; }
-
-        public bool? Gender { get; set; }
 
         public int CategoryId { get; set; }
 

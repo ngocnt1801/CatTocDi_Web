@@ -15,12 +15,11 @@ namespace cattocdi.entity
             ServiceAppointments = new HashSet<ServiceAppointment>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int SalonServiceId { get; set; }
+        public int Id { get; set; }
 
-        public int? SalonId { get; set; }
+        public int SalonId { get; set; }
 
-        public int? ServiceId { get; set; }
+        public int ServiceId { get; set; }
 
         public double? Price { get; set; }
 

@@ -19,9 +19,7 @@ namespace cattocdi.entity
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ServiceId { get; set; }
 
-        public double? Price { get; set; }
-
-        public int? Time { get; set; }
+        public double Price { get; set; }
 
         public virtual Appointment Appointment { get; set; }
 

@@ -15,22 +15,27 @@ namespace cattocdi.entity
             Appointments = new HashSet<Appointment>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int CustomerId { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string FirstName { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string LastName { get; set; }
 
         [StringLength(20)]
         public string Phone { get; set; }
 
-        public bool? Gender { get; set; }
-
+        [Required]
         [StringLength(128)]
         public string AccountId { get; set; }
+
+        public bool? Gender { get; set; }
+
+        [StringLength(150)]
+        public string Email { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }
