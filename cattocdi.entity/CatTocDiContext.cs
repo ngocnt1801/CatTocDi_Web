@@ -14,26 +14,29 @@ namespace cattocdi.entity
 
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Appointment> Appointments { get; set; }
-        public virtual DbSet<AppointmentStatu> AppointmentStatus { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<ClosedDay> ClosedDays { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<Salon> Salons { get; set; }
-        public virtual DbSet<SalonRegistration> SalonRegistrations { get; set; }
         public virtual DbSet<SalonService> SalonServices { get; set; }
-        public virtual DbSet<Schedule> Schedules { get; set; }
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<ServiceAppointment> ServiceAppointments { get; set; }
         public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
-        public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TimeSlot> TimeSlots { get; set; }
-        public virtual DbSet<Voucher> Vouchers { get; set; }
+        public virtual DbSet<Promotion> Promotions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Appointment>()
+                .HasMany(e => e.Reviews)
+                .WithRequired(e => e.Appointment)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Appointment>()
                 .HasMany(e => e.ServiceAppointments)
                 .WithRequired(e => e.Appointment)
@@ -56,17 +59,22 @@ namespace cattocdi.entity
 
             modelBuilder.Entity<AspNetUser>()
                 .HasMany(e => e.Customers)
-                .WithOptional(e => e.AspNetUser)
-                .HasForeignKey(e => e.AccountId);
-
-            modelBuilder.Entity<AspNetUser>()
-                .HasMany(e => e.Salons)
-                .WithOptional(e => e.AspNetUser)
-                .HasForeignKey(e => e.AccountId);
+                .WithRequired(e => e.AspNetUser)
+                .HasForeignKey(e => e.AccountId)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Customer>()
                 .Property(e => e.Phone)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Customer>()
+                .Property(e => e.Email)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Customer>()
+                .HasMany(e => e.Appointments)
+                .WithRequired(e => e.Customer)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Salon>()
                 .Property(e => e.Address)
@@ -76,24 +84,41 @@ namespace cattocdi.entity
                 .Property(e => e.Phone)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<Salon>()
+                .Property(e => e.Email)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Salon>()
+                .HasMany(e => e.ClosedDays)
+                .WithRequired(e => e.Salon)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Salon>()
+                .HasMany(e => e.Promotions)
+                .WithRequired(e => e.Salon)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Salon>()
+                .HasMany(e => e.SalonServices)
+                .WithRequired(e => e.Salon)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<SalonService>()
                 .HasMany(e => e.ServiceAppointments)
                 .WithRequired(e => e.SalonService)
                 .HasForeignKey(e => e.ServiceId)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Service>()
+                .HasMany(e => e.SalonServices)
+                .WithRequired(e => e.Service)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<ServiceCategory>()
                 .HasMany(e => e.Services)
                 .WithRequired(e => e.ServiceCategory)
+                .HasForeignKey(e => e.CategoryId)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Staff>()
-                .Property(e => e.Email)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Voucher>()
-                .Property(e => e.VoucherCode)
-                .IsUnicode(false);
         }
     }
 }

@@ -15,9 +15,9 @@ namespace cattocdi.entity
             Services = new HashSet<Service>();
         }
 
-        [Key]
-        public int CategoryId { get; set; }
+        public int Id { get; set; }
 
+        [Required]
         [StringLength(30)]
         public string Name { get; set; }
 

@@ -328,7 +328,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51249</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/cattocdi.userapi</IISUrl>
+          <IISUrl>http://localhost/cattocdi.testapi</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
