@@ -19,6 +19,12 @@ namespace cattocdi.Service.Implement
             _salonRepo = salonRepo;
             _unitOfWork = unitOfWork;
         }
+
+        public IEnumerable<Salon> GetAllSalon()
+        {
+            return _salonRepo.Gets();
+        }
+
         public void RegisterSalonAccount(SalonViewModel newSalon)
         {
             if (newSalon != null)

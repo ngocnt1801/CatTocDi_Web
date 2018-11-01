@@ -16,7 +16,7 @@ namespace cattocdi.userapi
             app.UseCors(CorsOptions.AllowAll);
             OAuthAuthorizationServerOptions option = new OAuthAuthorizationServerOptions
             {
-                TokenEndpointPath = new PathString("/token"),
+                TokenEndpointPath = new PathString("/login"),
                 Provider = new ApplicationOAuthProvider(),
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(1),
                 AllowInsecureHttp = true
