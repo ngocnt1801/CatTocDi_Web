@@ -1,5 +1,6 @@
 ﻿using cattocdi.Service.Interface;
 using cattocdi.Service.ViewModel;
+using cattocdi.Service.ViewModel.Salon;
 using cattocdi.userapi.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;

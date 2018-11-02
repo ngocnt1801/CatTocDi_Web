@@ -26,8 +26,9 @@ namespace cattocdi.webapi
             if (user != null)
             {
                 var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-                identity.AddClaim(new Claim("Username", user.UserName));
+                identity.AddClaim(new Claim("Username", user.UserName));                
                 identity.AddClaim(new Claim("Email", user.Email));
+                identity.AddClaim(new Claim("AccountId", user.Id));
                 identity.AddClaim(new Claim("LoggedOn", DateTime.Now.ToString()));
                 var userRoles = manager.GetRoles(user.Id);
                 foreach(var roleName in userRoles)
@@ -37,10 +38,7 @@ namespace cattocdi.webapi
                 var additionalData = new AuthenticationProperties(new Dictionary<string, string> {
                     {
                         "role", Newtonsoft.Json.JsonConvert.SerializeObject(userRoles)
-                    },
-                    {
-                        "id" , "Hello"
-                    }
+                    }                  
                 });                
                 var token = new AuthenticationTicket(identity, additionalData);
                 context.Validated(token);

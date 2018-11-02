@@ -1,6 +1,7 @@
 ﻿using cattocdi.Service.Constant;
 using cattocdi.Service.Interface;
 using cattocdi.Service.ViewModel;
+using cattocdi.Service.ViewModel.Salon;
 using cattocdi.webapi.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -24,47 +25,8 @@ namespace cattocdi.webapi.Controllers
             _salonService = salonService;
             _customerService = customerService;
         }
-        [Route("User/Register")]
-        [HttpPost]
-        [AllowAnonymous]
-        public IdentityResult UserRegister(UserAccountModel model)
-        {
-            IdentityResult result = null;
-            try
-            {
-                var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
-                var manager = new UserManager<ApplicationUser>(userStore);
-                var user = new ApplicationUser()
-                {
-                    UserName = model.UserName,
-                    Email = model.Email
-                };
-                manager.PasswordValidator = new PasswordValidator()
-                {
-                    RequiredLength = 3
-                };
-                result = manager.Create(user, model.Password);
-                if (result.Succeeded && model.Role != null)
-                {
-                    var newCustomer = new CustomerViewModel
-                    {
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        AccountId = user.Id,
-                        Gender = model.Gender
-                    };
-                    _customerService.CreateCustomerAccount(newCustomer);
-                    manager.AddToRole(user.Id, model.Role);
-                }
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine("Error IN Customer Registter " + ex.Message);
-            }           
-            return result;
-        }
-
-        [Route("Salon/Register")]
+        
+        [Route("Register")]
         [HttpPost]
         [AllowAnonymous]
         public IdentityResult SalonRegister(SalonAccountModel model)
@@ -77,31 +39,34 @@ namespace cattocdi.webapi.Controllers
                 var user = new ApplicationUser()
                 {
                     UserName = model.UserName,
-                    Email = model.Email
+                    Email = model.Email,     
+                    PhoneNumber = model.PhoneNumber,                          
                 };
                 manager.PasswordValidator = new PasswordValidator()
                 {
                     RequiredLength = 3
-                };
-                result = manager.Create(user, model.Password);
-                if (result.Succeeded && model.Role != null)
+                };                
+                result = manager.Create(user, model.Password);                
+                if (result.Succeeded)
                 {
-                    var newSalon = new SalonViewModel
+                    var createRoleResult = manager.AddToRole(user.Id, RoleConstant.SALON);
+                    if (createRoleResult.Succeeded)
                     {
-                        SalonName = model.SalonName,
-                        Address = model.Address,
-                        AccountId = user.Id,
-                        IsForMen = model.IsForMen,
-                        IsForWomen = model.IsForWomen,
-                        RatingAvarage = 0
-                    };
-                    _salonService.RegisterSalonAccount(newSalon);
-                    manager.AddToRole(user.Id, model.Role);
+                        var newSalon = new SalonViewModel
+                        {
+                            SalonName = model.SalonName,
+                            Address = model.Address,
+                            AccountId = user.Id,
+                            IsForMen = model.IsForMen,
+                            IsForWomen = model.IsForWomen,                            
+                        };
+                        _salonService.RegisterSalonAccount(newSalon);
+                    }                                  
                 }
             }
             catch(Exception ex)
             {
-                Console.WriteLine("Error IN Salon Registter " + ex.Message);
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);                               
             }          
             return result;
         }
@@ -111,14 +76,62 @@ namespace cattocdi.webapi.Controllers
         public AccountModel GetUserClaims()
         {
             var identityClaims = (ClaimsIdentity)User.Identity;
-            IEnumerable<Claim> claims = identityClaims.Claims;
-            AccountModel model = new AccountModel
+            AccountModel model = null;
+            try
+            {                
+                IEnumerable<Claim> claims = identityClaims.Claims;
+                model = new AccountModel
+                {
+                    Email = identityClaims.FindFirst("Email").Value,
+                    UserName = identityClaims.FindFirst("Username").Value,
+                    LoggedOn = identityClaims.FindFirst("LoggedOn").Value
+                };
+            }
+            catch(Exception ex)
             {
-                Email = identityClaims.FindFirst("Email").Value,
-                UserName = identityClaims.FindFirst("Username").Value,
-                LoggedOn = identityClaims.FindFirst("LoggedOn").Value
-            };
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+            }            
             return model; 
         }
     }
 }
+
+//[Route("User/Register")]
+//[HttpPost]
+//[AllowAnonymous]
+//public IdentityResult UserRegister(UserAccountModel model)
+//{
+//    IdentityResult result = null;
+//    try
+//    {
+//        var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+//        var manager = new UserManager<ApplicationUser>(userStore);
+//        var user = new ApplicationUser()
+//        {
+//            UserName = model.UserName,
+//            Email = model.Email,
+//        };
+//        manager.PasswordValidator = new PasswordValidator()
+//        {
+//            RequiredLength = 3
+//        };
+//        result = manager.Create(user, model.Password);
+//        if (result.Succeeded && model.Role != null)
+//        {
+//            var newCustomer = new CustomerViewModel
+//            {
+//                FirstName = model.FirstName,
+//                LastName = model.LastName,
+//                AccountId = user.Id,
+//                Gender = model.Gender
+//            };
+//            _customerService.CreateCustomerAccount(newCustomer);
+//            manager.AddToRole(user.Id, "Admin");
+//        }
+//    }
+//    catch(Exception ex)
+//    {
+//        Console.WriteLine("Error IN Customer Registter " + ex.Message);
+//    }           
+//    return result;
+//}

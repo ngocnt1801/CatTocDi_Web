@@ -6,10 +6,10 @@ using System.Net.Http;
 using System.Web.Http;
 
 namespace cattocdi.webapi.Controllers
-{       
-    [Authorize(Roles = "Admin")]
+{
+    [AllowAnonymous]
     public class ValuesController : ApiController
-    {
+    {        
         // GET api/values
         public IEnumerable<string> Get()
         {

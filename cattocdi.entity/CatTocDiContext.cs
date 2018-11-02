@@ -8,7 +8,7 @@ namespace cattocdi.entity
     public partial class CatTocDiContext : DbContext
     {
         public CatTocDiContext()
-            : base("name=CatTocDi")
+            : base("name=CatTocDiContext")
         {
         }
 
@@ -75,10 +75,6 @@ namespace cattocdi.entity
                 .HasMany(e => e.Appointments)
                 .WithRequired(e => e.Customer)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Salon>()
-                .Property(e => e.Address)
-                .IsUnicode(false);
 
             modelBuilder.Entity<Salon>()
                 .Property(e => e.Phone)

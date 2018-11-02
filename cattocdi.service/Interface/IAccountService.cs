@@ -1,5 +1,4 @@
-﻿using cattocdi.Service.ViewModel.Salon;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace cattocdi.Service.Interface
 {
-    public interface ICustomerService
+    public interface IAccountService
     {
-        void CreateCustomerAccount(CustomerViewModel model);
     }
 }
