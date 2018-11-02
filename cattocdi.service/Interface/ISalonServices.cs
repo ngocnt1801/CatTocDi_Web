@@ -1,4 +1,4 @@
-﻿using cattocdi.Service.ViewModel;
+﻿using cattocdi.Service.ViewModel.Salon;
 using System;
 using System.Collections.Generic;
 using System.Linq;

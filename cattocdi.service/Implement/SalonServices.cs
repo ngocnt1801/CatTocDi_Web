@@ -34,6 +34,7 @@ namespace cattocdi.Service.Implement
                     Address = newSalon.Address,
                     RatingAverage = 0,
                     IsForMen = newSalon.IsForMen,
+                    Phone = newSalon.Phone,
                     IsForWomen = newSalon.IsForWomen
                 };
                 _salonRepo.Insert(salon);

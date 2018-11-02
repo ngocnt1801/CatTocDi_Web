@@ -8,7 +8,7 @@ namespace cattocdi.entity
     public partial class CatTocDiContext : DbContext
     {
         public CatTocDiContext()
-            : base("name=CatTocDiContext")
+            : base("name=CatTocDi")
         {
         }
 

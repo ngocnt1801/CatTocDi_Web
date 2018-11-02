@@ -1,6 +1,5 @@
 ﻿using cattocdi.Service.Constant;
 using cattocdi.Service.Interface;
-using cattocdi.Service.ViewModel;
 using cattocdi.Service.ViewModel.Salon;
 using cattocdi.webapi.Models;
 using Microsoft.AspNet.Identity;
@@ -58,7 +57,8 @@ namespace cattocdi.webapi.Controllers
                             Address = model.Address,
                             AccountId = user.Id,
                             IsForMen = model.IsForMen,
-                            IsForWomen = model.IsForWomen,                            
+                            IsForWomen = model.IsForWomen,     
+                            Phone = model.PhoneNumber
                         };
                         _salonService.RegisterSalonAccount(newSalon);
                     }                                  
