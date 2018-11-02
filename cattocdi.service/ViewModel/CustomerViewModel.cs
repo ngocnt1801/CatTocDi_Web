@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace cattocdi.Service.ViewModel.User
+namespace cattocdi.Service.ViewModel
 {
     public class CustomerViewModel
     {        
