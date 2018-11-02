@@ -1,6 +1,6 @@
-﻿using cattocdi.Service.Constant;
-using cattocdi.Service.Interface;
-using cattocdi.Service.ViewModel.Salon;
+﻿using cattocdi.salonservice.Constant;
+using cattocdi.salonservice.Interface;
+using cattocdi.salonservice.ViewModel;
 using cattocdi.webapi.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;

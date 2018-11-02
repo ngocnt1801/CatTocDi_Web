@@ -330,9 +330,9 @@
       <Project>{be9a8f9b-b0ab-48c2-a3d0-b232e2e21e08}</Project>
       <Name>cattocdi.repository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\cattocdi.Service\cattocdi.service.csproj">
-      <Project>{9e6b755a-12c4-4f6c-9770-07a726638564}</Project>
-      <Name>cattocdi.service</Name>
+    <ProjectReference Include="..\cattocdi.salonservice\cattocdi.salonservice.csproj">
+      <Project>{2859108b-c0d5-4782-b903-04d09b0d7686}</Project>
+      <Name>cattocdi.salonservice</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

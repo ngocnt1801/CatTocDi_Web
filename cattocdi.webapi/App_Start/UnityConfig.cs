@@ -1,7 +1,7 @@
 using cattocdi.entity;
 using cattocdi.repository;
-using cattocdi.Service.Implement;
-using cattocdi.Service.Interface;
+using cattocdi.salonservice.Implement;
+using cattocdi.salonservice.Interface;
 using System;
 
 using Unity;
