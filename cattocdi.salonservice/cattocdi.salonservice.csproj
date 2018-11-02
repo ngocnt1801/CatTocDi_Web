@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9E6B755A-12C4-4F6C-9770-07A726638564}</ProjectGuid>
+    <ProjectGuid>{2859108B-C0D5-4782-B903-04D09B0D7686}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>cattocdi.Service</RootNamespace>
-    <AssemblyName>cattocdi.Service</AssemblyName>
+    <RootNamespace>cattocdi.salonservice</RootNamespace>
+    <AssemblyName>cattocdi.salonservice</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -46,23 +46,20 @@
     <Compile Include="Interface\ICustomerService.cs" />
     <Compile Include="Interface\ISalonServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\Salon\CustomerViewModel.cs" />
-    <Compile Include="ViewModel\Salon\SalonProfileViewModel.cs" />
-    <Compile Include="ViewModel\Salon\SalonServiceViewModel.cs" />
-    <Compile Include="ViewModel\Salon\SalonViewModel.cs" />
+    <Compile Include="ViewModel\CustomerViewModel.cs" />
+    <Compile Include="ViewModel\SalonProfileViewModel.cs" />
+    <Compile Include="ViewModel\SalonServiceViewModel.cs" />
+    <Compile Include="ViewModel\SalonViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cattocdi.entity\cattocdi.entity.csproj">
-      <Project>{D4E5D94A-2C9A-473B-9D1E-26D3AB28B5C2}</Project>
+      <Project>{d4e5d94a-2c9a-473b-9d1e-26d3ab28b5c2}</Project>
       <Name>cattocdi.entity</Name>
     </ProjectReference>
     <ProjectReference Include="..\cattocdi.repository\cattocdi.repository.csproj">
-      <Project>{BE9A8F9B-B0AB-48C2-A3D0-B232E2E21E08}</Project>
+      <Project>{be9a8f9b-b0ab-48c2-a3d0-b232e2e21e08}</Project>
       <Name>cattocdi.repository</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

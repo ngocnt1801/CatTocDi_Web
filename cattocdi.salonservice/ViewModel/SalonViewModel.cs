@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace cattocdi.Service.ViewModel
+namespace cattocdi.salonservice.ViewModel
 {
     public class SalonViewModel
     {        
@@ -14,5 +14,6 @@ namespace cattocdi.Service.ViewModel
         public bool IsForMen { get; set; }
         public bool IsForWomen { get; set; }
         public float RatingAvarage { get; set; }
+        public string Phone { get; set; }
     }
 }

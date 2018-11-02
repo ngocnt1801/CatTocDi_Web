@@ -77,10 +77,6 @@ namespace cattocdi.entity
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Salon>()
-                .Property(e => e.Address)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Salon>()
                 .Property(e => e.Phone)
                 .IsUnicode(false);
 
