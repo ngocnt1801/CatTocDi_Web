@@ -12,6 +12,6 @@ namespace cattocdi.Service.Interface
     public interface ISalonServices
     {
         void RegisterSalonAccount(SalonViewModel newSalon);
-        IEnumerable<Salon> GetAllSalon();
+        IEnumerable<SalonViewModel> GetAllSalon();
     }
 }

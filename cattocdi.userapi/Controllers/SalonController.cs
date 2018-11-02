@@ -28,14 +28,7 @@ namespace cattocdi.userapi.Controllers
         public IHttpActionResult Gets()
         {
             var salons = _salonService.GetAllSalon();
-            var salonVM = salons.Select(s => new
-            {
-                Name = s.Name,
-                Address = s.Address
-            }).ToList();
-            //var json = JsonConvert.SerializeObject(salonVM);
-
-            return Json(salonVM);
+            return Json(salons);
         }
 
         // GET: api/Salon/5
