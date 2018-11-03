@@ -18,7 +18,7 @@ namespace cattocdi.webapi
             {
                 TokenEndpointPath = new PathString("/token"),
                 Provider = new ApplicationOAuthProvider(),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(5),
                 AllowInsecureHttp = true
             };
             app.UseOAuthAuthorizationServer(option);
