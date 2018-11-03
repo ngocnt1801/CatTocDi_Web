@@ -46,10 +46,14 @@
     <Compile Include="Interface\ICustomerService.cs" />
     <Compile Include="Interface\ISalonServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\Salon\CustomerViewModel.cs" />
-    <Compile Include="ViewModel\Salon\SalonProfileViewModel.cs" />
-    <Compile Include="ViewModel\Salon\SalonServiceViewModel.cs" />
-    <Compile Include="ViewModel\Salon\SalonViewModel.cs" />
+    <Compile Include="ViewModel\User\ClosedDayViewModel.cs" />
+    <Compile Include="ViewModel\User\CustomerViewModel.cs" />
+    <Compile Include="ViewModel\User\PromotionViewModel.cs" />
+    <Compile Include="ViewModel\User\ReviewViewModel.cs" />
+    <Compile Include="ViewModel\User\SalonServiceViewModel.cs" />
+    <Compile Include="ViewModel\User\SalonViewModel.cs" />
+    <Compile Include="ViewModel\User\ServiceViewModel.cs" />
+    <Compile Include="ViewModel\User\TimeSlotViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cattocdi.entity\cattocdi.entity.csproj">

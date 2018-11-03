@@ -12,7 +12,8 @@ using Newtonsoft.Json;
 
 namespace cattocdi.userapi.Controllers
 {
-    [RoutePrefix("api/Salon")]    
+    [RoutePrefix("api/Salon")]
+    [Authorize (Roles="User")]    
     public class SalonController : ApiController
     {
         private ISalonServices _salonService;
@@ -28,14 +29,7 @@ namespace cattocdi.userapi.Controllers
         public IHttpActionResult Gets()
         {
             var salons = _salonService.GetAllSalon();
-            var salonVM = salons.Select(s => new
-            {
-                Name = s.Name,
-                Address = s.Address
-            }).ToList();
-            //var json = JsonConvert.SerializeObject(salonVM);
-
-            return Json(salonVM);
+            return Json(salons);
         }
 
         // GET: api/Salon/5

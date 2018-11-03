@@ -1,6 +1,5 @@
 ﻿using cattocdi.Service.Interface;
-using cattocdi.Service.ViewModel;
-using cattocdi.Service.ViewModel.Salon;
+using cattocdi.Service.ViewModel.User;
 using cattocdi.userapi.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -24,7 +23,7 @@ namespace cattocdi.userapi.Controllers
             _salonService = salonService;
             _customerService = customerService;
         }
-        [Route("User/Register")]
+        [Route("api/Register")]
         [HttpPost]
         [AllowAnonymous]
         public IdentityResult UserRegister(UserAccountModel model)
