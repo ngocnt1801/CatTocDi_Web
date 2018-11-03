@@ -13,14 +13,18 @@ namespace cattocdi.salonservice.Implement
     public class SalonServices : ISalonServices
     {
         private IRepository<Salon> _salonRepo;
-        private IRepository<Promotion> _promotionRepo;        
+        private IRepository<Promotion> _promotionRepo;
+        private IRepository<TimeSlot> _slotRepo;
         private IUnitOfWork _unitOfWork;
 
-        public SalonServices(IRepository<Salon> salonRepo, IUnitOfWork unitOfWork, IRepository<Promotion> promotionRepo)
+        public SalonServices(IRepository<Salon> salonRepo, IUnitOfWork unitOfWork, 
+            IRepository<Promotion> promotionRepo,IRepository<TimeSlot> slotRepo
+            )
         {
             _salonRepo = salonRepo;
             _unitOfWork = unitOfWork;
             _promotionRepo = promotionRepo;
+            _slotRepo = slotRepo;
         }     
         public void RegisterSalonAccount(SalonViewModel newSalon)
         {
@@ -42,8 +46,8 @@ namespace cattocdi.salonservice.Implement
         }
 
         public SalonProfileViewModel GetSalonProfile(string accountId)
-        {
-            var salon = _salonRepo.Gets()
+        {           
+            var salons = _salonRepo.Gets()
                     .Where(s => s.AccountId == accountId)
                     .Select(s => new SalonProfileViewModel
                     {
@@ -52,18 +56,30 @@ namespace cattocdi.salonservice.Implement
                         Name = s.Name,
                         Phone = s.Phone,
                         IsForMen = s.IsForMen ?? false,
-                        IsForWomen = s.IsForWomen ?? false,     
-                        Services = s.SalonServices.Select(se => new SalonServiceViewModel{
-                                     Id = se.Id,
-                                     ServiceId = se.ServiceId,
-                                     CategoryId = se.Service.CategoryId,
-                                     CategoryName = se.Service.ServiceCategory.Name,
-                                     Price = se.Price ?? 0,
-                                     AvarageTime = se.AvarageTime ?? 0,
-                                     ServiceName = se.Service.Name
-                                }).ToList()
+                        IsForWomen = s.IsForWomen ?? false,
+                        Longitude = s.Longitude ?? 0,
+                        Latitude = s.Latitude ?? 0,
+                        Services = s.SalonServices.Select(se => new SalonServiceViewModel {
+                            Id = se.Id,
+                            ServiceId = se.ServiceId,
+                            CategoryId = se.Service.CategoryId,
+                            CategoryName = se.Service.ServiceCategory.Name,
+                            Price = se.Price ?? 0,
+                            AvarageTime = se.AvarageTime ?? 0,
+                            ServiceName = se.Service.Name
+                        }).ToList(),
+                        CurrentPromotions = s.Promotions.Where(p => p.StartTime >= DateTime.Now)
+                                                    .Select(pro => new PromotionViewModel {
+                                                        Id = pro.Id,
+                                                        StartTime = pro.StartTime,
+                                                        EndTime = pro.EndTime,
+                                                        Description = pro.Description,
+                                                        DiscountPercent = pro.DiscountPercent
+                                                    }).ToList()                        
                     }).FirstOrDefault();           
-            return salon; 
+            return salons; 
         }
+        publi
+        
     }
 }
