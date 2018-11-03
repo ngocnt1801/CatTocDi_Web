@@ -1,4 +1,5 @@
-﻿using cattocdi.Service.Interface;
+﻿using cattocdi.Service.Constant;
+using cattocdi.Service.Interface;
 using cattocdi.Service.ViewModel.User;
 using cattocdi.userapi.Models;
 using Microsoft.AspNet.Identity;
@@ -23,7 +24,7 @@ namespace cattocdi.userapi.Controllers
             _salonService = salonService;
             _customerService = customerService;
         }
-        [Route("api/Register")]
+        [Route("Register")]
         [HttpPost]
         [AllowAnonymous]
         public IdentityResult UserRegister(UserAccountModel model)
@@ -53,7 +54,7 @@ namespace cattocdi.userapi.Controllers
                         Gender = model.Gender
                     };
                     _customerService.CreateCustomerAccount(newCustomer);
-                    manager.AddToRole(user.Id, model.Role);
+                    manager.AddToRole(user.Id, RoleConstant.USER);
                 }
             }
             catch (Exception ex)
