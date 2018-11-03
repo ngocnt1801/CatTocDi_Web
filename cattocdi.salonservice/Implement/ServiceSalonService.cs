@@ -46,9 +46,11 @@ namespace cattocdi.salonservice.Implement
 
         public void UpdateSalonService(UpdateServiceViewModel model)
         {
+            var salonId = _salonRepo.Gets().Where(s => s.AccountId == model.AccountId).Select(s => s.Id).FirstOrDefault();
+
             var foundedService = _salonServiceRepo.Gets()
-                    .Where(s => s.SalonId == model.SalonId && s.ServiceId == model.ServiceId)
-                    .FirstOrDefault(); 
+                    .Where(s => s.Id == salonId && s.ServiceId == model.ServiceId)
+                    .FirstOrDefault();
             if (foundedService != null)
             {
                 var salonService = _salonServiceRepo.GetByID(foundedService.ServiceId);
@@ -59,7 +61,7 @@ namespace cattocdi.salonservice.Implement
             }
             else
             {
-                var salon = _salonRepo.GetByID(model.SalonId);
+                var salon = _salonRepo.GetByID(salonId);
                 var service = _serviceRepo.GetByID(model.ServiceId);
                 if (salon != null && service != null)
                 {
@@ -72,7 +74,7 @@ namespace cattocdi.salonservice.Implement
                     };
                     _salonServiceRepo.Insert(newService);
                     _unitOfWork.SaveChanges();
-                } 
+                }
                 else
                 {
                     throw new Exception("Salon Not Found");

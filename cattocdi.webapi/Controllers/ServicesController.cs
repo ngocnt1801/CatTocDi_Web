@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 
 namespace cattocdi.webapi.Controllers
@@ -27,7 +28,13 @@ namespace cattocdi.webapi.Controllers
         {            
             try
             {
-                _salonService.UpdateSalonService(model);
+                var identity = (ClaimsIdentity)User.Identity;
+                string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
+                if (accountId != null)
+                {
+                    model.AccountId = accountId;
+                    _salonService.UpdateSalonService(model);
+                }
             }
             catch (Exception ex)
             {

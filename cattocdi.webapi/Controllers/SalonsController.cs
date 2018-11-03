@@ -26,7 +26,6 @@ namespace cattocdi.webapi.Controllers
             string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
             var profile = _salonService.GetSalonProfile(accountId);            
             return Json(profile);
-        }
-
+        }        
     }
 }

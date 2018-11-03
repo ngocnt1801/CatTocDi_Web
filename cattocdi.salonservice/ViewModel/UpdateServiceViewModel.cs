@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace cattocdi.salonservice.ViewModel
 {
     public class UpdateServiceViewModel
-    {
-        public int SalonId { get; set; }
+    {        
+        public string AccountId { get; set; }
         public int ServiceId { get; set; }
         public double Price { get; set; }
         public int Duration { get; set; }
