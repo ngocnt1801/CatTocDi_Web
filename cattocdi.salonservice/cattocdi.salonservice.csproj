@@ -43,15 +43,20 @@
     <Compile Include="Constant\RoleConstant.cs" />
     <Compile Include="Implement\CustomerService.cs" />
     <Compile Include="Implement\SalonServices.cs" />
+    <Compile Include="Implement\ServiceSalonService.cs" />
     <Compile Include="Interface\ICustomerService.cs" />
     <Compile Include="Interface\ISalonServices.cs" />
+    <Compile Include="Interface\IServiceSalonService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\CustomerViewModel.cs" />
     <Compile Include="ViewModel\PromotionViewModel.cs" />
     <Compile Include="ViewModel\SalonProfileViewModel.cs" />
     <Compile Include="ViewModel\SalonServiceViewModel.cs" />
     <Compile Include="ViewModel\SalonViewModel.cs" />
-    <Compile Include="ViewModel\WorkingHourViewModel.cs" />
+    <Compile Include="ViewModel\ServiceViewModel.cs" />
+    <Compile Include="ViewModel\UpdateServiceViewModel.cs" />
+    <Compile Include="ViewModel\WorkDayViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cattocdi.entity\cattocdi.entity.csproj">

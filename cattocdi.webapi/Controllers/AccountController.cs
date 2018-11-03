@@ -58,7 +58,9 @@ namespace cattocdi.webapi.Controllers
                             AccountId = user.Id,
                             IsForMen = model.IsForMen,
                             IsForWomen = model.IsForWomen,     
-                            Phone = model.PhoneNumber
+                            Phone = model.PhoneNumber,
+                            Email = model.Email,
+                            RatingAvarage = 0                            
                         };
                         _salonService.RegisterSalonAccount(newSalon);
                     }                                  
