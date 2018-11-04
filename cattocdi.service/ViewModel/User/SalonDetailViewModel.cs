@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace cattocdi.Service.ViewModel.User
 {
-    public class SalonViewModel
+    public class SalonDetailViewModel
     {
         public int SalonId { get; set; }
         public string SalonName { get; set; }
@@ -15,9 +15,10 @@ namespace cattocdi.Service.ViewModel.User
         public double lattitude { get; set; }
         public string AccountId { get; set; }
         public bool IsForMen { get; set; }
-        public int ReviewCount { get; set; }
         public bool IsForWomen { get; set; }
         public double RatingAvarage { get; set; }
-        public PromotionViewModel Promotion {get; set;}
+        public List<PromotionViewModel> Promotions { get; set; }
+        public List<SalonServiceViewModel> Services { get; set; }
+        public List<ReviewViewModel> Reviews { get; set; }
     }
 }

@@ -13,6 +13,8 @@ namespace cattocdi.Service.Interface
         void RegisterSalonAccount(SalonViewModel newSalon);
 
         IEnumerable<SalonViewModel> GetAllSalon();
+        IEnumerable<SalonViewModel> SearchSalon(string nameAndAddress, string serviceName);
+        
         
     }
 }

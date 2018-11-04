@@ -27,7 +27,7 @@ namespace cattocdi.userapi
             {
                 var identity = new ClaimsIdentity(context.Options.AuthenticationType);
                 identity.AddClaim(new Claim("Username", user.UserName));
-                identity.AddClaim(new Claim("Email", user.Email));
+                if (user.Email != null) identity.AddClaim(new Claim("Email", user.Email));
                 identity.AddClaim(new Claim("LoggedOn", DateTime.Now.ToString()));
                 var userRoles = manager.GetRoles(user.Id);
                 foreach (var roleName in userRoles)
@@ -38,9 +38,6 @@ namespace cattocdi.userapi
                     {
                         "role", Newtonsoft.Json.JsonConvert.SerializeObject(userRoles)
                     },
-                    {
-                        "id" , "Hello"
-                    }
                 });
                 var token = new AuthenticationTicket(identity, additionalData);
                 context.Validated(token);

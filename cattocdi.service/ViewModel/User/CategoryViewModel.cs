@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace cattocdi.Service.ViewModel.User
 {
-    public class ServiceViewModel
+    public class CategoryViewModel
     {
-        public int ServiceId { get; set; }
-        public string Name { get; set; }
         public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
+        public List<ServiceViewModel> Services { get; set; }
     }
 }

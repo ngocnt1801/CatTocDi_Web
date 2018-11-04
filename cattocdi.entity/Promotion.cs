@@ -32,6 +32,8 @@ namespace cattocdi.entity
 
         public string Description { get; set; }
 
+        public DateTime? PostDate { get; set; }
+
         public virtual Salon Salon { get; set; }
     }
 }

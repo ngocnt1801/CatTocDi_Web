@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace cattocdi.Service.ViewModel.User
 {
-    class ReviewViewModel
+    public class ReviewViewModel
     {
+        public int ReviewId { get; set; }
+        public  int AppointmentId { get; set; }
+        public DateTime Date { get; set; }
+        public int RateNumber { get; set; }
+        public string Comment { get; set; }
+
     }
 }
