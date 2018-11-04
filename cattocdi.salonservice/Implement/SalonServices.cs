@@ -35,10 +35,13 @@ namespace cattocdi.salonservice.Implement
                     Name = newSalon.SalonName,
                     AccountId = newSalon.AccountId,
                     Address = newSalon.Address,
+                    Email = newSalon.Email,
+                    Latitude = 0,
+                    Longitude = 0,
                     RatingAverage = 0,
-                    IsForMen = newSalon.IsForMen,
                     Phone = newSalon.Phone,
-                    IsForWomen = newSalon.IsForWomen
+                    IsForMen = newSalon.IsForMen,                    
+                    IsForWomen = newSalon.IsForWomen,                                        
                 };
                 _salonRepo.Insert(salon);
                 _unitOfWork.SaveChanges();
@@ -79,7 +82,10 @@ namespace cattocdi.salonservice.Implement
                     }).FirstOrDefault();           
             return salons; 
         }
-        publi
-        
+        public List<WorkDayViewModel> GetSalonTimeTable(int salonId)
+        {
+            return null;
+        }
+
     }
 }

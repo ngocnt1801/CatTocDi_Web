@@ -10,10 +10,8 @@ namespace cattocdi.salonservice.Interface
 {
     public interface ISalonServices
     {
-        void RegisterSalonAccount(SalonViewModel newSalon);
-
-        #region Salon 
+        void RegisterSalonAccount(SalonViewModel newSalon);        
         SalonProfileViewModel GetSalonProfile(string salonId);
-        #endregion
+        List<WorkDayViewModel> GetSalonTimeTable(int salonId);
     }
 }

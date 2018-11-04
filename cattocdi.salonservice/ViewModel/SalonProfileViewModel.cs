@@ -18,5 +18,6 @@ namespace cattocdi.salonservice.ViewModel
         public double Latitude { get; set; }   
         public List<SalonServiceViewModel> Services { get; set; }
         public List<PromotionViewModel> CurrentPromotions { get; set; }
+        public List<WorkDayViewModel> WorkingHours { get; set; }
     }
 }
