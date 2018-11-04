@@ -30,5 +30,11 @@ namespace cattocdi.userapi.Controllers
             return Json(salons);
         }
 
+        public IHttpActionResult getSalonDetail(int id)
+        {
+            var salon = _salonService.getSalonById(id);
+            return Json(salon);
+        }
+
     }
 }
