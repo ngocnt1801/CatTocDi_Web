@@ -15,5 +15,6 @@ namespace cattocdi.salonservice.ViewModel
         public bool IsForWomen { get; set; }
         public float RatingAvarage { get; set; }
         public string Phone { get; set; }
+        public string Email { get; set; }
     }
 }

@@ -47,6 +47,7 @@ namespace cattocdi.webapi
             // Services
             container.RegisterType<ISalonServices, SalonServices>();
             container.RegisterType<ICustomerService, CustomerService>();
+            container.RegisterType<IServiceSalonService, ServiceSalonService>();
         }
     }
 }
