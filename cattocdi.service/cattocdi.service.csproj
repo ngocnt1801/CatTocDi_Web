@@ -40,22 +40,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constant\AppointmentStatusConstant.cs" />
     <Compile Include="Constant\RoleConstant.cs" />
+    <Compile Include="Implement\AppointmentServices.cs" />
     <Compile Include="Implement\CustomerService.cs" />
     <Compile Include="Implement\SalonServices.cs" />
     <Compile Include="Implement\CategoryServices.cs" />
+    <Compile Include="Interface\IAppointmentServices.cs" />
     <Compile Include="Interface\ICustomerService.cs" />
     <Compile Include="Interface\ISalonServices.cs" />
     <Compile Include="Interface\ICategoryServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\User\AppointmentViewModel.cs" />
     <Compile Include="ViewModel\User\CategoryViewModel.cs" />
     <Compile Include="ViewModel\User\ClosedDayViewModel.cs" />
     <Compile Include="ViewModel\User\CustomerViewModel.cs" />
+    <Compile Include="ViewModel\User\NewAppointmentViewModel.cs" />
+    <Compile Include="ViewModel\User\ProfileViewModel.cs" />
     <Compile Include="ViewModel\User\PromotionViewModel.cs" />
     <Compile Include="ViewModel\User\ReviewViewModel.cs" />
     <Compile Include="ViewModel\User\SalonDetailViewModel.cs" />
     <Compile Include="ViewModel\User\SalonServiceViewModel.cs" />
     <Compile Include="ViewModel\User\SalonViewModel.cs" />
+    <Compile Include="ViewModel\User\ServiceAppointmentViewModel.cs" />
     <Compile Include="ViewModel\User\ServiceViewModel.cs" />
     <Compile Include="ViewModel\User\TimeSlotViewModel.cs" />
   </ItemGroup>

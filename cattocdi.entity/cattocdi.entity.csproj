@@ -68,6 +68,7 @@
     <Compile Include="ClosedDay.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="C__MigrationHistory.cs" />
+    <Compile Include="Image.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Promotion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,8 +78,8 @@
     <Compile Include="Service.cs" />
     <Compile Include="ServiceAppointment.cs" />
     <Compile Include="ServiceCategory.cs" />
-    <Compile Include="sysdiagram.cs" />
     <Compile Include="TimeSlot.cs" />
+    <Compile Include="WorkingHour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

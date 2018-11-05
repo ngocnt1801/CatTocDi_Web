@@ -16,6 +16,7 @@ namespace cattocdi.entity
             Promotions = new HashSet<Promotion>();
             SalonServices = new HashSet<SalonService>();
             TimeSlots = new HashSet<TimeSlot>();
+            WorkingHours = new HashSet<WorkingHour>();
         }
 
         public int Id { get; set; }
@@ -47,6 +48,8 @@ namespace cattocdi.entity
         [StringLength(150)]
         public string Email { get; set; }
 
+        public int? Capacity { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClosedDay> ClosedDays { get; set; }
 
@@ -58,5 +61,8 @@ namespace cattocdi.entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TimeSlot> TimeSlots { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WorkingHour> WorkingHours { get; set; }
     }
 }

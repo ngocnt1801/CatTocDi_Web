@@ -26,7 +26,7 @@ namespace cattocdi.Service.Implement
                 Services = s.Services.Select(p => new ServiceViewModel
                 {
                     CategoryId = p.CategoryId,
-                    Name = p.Name,
+                    ServiceName = p.Name,
                     ServiceId = p.Id
                 }).ToList()
             }).ToList();

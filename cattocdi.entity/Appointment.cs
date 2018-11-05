@@ -29,6 +29,8 @@ namespace cattocdi.entity
 
         public TimeSpan TimeSlot { get; set; }
 
+        public int? PromotionId { get; set; }
+
         public virtual Customer Customer { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

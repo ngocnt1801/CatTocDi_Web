@@ -92,7 +92,7 @@ namespace cattocdi.Service.Implement
 
         public IEnumerable<SalonViewModel> SearchSalon(string nameAndAddress, string servicename)
         {
-             
+
             var salons = _salonRepo.Gets().Select(s => new SalonViewModel
             {
                 SalonId = s.Id,
@@ -102,7 +102,7 @@ namespace cattocdi.Service.Implement
                 IsForWomen = s.IsForWomen ?? false,
                 RatingAvarage = s.RatingAverage ?? 0,
                 longtitude = s.Longitude ?? 0,
-                lattitude =s.Latitude ?? 0,
+                lattitude = s.Latitude ?? 0,
                 SalonName = s.Name,
                 Promotion = s.Promotions.OrderBy(o => o.EndTime).Select(x => new PromotionViewModel
                 {
@@ -113,7 +113,27 @@ namespace cattocdi.Service.Implement
                     PromotionId = x.Id,
                     SalonId = x.SalonId
                 }).FirstOrDefault(),
-                
+                Services = s.SalonServices.Where(q => q.SalonId == s.Id && q.Disabled == false).ToList().Select(x => new SalonServiceViewModel
+                {
+                    SalonServiceId = x.Id,
+                    AverageTime = x.AvarageTime ?? 0,
+                    Price = x.Price ?? 0,
+                    SalonId = x.SalonId,
+                    ServiceId = x.ServiceId,
+                    ServiceName = x.Service.Name,
+                    CategoryName = x.Service.ServiceCategory.Name,
+                    CategoryId = x.Service.ServiceCategory.Id,
+
+                }).ToList(),
+
+                ClosedDays = s.ClosedDays.Select(c => new ClosedDayViewModel {
+                    ClosedDayId = c.Id,
+                    Date = c.Date ?? DateTime.Now,
+                    Description = c.Description,
+                    SalonId = c.SalonId
+                }).ToList()
+
+
             });
             foreach (var item in salons)
             {
@@ -132,19 +152,21 @@ namespace cattocdi.Service.Implement
             IEnumerable<SalonViewModel> result = salons;
             if(nameAndAddress != null && nameAndAddress.Length > 0)
             {
-                var listStr = Regex.Split(nameAndAddress, " ");
+                string[] listStr = Regex.Split(nameAndAddress.Trim(), " ");
                 foreach (string s in listStr)
                 {
-                    result = result.Where(w => w.SalonName.Contains(s.Trim()) || w.Address.Contains(s.Trim())).ToList();
+                    result = result.Where(w => w.SalonName.ToUpper().Contains(s.Trim().ToUpper()) || (w.Address == null ? false : w.Address.ToUpper().Contains(s.Trim().ToUpper()))).ToList();
                 }
             }
             
             if(servicename != null && servicename.Length > 0)
             {
-                var listStr = Regex.Split(servicename, ",");
+                var listStr = Regex.Split(servicename, ",").ToList();
+                listStr.RemoveAt(listStr.Count - 1);
+
                 foreach (string s in listStr)
                 {
-                    result = result.Where(w => w.SalonName.Contains(s.Trim()) || w.Address.Contains(s.Trim())).ToList();
+                    result = result.Where(w => w.Services.Where(n => n.ServiceName.Contains(s.Trim())).ToList().Count > 0).ToList();
                 }
             }
 
@@ -179,12 +201,15 @@ namespace cattocdi.Service.Implement
                 SalonName = m.Name,
                 Services = m.SalonServices.Where(q => q.SalonId == m.Id).ToList().Select(x => new SalonServiceViewModel
                 {
+                    SalonServiceId = x.Id,
                     AverageTime = x.AvarageTime ?? 0,
                     Price = x.Price ?? 0,
                     SalonId = x.SalonId,
                     ServiceId = x.ServiceId,
                     ServiceName = x.Service.Name,
-                    CategoryName = x.Service.ServiceCategory.Name
+                    CategoryName = x.Service.ServiceCategory.Name,
+                    CategoryId = x.Service.ServiceCategory.Id,
+
                 }).ToList(),
 
                 Reviews = _reviewRepo.Gets().Where(r => aptIds.Contains(r.AppointmentId))
@@ -194,7 +219,16 @@ namespace cattocdi.Service.Implement
                                 Date = x.Date,
                                 RateNumber = x.RateNumber,
                                 ReviewId = x.Id
-                            }).ToList()
+                            }).ToList(),
+                TimeSlots = m.TimeSlots.Select(p => new TimeSlotViewModel
+                {
+                    DayOfWeek = p.DayOfWeek ?? 0,
+                    SalonId = p.SalonId ?? 0,
+                    SlotDate = p.SlotDate ?? DateTime.Now,
+                    SlotTime = p.SlotTime ?? TimeSpan.Zero,
+                    Status = p.Status ?? 0,
+                    TimeSlotId = p.Id,
+                }).ToList()
 
             }).FirstOrDefault();
             return salon;

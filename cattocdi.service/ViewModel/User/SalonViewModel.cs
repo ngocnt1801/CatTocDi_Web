@@ -19,5 +19,7 @@ namespace cattocdi.Service.ViewModel.User
         public bool IsForWomen { get; set; }
         public double RatingAvarage { get; set; }
         public PromotionViewModel Promotion {get; set;}
+        public List<SalonServiceViewModel> Services { get; set; }
+        public List <ClosedDayViewModel> ClosedDays { get; set; }
     }
 }

@@ -25,7 +25,6 @@ namespace cattocdi.userapi.Controllers
         [HttpGet]
         public IHttpActionResult SearchSalon(string nameAndAddress, string service)
         {
-
             var salons = _salonService.SearchSalon(nameAndAddress, service);
             return Json(salons);
         }

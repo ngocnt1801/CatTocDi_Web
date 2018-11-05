@@ -9,7 +9,7 @@ namespace cattocdi.Service.ViewModel.User
     public class ServiceViewModel
     {
         public int ServiceId { get; set; }
-        public string Name { get; set; }
+        public string ServiceName { get; set; }
         public int CategoryId { get; set; }
     }
 }

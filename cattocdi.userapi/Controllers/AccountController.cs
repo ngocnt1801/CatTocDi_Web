@@ -38,20 +38,23 @@ namespace cattocdi.userapi.Controllers
                 {
                     UserName = model.UserName,
                     Email = model.Email
+                    
                 };
                 manager.PasswordValidator = new PasswordValidator()
                 {
                     RequiredLength = 3
                 };
                 result = manager.Create(user, model.Password);
-                if (result.Succeeded && model.Role != null)
+                if (result.Succeeded)
                 {
                     var newCustomer = new CustomerViewModel
                     {
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         AccountId = user.Id,
-                        Gender = model.Gender
+                        Gender = model.Gender,
+                        Email = model.Email,
+                        Phone = model.PhoneNumber
                     };
                     _customerService.CreateCustomerAccount(newCustomer);
                     manager.AddToRole(user.Id, RoleConstant.USER);
@@ -63,6 +66,8 @@ namespace cattocdi.userapi.Controllers
             }
             return result;
         }
+
+
       
         [HttpGet]
         [Route("~/api/GetUserClaims")]
@@ -78,5 +83,7 @@ namespace cattocdi.userapi.Controllers
             };
             return model;
         }
+
+        
     }
 }

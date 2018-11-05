@@ -25,6 +25,8 @@ namespace cattocdi.entity
 
         public int? AvarageTime { get; set; }
 
+        public bool Disabled { get; set; }
+
         public virtual Salon Salon { get; set; }
 
         public virtual Service Service { get; set; }

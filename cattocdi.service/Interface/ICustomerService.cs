@@ -10,5 +10,9 @@ namespace cattocdi.Service.Interface
     public interface ICustomerService
     {
         void CreateCustomerAccount(CustomerViewModel model);
+
+        ProfileViewModel getCustomerProfile(string username);
+
+        bool UpdateCustomerProfile(ProfileViewModel model);
     }
 }

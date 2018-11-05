@@ -14,5 +14,7 @@ namespace cattocdi.Service.ViewModel.User
         public TimeSpan SlotTime { get; set; }
         public int DayOfWeek { get; set; }
         public bool SlotType { get; set; }
+        public byte Status { get; set; }
+
     }
 }
