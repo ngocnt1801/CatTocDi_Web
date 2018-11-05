@@ -13,5 +13,7 @@ namespace cattocdi.salonservice.ViewModel
         public DateTime EndTime { get; set; }
         public double DiscountPercent { get; set; }
         public string Description { get; set; }
+        public int SalonId { get; set; }
+        public string AccountId { get; set; }
     }
 }

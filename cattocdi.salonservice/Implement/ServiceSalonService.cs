@@ -30,6 +30,15 @@ namespace cattocdi.salonservice.Implement
             _salonRepo = salonRepo;
             _unitOfWork = unitOfWork;
         }
+
+        public void DeleteSalonService(int salonServiceId)
+        {
+            var salonService = _salonServiceRepo.GetByID(salonServiceId);
+            salonService.Disabled = true;
+            _salonServiceRepo.Edit(salonService);
+            _unitOfWork.SaveChanges();
+        }
+
         public List<CategoryViewModel> GetCategories()
         {
             var categories = _categoryRepo.Gets().Select(c => new CategoryViewModel
@@ -44,19 +53,41 @@ namespace cattocdi.salonservice.Implement
             return categories;
         }
 
+        public List<SalonServiceViewModel> GetSalonServices(string accountId)
+        {
+            var salon = _salonRepo.Gets().Where(s => s.AccountId == accountId).FirstOrDefault();
+            if (salon != null)
+            {
+                var services = _salonServiceRepo.Gets()
+                        .Where(s => s.SalonId == salon.Id && s.Disabled == false)
+                        .Select(s => new SalonServiceViewModel {
+                            Id = s.Id,
+                            ServiceId = s.ServiceId,
+                            Price = s.Price ?? 0,
+                            AvarageTime = s.AvarageTime ?? 0,
+                            ServiceName = s.Service.Name,
+                            CategoryId = s.Service.CategoryId,
+                            CategoryName = s.Service.ServiceCategory.Name
+                        })
+                        .ToList();
+                return services;
+            }
+            return null;            
+        }
+        
         public void UpdateSalonService(UpdateServiceViewModel model)
         {
             var salonId = _salonRepo.Gets().Where(s => s.AccountId == model.AccountId).Select(s => s.Id).FirstOrDefault();
 
             var foundedService = _salonServiceRepo.Gets()
-                    .Where(s => s.Id == salonId && s.ServiceId == model.ServiceId)
+                    .Where(s => s.SalonId == salonId && s.ServiceId == model.ServiceId)
                     .FirstOrDefault();
             if (foundedService != null)
             {
-                var salonService = _salonServiceRepo.GetByID(foundedService.ServiceId);
-                salonService.Price = model.Price;
-                salonService.AvarageTime = model.Duration;
-                _salonServiceRepo.Edit(salonService);
+                
+                foundedService.Price = model.Price;
+                foundedService.AvarageTime = model.Duration;
+                _salonServiceRepo.Edit(foundedService);
                 _unitOfWork.SaveChanges();
             }
             else
@@ -70,7 +101,8 @@ namespace cattocdi.salonservice.Implement
                         Salon = salon,
                         Service = service,
                         Price = model.Price,
-                        AvarageTime = model.Duration
+                        AvarageTime = model.Duration,
+                        Disabled = false
                     };
                     _salonServiceRepo.Insert(newService);
                     _unitOfWork.SaveChanges();
@@ -81,5 +113,7 @@ namespace cattocdi.salonservice.Implement
                 }
             }
         }
+
+
     }
 }

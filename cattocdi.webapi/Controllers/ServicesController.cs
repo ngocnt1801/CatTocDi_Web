@@ -15,11 +15,11 @@ namespace cattocdi.webapi.Controllers
     [RoutePrefix("api/Services")]
     public class ServicesController : ApiController
     {
-        private IServiceSalonService _salonService;
+        private IServiceSalonService _salonServiceService;
 
         public ServicesController(IServiceSalonService salonService)
         {
-            _salonService = salonService;
+            _salonServiceService = salonService;
         }
 
         [HttpPost]
@@ -33,7 +33,7 @@ namespace cattocdi.webapi.Controllers
                 if (accountId != null)
                 {
                     model.AccountId = accountId;
-                    _salonService.UpdateSalonService(model);
+                    _salonServiceService.UpdateSalonService(model);
                 }
             }
             catch (Exception ex)
@@ -42,6 +42,29 @@ namespace cattocdi.webapi.Controllers
                 return BadRequest("Update Failed");
             }
             return Ok("Update Success");
+        }   
+
+        [HttpGet]
+        public IHttpActionResult Get()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
+            var result = _salonServiceService.GetSalonServices(accountId);
+
+            return Json(result);            
+        }
+        [HttpDelete]        
+        public IHttpActionResult Delete(int salonServiceId)
+        {
+            try
+            {
+                _salonServiceService.DeleteSalonService(salonServiceId);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest("Remove Failed");
+            }
+            return Ok("Remove Success");
         }
     }
 }

@@ -49,6 +49,7 @@ namespace cattocdi.webapi
             container.RegisterType<ICustomerService, CustomerService>();
             container.RegisterType<IServiceSalonService, ServiceSalonService>();
             container.RegisterType<IWorkingHourService, WorkingHourService>();
+            container.RegisterType<IPromotionService, PromotionService>();
 
         }
     }

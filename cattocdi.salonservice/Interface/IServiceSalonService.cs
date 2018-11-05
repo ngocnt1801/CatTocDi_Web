@@ -11,5 +11,8 @@ namespace cattocdi.salonservice.Interface
     {
         List<CategoryViewModel> GetCategories();
         void UpdateSalonService(UpdateServiceViewModel model);
+        List<SalonServiceViewModel> GetSalonServices(string accountId);
+
+        void DeleteSalonService(int salonServiceId);        
     }
 }
