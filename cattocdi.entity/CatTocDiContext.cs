@@ -20,6 +20,7 @@ namespace cattocdi.entity
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<ClosedDay> ClosedDays { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<Salon> Salons { get; set; }
         public virtual DbSet<SalonService> SalonServices { get; set; }
@@ -28,6 +29,7 @@ namespace cattocdi.entity
         public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TimeSlot> TimeSlots { get; set; }
+        public virtual DbSet<WorkingHour> WorkingHours { get; set; }
         public virtual DbSet<Promotion> Promotions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -76,6 +78,10 @@ namespace cattocdi.entity
                 .WithRequired(e => e.Customer)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Image>()
+                .Property(e => e.Url)
+                .IsUnicode(false);
+
             modelBuilder.Entity<Salon>()
                 .Property(e => e.Phone)
                 .IsUnicode(false);
@@ -96,6 +102,11 @@ namespace cattocdi.entity
 
             modelBuilder.Entity<Salon>()
                 .HasMany(e => e.SalonServices)
+                .WithRequired(e => e.Salon)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Salon>()
+                .HasMany(e => e.WorkingHours)
                 .WithRequired(e => e.Salon)
                 .WillCascadeOnDelete(false);
 

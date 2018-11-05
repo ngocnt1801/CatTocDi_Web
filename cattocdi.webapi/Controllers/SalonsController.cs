@@ -1,4 +1,6 @@
 ﻿using cattocdi.salonservice.Interface;
+using cattocdi.salonservice.ViewModel;
+using Elmah;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,9 +18,11 @@ namespace cattocdi.webapi.Controllers
     public class SalonsController : ApiController
     {
         private ISalonServices _salonService;
-        public SalonsController(ISalonServices salonService)
+        private IWorkingHourService _workingHourService;
+        public SalonsController(ISalonServices salonService, IWorkingHourService workingHourService)
         {
             _salonService = salonService;
+            _workingHourService = workingHourService;                
         }
         public IHttpActionResult Get()
         {
@@ -26,6 +30,43 @@ namespace cattocdi.webapi.Controllers
             string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
             var profile = _salonService.GetSalonProfile(accountId);            
             return Json(profile);
-        }        
+        }    
+
+        [HttpPut]
+        [Route("Profile")]
+        public IHttpActionResult Profile(SalonProfileViewModel model)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
+                model.AccountId = accountId;
+                _salonService.UpdateProfile(model); 
+
+            } catch (Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Update Profile Failed");
+            }
+            return Ok("Update Profile Success");
+        }
+        [HttpPost] 
+        [Route("WorkingHour")]
+        public IHttpActionResult WorkingHour(List<WorkingHourViewModel> workingHours)
+        {
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
+                _workingHourService.Update(accountId, workingHours);
+            }
+            catch(Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Update Profile Failed");
+            }
+                       
+            return Json("Update Working Hour Success");
+        }
     }
 }

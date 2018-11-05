@@ -1,4 +1,5 @@
-﻿using cattocdi.webapi.Models;
+﻿using cattocdi.salonservice.Constant;
+using cattocdi.webapi.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -22,28 +23,31 @@ namespace cattocdi.webapi
         {
             var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
             var manager = new UserManager<ApplicationUser>(userStore);
-            var user = await manager.FindAsync(context.UserName, context.Password);
+            var user = await manager.FindAsync(context.UserName, context.Password);                    
             if (user != null)
             {
-                var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-                identity.AddClaim(new Claim("Username", user.UserName));                
-                identity.AddClaim(new Claim("Email", user.Email));
-                identity.AddClaim(new Claim("AccountId", user.Id));
-                identity.AddClaim(new Claim("LoggedOn", DateTime.Now.ToString()));
-                var userRoles = manager.GetRoles(user.Id);
-                foreach(var roleName in userRoles)
+                var userRoles = manager.GetRoles(user.Id);    
+                if (userRoles.Contains(RoleConstant.SALON))
                 {
-                    identity.AddClaim(new Claim(ClaimTypes.Role, roleName));
-                }
-                var additionalData = new AuthenticationProperties(new Dictionary<string, string> {
+                    var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                    identity.AddClaim(new Claim("Username", user.UserName));
+                    identity.AddClaim(new Claim("Email", user.Email));
+                    identity.AddClaim(new Claim("AccountId", user.Id));
+                    identity.AddClaim(new Claim("LoggedOn", DateTime.Now.ToString()));
+                    foreach (var roleName in userRoles)
+                    {
+                        identity.AddClaim(new Claim(ClaimTypes.Role, roleName));
+                    }
+                    var additionalData = new AuthenticationProperties(new Dictionary<string, string> {
                     {
                         "role", Newtonsoft.Json.JsonConvert.SerializeObject(userRoles)
-                    }                  
-                });                
-                var token = new AuthenticationTicket(identity, additionalData);
-                context.Validated(token);
+                    }
+                });
+                    var token = new AuthenticationTicket(identity, additionalData);
+                    context.Validated(token);
+                }               
             }
-            else return;
+            return;
         }
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
         {

@@ -56,7 +56,7 @@ namespace cattocdi.salonservice.Implement
                     {
                         SalonId = s.Id,
                         Address = s.Address,
-                        Name = s.Name,
+                        SalonName = s.Name,
                         Phone = s.Phone,
                         IsForMen = s.IsForMen ?? false,
                         IsForWomen = s.IsForWomen ?? false,
@@ -87,5 +87,37 @@ namespace cattocdi.salonservice.Implement
             return null;
         }
 
+        public void UpdateProfile(SalonProfileViewModel model)
+        {
+            var salon = _salonRepo.Gets().FirstOrDefault(s => s.AccountId == model.AccountId);                
+            if (salon != null)
+            {                
+                if (model.SalonName != null)
+                {
+                    salon.Name = model.SalonName;
+                }
+                if (salon.Email != null)
+                {
+                    salon.Email = model.Email;
+                }
+                if (salon.Phone != null)
+                {
+                    salon.Phone = model.Phone;
+                }                
+                if (salon.Address != null)
+                {
+                    salon.Address = model.Address;
+                }
+                if (salon.Capacity != null)
+                {
+                    salon.Capacity = model.Capacity;
+                }
+                salon.Longitude = model.Longitude;
+                salon.Latitude = model.Latitude;
+
+                _salonRepo.Edit(salon);
+                _unitOfWork.SaveChanges();
+            }
+        }
     }
 }

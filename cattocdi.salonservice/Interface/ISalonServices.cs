@@ -13,5 +13,6 @@ namespace cattocdi.salonservice.Interface
         void RegisterSalonAccount(SalonViewModel newSalon);        
         SalonProfileViewModel GetSalonProfile(string salonId);
         List<WorkDayViewModel> GetSalonTimeTable(int salonId);
+        void UpdateProfile(SalonProfileViewModel model);
     }
 }
