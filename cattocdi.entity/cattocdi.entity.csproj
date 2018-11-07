@@ -78,6 +78,9 @@
     <Compile Include="Service.cs" />
     <Compile Include="ServiceAppointment.cs" />
     <Compile Include="ServiceCategory.cs" />
+    <Compile Include="SlotAppointment.cs" />
+    <Compile Include="SlotTime.cs" />
+    <Compile Include="sysdiagram.cs" />
     <Compile Include="TimeSlot.cs" />
     <Compile Include="WorkingHour.cs" />
   </ItemGroup>

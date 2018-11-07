@@ -49,7 +49,7 @@ namespace cattocdi.Service.Implement
                 SalonName = s.Name,
                 Promotion = s.Promotions.OrderBy(o => o.EndTime).Select(x => new PromotionViewModel {
                     Description = x.Description,
-                    DiscountPersent = x.DiscountPercent,
+                    DiscountPercent = x.DiscountPercent,
                     EndTime = x.EndTime,
                     StartTime = x.StartTime,
                     PromotionId = x.Id,
@@ -107,7 +107,7 @@ namespace cattocdi.Service.Implement
                 Promotion = s.Promotions.OrderBy(o => o.EndTime).Select(x => new PromotionViewModel
                 {
                     Description = x.Description,
-                    DiscountPersent = x.DiscountPercent,
+                    DiscountPercent = x.DiscountPercent,
                     EndTime = x.EndTime,
                     StartTime = x.StartTime,
                     PromotionId = x.Id,
@@ -191,7 +191,7 @@ namespace cattocdi.Service.Implement
                 Promotions = m.Promotions.Where(x => x.EndTime > DateTime.Now).Select(x => new PromotionViewModel
                 {
                     Description = x.Description,
-                    DiscountPersent = x.DiscountPercent,
+                    DiscountPercent = x.DiscountPercent,
                     EndTime = x.EndTime,
                     StartTime = x.StartTime,
                     PromotionId = x.Id,
@@ -220,16 +220,15 @@ namespace cattocdi.Service.Implement
                                 RateNumber = x.RateNumber,
                                 ReviewId = x.Id
                             }).ToList(),
-                TimeSlots = m.TimeSlots.Select(p => new TimeSlotViewModel
-                {
-                    DayOfWeek = p.DayOfWeek ?? 0,
-                    SalonId = p.SalonId ?? 0,
-                    SlotDate = p.SlotDate ?? DateTime.Now,
-                    SlotTime = p.SlotTime ?? TimeSpan.Zero,
-                    Status = p.Status ?? 0,
-                    TimeSlotId = p.Id,
-                }).ToList()
-
+                //TimeSlots = m.TimeSlots.Select(p => new TimeSlotViewModel
+                //{
+                //    DayOfWeek = p.DayOfWeek ?? 0,
+                //    SalonId = p.SalonId ?? 0,
+                //    SlotDate = p.SlotDate ?? DateTime.Now,
+                //    SlotTime = p.SlotTime ?? TimeSpan.Zero,
+                //    Status = p.Status ?? 0,
+                //    TimeSlotId = p.Id,
+                //}).ToList()
             }).FirstOrDefault();
             return salon;
         }

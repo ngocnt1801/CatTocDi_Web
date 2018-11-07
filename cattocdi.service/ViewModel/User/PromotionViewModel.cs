@@ -12,7 +12,7 @@ namespace cattocdi.Service.ViewModel.User
         public int SalonId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public double DiscountPersent { get; set; }
+        public double DiscountPercent { get; set; }
         public string Description { get; set; }
     }
 }

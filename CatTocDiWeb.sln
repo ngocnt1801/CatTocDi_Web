@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cattocdi.userapi", "cattocd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cattocdi.salonservice", "cattocdi.salonservice\cattocdi.salonservice.csproj", "{2859108B-C0D5-4782-B903-04D09B0D7686}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cattocdi.taskscheduler", "cattocdi.taskscheduler\cattocdi.taskscheduler.csproj", "{E6B38193-01B6-4450-842C-1E6D5F20A053}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{2859108B-C0D5-4782-B903-04D09B0D7686}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2859108B-C0D5-4782-B903-04D09B0D7686}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2859108B-C0D5-4782-B903-04D09B0D7686}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6B38193-01B6-4450-842C-1E6D5F20A053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6B38193-01B6-4450-842C-1E6D5F20A053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6B38193-01B6-4450-842C-1E6D5F20A053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6B38193-01B6-4450-842C-1E6D5F20A053}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

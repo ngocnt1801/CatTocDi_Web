@@ -45,7 +45,7 @@ namespace cattocdi.Service.Implement
 
         public bool CancelAppointment(int appointmentId)
         {
-            var apm = _apmRepo.Gets().Where(p => p.AppointmentId == appointmentId).FirstOrDefault();
+            var apm = _apmRepo.Gets().Where(p => p.Id == appointmentId).FirstOrDefault();
             apm.Status = AppointmentStatusConstant.CANCEL;
             _apmRepo.Edit(apm);
             return _unitOfWork.SaveChanges() > 0;
@@ -58,13 +58,13 @@ namespace cattocdi.Service.Implement
             var customer = _customerRepo.Gets().Where(x => x.AspNetUser.UserName.Equals(username)).FirstOrDefault();
             var apms = customer.Appointments.Select(p => new AppointmentViewModel
             {
-                AppointmentId = p.AppointmentId,
+                AppointmentId = p.Id,
                 BookDate = p.BookedDate,
                 DiscountPercent = _promotionRepo.Gets().Where(n => n.Id == p.PromotionId).Select(k => k.DiscountPercent).FirstOrDefault(),
                 Duration = p.Duration,
                 Status = p.Status,
-                TimeSlot = p.TimeSlot,
-                SalonID = p.ServiceAppointments.Where(n => n.AppointmentId == p.AppointmentId)
+                //TimeSlot = p.TimeSlot,
+                SalonID = p.ServiceAppointments.Where(n => n.AppointmentId == p.Id)
                                                 .Select(k => k.SalonService)
                                                 .Select(l => l.SalonId).FirstOrDefault(),
 
@@ -83,7 +83,7 @@ namespace cattocdi.Service.Implement
                 PromotionId = model.PromotionId,
                 Duration = model.Duration,
                 Status = AppointmentStatusConstant.NOTAPPROVE,
-                TimeSlot = model.TimeSlot,
+                //TimeSlot = model.TimeSlot,
                 ServiceAppointments = model.Services.Select(x => new ServiceAppointment
                 {
                     Price = x.Price,

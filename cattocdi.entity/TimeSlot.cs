@@ -23,7 +23,5 @@ namespace cattocdi.entity
         public bool? SlotType { get; set; }
 
         public byte? Status { get; set; }
-
-        public virtual Salon Salon { get; set; }
     }
 }
