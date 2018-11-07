@@ -1,6 +1,6 @@
-﻿using cattocdi.Service.Interface;
-using cattocdi.Service.ViewModel;
-using cattocdi.Service.ViewModel.Salon;
+﻿using cattocdi.Service.Constant;
+using cattocdi.Service.Interface;
+using cattocdi.Service.ViewModel.User;
 using cattocdi.userapi.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -24,7 +24,7 @@ namespace cattocdi.userapi.Controllers
             _salonService = salonService;
             _customerService = customerService;
         }
-        [Route("User/Register")]
+        [Route("Register")]
         [HttpPost]
         [AllowAnonymous]
         public IdentityResult UserRegister(UserAccountModel model)
@@ -38,23 +38,26 @@ namespace cattocdi.userapi.Controllers
                 {
                     UserName = model.UserName,
                     Email = model.Email
+                    
                 };
                 manager.PasswordValidator = new PasswordValidator()
                 {
                     RequiredLength = 3
                 };
                 result = manager.Create(user, model.Password);
-                if (result.Succeeded && model.Role != null)
+                if (result.Succeeded)
                 {
                     var newCustomer = new CustomerViewModel
                     {
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         AccountId = user.Id,
-                        Gender = model.Gender
+                        Gender = model.Gender,
+                        Email = model.Email,
+                        Phone = model.PhoneNumber
                     };
                     _customerService.CreateCustomerAccount(newCustomer);
-                    manager.AddToRole(user.Id, model.Role);
+                    manager.AddToRole(user.Id, RoleConstant.USER);
                 }
             }
             catch (Exception ex)
@@ -63,6 +66,8 @@ namespace cattocdi.userapi.Controllers
             }
             return result;
         }
+
+
       
         [HttpGet]
         [Route("~/api/GetUserClaims")]
@@ -78,5 +83,7 @@ namespace cattocdi.userapi.Controllers
             };
             return model;
         }
+
+        
     }
 }

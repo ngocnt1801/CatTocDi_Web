@@ -1,4 +1,4 @@
-﻿using cattocdi.Service.ViewModel.Salon;
+﻿using cattocdi.Service.ViewModel.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +12,10 @@ namespace cattocdi.Service.Interface
     {
         void RegisterSalonAccount(SalonViewModel newSalon);
 
-        #region Salon 
-        SalonProfileViewModel GetSalonProfile(string salonId);
-        #endregion
+        IEnumerable<SalonViewModel> GetAllSalon();
+        IEnumerable<SalonViewModel> SearchSalon(string nameAndAddress, string serviceName);
+        SalonDetailViewModel getSalonById(int id);
+
+
     }
 }

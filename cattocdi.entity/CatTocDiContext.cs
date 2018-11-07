@@ -30,6 +30,7 @@ namespace cattocdi.entity
         public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
         public virtual DbSet<SlotAppointment> SlotAppointments { get; set; }
         public virtual DbSet<SlotTime> SlotTimes { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TimeSlot> TimeSlots { get; set; }
         public virtual DbSet<WorkingHour> WorkingHours { get; set; }
 

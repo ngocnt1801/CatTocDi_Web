@@ -1,4 +1,4 @@
-﻿using cattocdi.Service.ViewModel.Salon;
+﻿using cattocdi.Service.ViewModel.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +10,9 @@ namespace cattocdi.Service.Interface
     public interface ICustomerService
     {
         void CreateCustomerAccount(CustomerViewModel model);
+
+        ProfileViewModel getCustomerProfile(string username);
+
+        bool UpdateCustomerProfile(ProfileViewModel model);
     }
 }

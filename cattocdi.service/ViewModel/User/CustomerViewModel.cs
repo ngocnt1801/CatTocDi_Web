@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace cattocdi.Service.ViewModel.Salon
+namespace cattocdi.Service.ViewModel.User
 {
     public class CustomerViewModel
     {        
@@ -13,5 +13,7 @@ namespace cattocdi.Service.ViewModel.Salon
         public string LastName { get; set; }
         public bool Gender { get; set; }
         public string AccountId { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
     }
 }

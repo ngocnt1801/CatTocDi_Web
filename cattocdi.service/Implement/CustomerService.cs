@@ -1,7 +1,7 @@
 ﻿using cattocdi.entity;
 using cattocdi.repository;
 using cattocdi.Service.Interface;
-using cattocdi.Service.ViewModel.Salon;
+using cattocdi.Service.ViewModel.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,11 +28,41 @@ namespace cattocdi.Service.Implement
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Gender = model.Gender,
-                    AccountId = model.AccountId                    
+                    AccountId = model.AccountId,
+                    Email = model.Email,
+                    Phone = model.Phone                    
                 };
-                _customerRepo.Insert(newCustomer);
-                _unitOfWork.SaveChanges(); 
+               _customerRepo.Insert(newCustomer);
+               int n = _unitOfWork.SaveChanges();
+                Console.Write("xxx");
             }
+        }
+
+        public ProfileViewModel getCustomerProfile(string username)
+        {
+            var user = _customerRepo.Gets().Where(x => x.AspNetUser.UserName.Equals(username)).Select(z => new ProfileViewModel
+            {
+                CustomerID = z.CustomerId,
+                Email = z.Email,
+                AccountId = z.AccountId,
+                Firstname = z.FirstName,
+                Gender = z.Gender?? false,
+                Lastname = z.LastName,
+                Phone = z.Phone
+            }).FirstOrDefault();
+            return user;
+        }
+
+        public bool UpdateCustomerProfile(ProfileViewModel model)
+        {
+            var customer = _customerRepo.Gets().Where(s => s.AccountId == model.AccountId).FirstOrDefault();
+
+            customer.FirstName = model.Firstname;
+            customer.LastName = model.Lastname;
+            customer.Email = model.Email;
+            _customerRepo.Edit(customer);
+            return _unitOfWork.SaveChanges() > 0 ? true : false;
+
         }
     }
 }

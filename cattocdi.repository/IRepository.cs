@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace cattocdi.repository
 {
     public interface IRepository<T> where T : class
-    {
+    {        
         IEnumerable<T> Gets();
         T GetByID(int id);
         void Insert(T model);

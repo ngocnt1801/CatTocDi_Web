@@ -48,6 +48,8 @@ namespace cattocdi.userapi
             // Services
             container.RegisterType<ISalonServices, SalonServices>();
             container.RegisterType<ICustomerService, CustomerService>();
+            container.RegisterType<ICategoryServices, CategoryServices>();
+            container.RegisterType<IAppointmentServices, AppointmentServices>();
         }
     }
 }

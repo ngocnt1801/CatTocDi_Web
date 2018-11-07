@@ -18,7 +18,7 @@ namespace cattocdi.userapi
             {
                 TokenEndpointPath = new PathString("/login"),
                 Provider = new ApplicationOAuthProvider(),
-                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(7),
                 AllowInsecureHttp = true
             };
             app.UseOAuthAuthorizationServer(option);
