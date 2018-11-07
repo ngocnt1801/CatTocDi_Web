@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace cattocdi.salonservice.Implement
 {
+    //LOve DAT
     public class CustomerService : ICustomerService
     {
         private IRepository<Customer> _customerRepo;
