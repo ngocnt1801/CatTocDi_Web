@@ -58,6 +58,8 @@ namespace cattocdi.salonservice.Implement
                         Address = s.Address,
                         SalonName = s.Name,
                         Phone = s.Phone,
+                        Capacity = s.Capacity ?? 0,
+                        Email = s.Email,
                         IsForMen = s.IsForMen ?? false,
                         IsForWomen = s.IsForWomen ?? false,
                         Longitude = s.Longitude ?? 0,
@@ -71,7 +73,7 @@ namespace cattocdi.salonservice.Implement
                             AvarageTime = se.AvarageTime ?? 0,
                             ServiceName = se.Service.Name
                         }).ToList(),
-                        CurrentPromotions = s.Promotions.Where(p => p.StartTime >= DateTime.Now)
+                        CurrentPromotions = s.Promotions.Where(p => p.EndTime >= DateTime.Now)
                                                     .Select(pro => new PromotionViewModel {
                                                         Id = pro.Id,
                                                         StartTime = pro.StartTime,
@@ -96,22 +98,21 @@ namespace cattocdi.salonservice.Implement
                 {
                     salon.Name = model.SalonName;
                 }
-                if (salon.Email != null)
+                if (model.Email != null)
                 {
                     salon.Email = model.Email;
                 }
-                if (salon.Phone != null)
+                if (model.Phone != null)
                 {
                     salon.Phone = model.Phone;
                 }                
-                if (salon.Address != null)
+                if (model.Address != null)
                 {
                     salon.Address = model.Address;
                 }
-                if (salon.Capacity != null)
-                {
-                    salon.Capacity = model.Capacity;
-                }
+                
+                salon.Capacity = model.Capacity;
+                
                 salon.Longitude = model.Longitude;
                 salon.Latitude = model.Latitude;
 

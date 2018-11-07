@@ -29,7 +29,7 @@ namespace cattocdi.webapi.Controllers
             var result = _promotionService.GetPromotions(accountId);
             return Json(result);            
         }   
-        [HttpPut]
+        [HttpPost]
         [Route("Update")]
         public IHttpActionResult Update(PromotionViewModel model)
         {

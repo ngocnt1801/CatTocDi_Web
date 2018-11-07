@@ -32,7 +32,7 @@ namespace cattocdi.webapi.Controllers
             return Json(profile);
         }    
 
-        [HttpPut]
+        [HttpPost]
         [Route("Profile")]
         public IHttpActionResult Profile(SalonProfileViewModel model)
         {

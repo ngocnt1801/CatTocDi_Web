@@ -46,7 +46,7 @@ namespace cattocdi.salonservice.Implement
             var salonId = _salonRepo.Gets().Where(s => s.AccountId == accountId).Select(s => s.Id).FirstOrDefault();
             if (salonId > 0)
             {
-                var list = _promotionRepo.Gets().Where(p => p.SalonId == salonId && p.StartTime >= DateTime.Now)
+                var list = _promotionRepo.Gets().Where(p => p.SalonId == salonId && p.EndTime > DateTime.Now)
                     .Select(s => new PromotionViewModel
                     {
                         Id = s.Id,

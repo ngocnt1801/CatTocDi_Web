@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace cattocdi.salonservice.Interface
 {
-    public interface ICustomerService
+    public interface IAppointmentServices
     {
-        void CreateCustomerAccount(CustomerViewModel model);
-        List<CustomerViewModel> GetAllCustomer(string AccountId);
-        CustomerDetailViewModel GetById(int id);
+        AppointmentSeprationViewModel getAllAppoitment(string AccountId);
+
+        List<AppointmentViewmodel> getBydate(DateTime date, string accountId);
     }
 }

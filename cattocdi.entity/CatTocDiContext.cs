@@ -21,16 +21,17 @@ namespace cattocdi.entity
         public virtual DbSet<ClosedDay> ClosedDays { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Image> Images { get; set; }
+        public virtual DbSet<Promotion> Promotions { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<Salon> Salons { get; set; }
         public virtual DbSet<SalonService> SalonServices { get; set; }
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<ServiceAppointment> ServiceAppointments { get; set; }
         public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<SlotAppointment> SlotAppointments { get; set; }
+        public virtual DbSet<SlotTime> SlotTimes { get; set; }
         public virtual DbSet<TimeSlot> TimeSlots { get; set; }
         public virtual DbSet<WorkingHour> WorkingHours { get; set; }
-        public virtual DbSet<Promotion> Promotions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -106,6 +107,11 @@ namespace cattocdi.entity
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Salon>()
+                .HasMany(e => e.SlotTimes)
+                .WithRequired(e => e.Salon)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Salon>()
                 .HasMany(e => e.WorkingHours)
                 .WithRequired(e => e.Salon)
                 .WillCascadeOnDelete(false);
@@ -126,6 +132,11 @@ namespace cattocdi.entity
                 .WithRequired(e => e.ServiceCategory)
                 .HasForeignKey(e => e.CategoryId)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<SlotTime>()
+                .HasMany(e => e.SlotAppointments)
+                .WithOptional(e => e.SlotTime)
+                .HasForeignKey(e => e.SlotId);
         }
     }
 }

@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace cattocdi.salonservice.Interface
 {
-    public interface ICustomerService
+    public interface IReviewServices
     {
-        void CreateCustomerAccount(CustomerViewModel model);
-        List<CustomerViewModel> GetAllCustomer(string AccountId);
-        CustomerDetailViewModel GetById(int id);
+        List<ReviewViewModel> GetAllReviews(string accountId);
     }
 }

@@ -14,9 +14,10 @@ namespace cattocdi.entity
         {
             Reviews = new HashSet<Review>();
             ServiceAppointments = new HashSet<ServiceAppointment>();
+            SlotAppointments = new HashSet<SlotAppointment>();
         }
 
-        public int AppointmentId { get; set; }
+        public int Id { get; set; }
 
         public int CustomerId { get; set; }
 
@@ -27,16 +28,19 @@ namespace cattocdi.entity
 
         public int Duration { get; set; }
 
-        public TimeSpan TimeSlot { get; set; }
-
         public int? PromotionId { get; set; }
 
         public virtual Customer Customer { get; set; }
+
+        public virtual Promotion Promotion { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Review> Reviews { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ServiceAppointment> ServiceAppointments { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SlotAppointment> SlotAppointments { get; set; }
     }
 }

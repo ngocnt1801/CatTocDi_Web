@@ -9,30 +9,28 @@ namespace cattocdi.entity
     [Table("Promotion")]
     public partial class Promotion
     {
-        [Key]
-        [Column(Order = 0)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Promotion()
+        {
+            Appointments = new HashSet<Appointment>();
+        }
+
         public int Id { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int SalonId { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
         public DateTime StartTime { get; set; }
 
-        [Key]
-        [Column(Order = 3)]
         public DateTime EndTime { get; set; }
 
-        [Key]
-        [Column(Order = 4)]
         public double DiscountPercent { get; set; }
 
         public string Description { get; set; }
 
         public DateTime? PostDate { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Appointment> Appointments { get; set; }
 
         public virtual Salon Salon { get; set; }
     }
