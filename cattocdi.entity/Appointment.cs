@@ -30,6 +30,8 @@ namespace cattocdi.entity
 
         public int? PromotionId { get; set; }
 
+        public DateTime StartTime { get; set; }
+
         public virtual Customer Customer { get; set; }
 
         public virtual Promotion Promotion { get; set; }

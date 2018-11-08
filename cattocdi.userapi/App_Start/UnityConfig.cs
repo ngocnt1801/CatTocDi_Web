@@ -50,6 +50,7 @@ namespace cattocdi.userapi
             container.RegisterType<ICustomerService, CustomerService>();
             container.RegisterType<ICategoryServices, CategoryServices>();
             container.RegisterType<IAppointmentServices, AppointmentServices>();
+            container.RegisterType<ISlotTimeService, SlotTimeService>();
         }
     }
 }
