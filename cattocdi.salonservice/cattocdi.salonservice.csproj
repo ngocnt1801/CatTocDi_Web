@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constant\AppoitmentStatusEnum.cs" />
+    <Compile Include="Constant\PromotionEnum.cs" />
     <Compile Include="Constant\RoleConstant.cs" />
     <Compile Include="Constant\RoleEnum.cs" />
     <Compile Include="Implement\AppointmentServices.cs" />

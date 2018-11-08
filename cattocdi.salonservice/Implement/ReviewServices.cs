@@ -31,7 +31,9 @@ namespace cattocdi.salonservice.Implement
                 Comment = v.Comment,
                 Date = v.Date,
                 RateNumber = v.RateNumber,
-                ReviewId = v.Id
+                ReviewId = v.Id,
+                CustomerName = v.Appointment.Customer.FirstName
+                
             }).ToList();
             return reviews;
         }

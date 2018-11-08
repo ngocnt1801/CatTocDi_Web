@@ -1,5 +1,6 @@
 ﻿using cattocdi.entity;
 using cattocdi.repository;
+using cattocdi.salonservice.Constant;
 using cattocdi.salonservice.Interface;
 using cattocdi.salonservice.ViewModel;
 using System;
@@ -14,12 +15,14 @@ namespace cattocdi.salonservice.Implement
     {
         private IRepository<Salon> _salonRepo;
         private IRepository<Promotion> _promotionRepo;
+        private IRepository<Appointment> _apmRepo;
         private IUnitOfWork _unitOfWork;
-        public PromotionService(IRepository<Salon> salonRepo, IRepository<Promotion> promotionRepo, IUnitOfWork unitOfWork)
+        public PromotionService(IRepository<Salon> salonRepo, IRepository<Promotion> promotionRepo, IUnitOfWork unitOfWork, IRepository<Appointment> apmRepo)
         {
             _salonRepo = salonRepo;
             _promotionRepo = promotionRepo;
-            _unitOfWork = unitOfWork;                 
+            _unitOfWork = unitOfWork;
+            _apmRepo = apmRepo;
         }
 
         public void CreatePromotion(PromotionViewModel model)
@@ -35,10 +38,11 @@ namespace cattocdi.salonservice.Implement
                 StartTime = model.StartTime,
                 EndTime = model.EndTime,
                 Description = model.Description,
-                DiscountPercent = model.DiscountPercent,                 
+                DiscountPercent = model.DiscountPercent,
+                Status = (byte)PromotionEnum.NORMAL                
             };
             _promotionRepo.Insert(newPromotion);
-            _unitOfWork.SaveChanges();            
+            int result = _unitOfWork.SaveChanges();            
         }
 
         public List<PromotionViewModel> GetPromotions(string accountId)
@@ -52,6 +56,7 @@ namespace cattocdi.salonservice.Implement
                         Id = s.Id,
                         StartTime = s.StartTime,
                         EndTime = s.EndTime,
+                        Status = s.Status,
                         Description = s.Description,
                         DiscountPercent = s.DiscountPercent
                     }).ToList();
@@ -59,15 +64,17 @@ namespace cattocdi.salonservice.Implement
             }
             return null; 
         }
-        public void UpdatePromotion(PromotionViewModel model)
+        public bool CancelPromotion(int id)
         {
-            var founded = _promotionRepo.GetByID(model.Id);
-            founded.StartTime = model.StartTime;
-            founded.EndTime = model.EndTime;
-            founded.Description = model.Description;
-            founded.DiscountPercent = model.DiscountPercent;
+            var founded = _promotionRepo.GetByID(id);
+            var usedPromotionIds = _apmRepo.Gets().Select(p => p.PromotionId).ToList();
+            if(founded.StartTime <= DateTime.Now || usedPromotionIds.Contains(id)) {
+                return false;
+            }
+            founded.Status = (int)PromotionEnum.CANCELED;
             _promotionRepo.Edit(founded);
-            _unitOfWork.SaveChanges();        
+            _unitOfWork.SaveChanges();
+            return true;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace cattocdi.salonservice.Interface
     public interface IPromotionService
     {
         List<PromotionViewModel> GetPromotions(string accountId);
-        void UpdatePromotion(PromotionViewModel model);
+        bool CancelPromotion(int id);
         void CreatePromotion(PromotionViewModel model);        
     }
 }
