@@ -33,23 +33,24 @@ namespace cattocdi.Service.Implement
                     Phone = model.Phone                    
                 };
                _customerRepo.Insert(newCustomer);
-               int n = _unitOfWork.SaveChanges();
-                Console.Write("xxx");
+               int n = _unitOfWork.SaveChanges();             
             }
         }
 
-        public ProfileViewModel getCustomerProfile(string username)
+        public ProfileViewModel GetCustomerProfile(string accountId)
         {
-            var user = _customerRepo.Gets().Where(x => x.AspNetUser.UserName.Equals(username)).Select(z => new ProfileViewModel
-            {
-                CustomerID = z.CustomerId,
-                Email = z.Email,
-                AccountId = z.AccountId,
-                Firstname = z.FirstName,
-                Gender = z.Gender?? false,
-                Lastname = z.LastName,
-                Phone = z.Phone
-            }).FirstOrDefault();
+            var user = _customerRepo.Gets()
+                .Where(x => x.AccountId.Equals(accountId))
+                .Select(z => new ProfileViewModel
+                {
+                    CustomerID = z.CustomerId,
+                    Email = z.Email,
+                    AccountId = z.AccountId,
+                    Firstname = z.FirstName,
+                    Gender = z.Gender ?? false,
+                    Lastname = z.LastName,
+                    Phone = z.Phone
+                }).FirstOrDefault();
             return user;
         }
 

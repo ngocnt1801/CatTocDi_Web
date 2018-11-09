@@ -18,7 +18,7 @@ namespace cattocdi.userapi.Controllers
         [HttpGet]
         public IHttpActionResult Gets()
         {
-            var salons = _salonService.GetAllSalon();
+        var salons = _salonService.GetAllSalon();
             return Json(salons);
         }
         

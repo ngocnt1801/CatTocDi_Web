@@ -25,8 +25,8 @@ namespace cattocdi.userapi.Controllers
             try
             {
                 var identity = (ClaimsIdentity)User.Identity;
-                string username = identity.Claims.FirstOrDefault(c => c.Type.Equals("Username")).Value;
-                var profile = _cusService.getCustomerProfile(username);
+                string username = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
+                var profile = _cusService.GetCustomerProfile(username);
                 return Json(profile);
             }
             catch(Exception ex)

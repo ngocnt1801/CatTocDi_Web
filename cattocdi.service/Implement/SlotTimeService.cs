@@ -29,18 +29,23 @@ namespace cattocdi.Service.Implement
                 int salonCapacity = salon.Capacity ?? 0;
                 int numberOfSlot = (int)Math.Ceiling((double)duration / 15); // Require Slots for appointment
                 var date = DateTime.Now;
-                var endDate = date.AddDays(7);
+                var endDate = date.AddDays(7).Date;
                 var currTime = date.TimeOfDay;
                 int currSlot = (int)Math.Ceiling(currTime.TotalMinutes / 15);
                 var timeMask = TimeSpan.FromMinutes(currSlot * 15);
 
                 var salonSlots = _slotRepo.Gets()
-                        .Where(s => s.SalonId == salonId && s.SlotDate >= date && s.SlotDate <= endDate)
-                        .ToList();                
+                        .Where(s => s.SlotDate >= date.Date && s.SlotDate <= endDate)
+                        .AsQueryable()
+                        .ToList();
+                salonSlots = salonSlots.Where(s => s.SalonId == salonId).ToList();
+
                 foreach (var slotdate in salonSlots)
                 {
-                    var convertedSlots = ParseToSlotList(slotdate);
-                    var availableSlots = GetAvailableSlot(convertedSlots, numberOfSlot, salonCapacity);                    
+                    var convertedSlots = ParseToSlotList(slotdate);                    
+                    var availableSlots = GetAvailableSlot(convertedSlots, numberOfSlot, salonCapacity);
+                    availableSlots = availableSlots.Where(s => s.Time >= date.TimeOfDay).ToList();
+
                     slotDateList.Add(new SlotDateViewModel
                     {
                         date = slotdate.SlotDate,
