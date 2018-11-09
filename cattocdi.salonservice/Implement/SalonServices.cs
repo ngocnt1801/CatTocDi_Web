@@ -49,7 +49,7 @@ namespace cattocdi.salonservice.Implement
         }
 
         public SalonProfileViewModel GetSalonProfile(string accountId)
-        {           
+        {
             var salons = _salonRepo.Gets()
                     .Where(s => s.AccountId == accountId)
                     .Select(s => new SalonProfileViewModel
@@ -81,7 +81,13 @@ namespace cattocdi.salonservice.Implement
                                                         Description = pro.Description,
                                                         Status = pro.Status ?? 0,
                                                         DiscountPercent = pro.DiscountPercent
-                                                    }).ToList()                        
+                                                    }).ToList(),
+                        WorkingHours = s.WorkingHours.Select(w => new WorkDayViewModel {
+                            DayOfWeek = w.DayOfWeek,
+                            FromHour = w.StartHour,
+                            ToHour = w.EndHour,
+                            IsClosed = w.IsClosed
+                        }).ToList()
                     }).FirstOrDefault();           
             return salons; 
         }
