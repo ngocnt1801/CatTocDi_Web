@@ -1,5 +1,6 @@
 ﻿
 using cattocdi.Service.Interface;
+using System;
 using System.Web.Http;
 
 
@@ -31,8 +32,15 @@ namespace cattocdi.userapi.Controllers
 
         public IHttpActionResult getSalonDetail(int id)
         {
-            var salon = _salonService.getSalonById(id);
-            return Json(salon);
+            try
+            {
+                var salon = _salonService.getSalonById(id);
+                return Json(salon);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest("Get Salon Detail Failed");
+            }            
         }
 
     }

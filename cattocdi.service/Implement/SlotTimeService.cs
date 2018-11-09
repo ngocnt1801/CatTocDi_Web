@@ -44,7 +44,9 @@ namespace cattocdi.Service.Implement
                 {
                     var convertedSlots = ParseToSlotList(slotdate);                    
                     var availableSlots = GetAvailableSlot(convertedSlots, numberOfSlot, salonCapacity);
-                    availableSlots = availableSlots.Where(s => s.Time >= date.TimeOfDay).ToList();
+                    availableSlots = availableSlots
+                                .Where(s => s.SlotDate > date.Date || (s.SlotDate == date.Date && s.Time >= date.TimeOfDay))
+                                .ToList();
 
                     slotDateList.Add(new SlotDateViewModel
                     {
@@ -76,7 +78,7 @@ namespace cattocdi.Service.Implement
         {
             var list = new List<SlotTimeViewModel>(); 
 
-            for (int i = 1; i <= 96; i ++)
+            for (int i = 1; i <= 96; i++)
             {                
                 var converted = slotdate.GetType().GetProperty($"Slot{i}").GetValue(slotdate);
                 int capacity = -1;

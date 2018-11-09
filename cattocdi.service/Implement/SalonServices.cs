@@ -189,7 +189,7 @@ namespace cattocdi.Service.Implement
                     DayOfWeek = p.DayOfWeek,
                     FromHour = p.StartHour,
                     ToHour = p.EndHour,
-                    IsClosed = p.IsClosed
+                    IsClosed = p.IsClosed 
                 }).ToList(),
                 Promotions = m.Promotions.Where(x => x.EndTime > DateTime.Now && x.Status != (byte)PromotionEnum.CANCELED)
                     .OrderBy(e => e.StartTime)
@@ -224,16 +224,7 @@ namespace cattocdi.Service.Implement
                                 Date = x.Date,
                                 RateNumber = x.RateNumber,
                                 ReviewId = x.Id
-                            }).ToList(),
-                //TimeSlots = m.TimeSlots.Select(p => new TimeSlotViewModel
-                //{
-                //    DayOfWeek = p.DayOfWeek ?? 0,
-                //    SalonId = p.SalonId ?? 0,
-                //    SlotDate = p.SlotDate ?? DateTime.Now,
-                //    SlotTime = p.SlotTime ?? TimeSpan.Zero,
-                //    Status = p.Status ?? 0,
-                //    TimeSlotId = p.Id,
-                //}).ToList()
+                            }).ToList(),              
             }).FirstOrDefault();
             return salon;
         }

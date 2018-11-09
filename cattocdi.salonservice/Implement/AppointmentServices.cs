@@ -70,7 +70,8 @@ namespace cattocdi.salonservice.Implement
                     BookedDate = m.BookedDate,
                     CustomerId = m.CustomerId,
                     Duration = m.Duration,
-                    Status = m.Status,
+                    Status = m.Status,    
+                    StartTime = m.StartTime,
                     //TimeSlot = m.TimeSlot,
                     Customer = new CustomerViewModel
                     {
@@ -96,7 +97,6 @@ namespace cattocdi.salonservice.Implement
                         Price = q.Price ?? 0,
                         ServiceId = q.ServiceId,
                         ServiceName = q.Service.Name
-
                     }).ToList()
                 }).ToList(),
 
@@ -107,6 +107,7 @@ namespace cattocdi.salonservice.Implement
                     CustomerId = m.CustomerId,
                     Duration = m.Duration,
                     Status = m.Status,
+                    StartTime = m.StartTime,
                     //TimeSlot = m.TimeSlot,
                     Customer = new CustomerViewModel
                     {
@@ -114,8 +115,7 @@ namespace cattocdi.salonservice.Implement
                         Firstname = m.Customer.FirstName,
                         Lastname = m.Customer.LastName,
                         Gender = m.Customer.Gender ?? false,
-                        Phone = m.Customer.Phone
-
+                        Phone = m.Customer.Phone                            
                     },
                     Services = m.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
                     {
