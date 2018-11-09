@@ -34,5 +34,7 @@ namespace cattocdi.webapi.Controllers
             var result  = _ApmServices.getBydate(date, accountId);
             return Json(result);
         }
+
+       
     }
 }

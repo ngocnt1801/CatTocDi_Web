@@ -12,5 +12,8 @@ namespace cattocdi.salonservice.Interface
         AppointmentSeprationViewModel getAllAppoitment(string AccountId);
 
         List<AppointmentViewmodel> getBydate(DateTime date, string accountId);
+
+        bool cancelAppoitment(int appointmentId);
+        bool approveAppointment(int appointmentId);
     }
 }

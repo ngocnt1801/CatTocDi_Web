@@ -10,7 +10,7 @@ using System.Web.Http;
 namespace cattocdi.webapi.Controllers
 {
     [Authorize(Roles = "Salon")]
-    [RoutePrefix("api/Reviews")]
+    [RoutePrefix("api/Review")]
     public class ReviewController : ApiController
     {
         // GET: api/Review

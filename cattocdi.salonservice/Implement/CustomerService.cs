@@ -45,7 +45,9 @@ namespace cattocdi.salonservice.Implement
 
         public List<CustomerViewModel> GetAllCustomer(string AccountId)
         {
-            List<int> salonServices = _salonRepo.Gets().Where(p => p.AccountId.Equals(AccountId)).Select(x => x.SalonServices.Where(v => v.SalonId == x.Id).Select(l => l.Id)).FirstOrDefault().ToList();
+            List<int> salonServices = _salonRepo.Gets().Where(p => p.AccountId.Equals(AccountId))
+                .Select(x => x.SalonServices.Where(v => v.SalonId == x.Id)
+                .Select(l => l.Id)).FirstOrDefault().ToList();
             var customers = _apmRepo.Gets().Where(p => p.ServiceAppointments.Where(x => salonServices.Contains(x.ServiceId)).Count() > 0).Select(m => m.Customer).Select(q => new CustomerViewModel {
                     CustomerId = q.CustomerId,
                     Firstname = q.FirstName,
@@ -88,6 +90,7 @@ namespace cattocdi.salonservice.Implement
                         EndTime = x.Promotion.EndTime,
                         StartTime = x.Promotion.StartTime,
                         Id = x.PromotionId ?? 0,
+                        Status = x.Promotion.Status
                     } : null,
                     Services = x.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
                     {

@@ -15,5 +15,6 @@ namespace cattocdi.salonservice.ViewModel
         public string Description { get; set; }
         public int SalonId { get; set; }
         public string AccountId { get; set; }
+        public byte Status { get; set; }
     }
 }

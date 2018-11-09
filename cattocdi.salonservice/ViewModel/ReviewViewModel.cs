@@ -13,5 +13,6 @@ namespace cattocdi.salonservice.ViewModel
         public DateTime Date { get; set; }
         public int RateNumber { get; set; }
         public string Comment { get; set; }
+        public string CustomerName { get; set; } 
     }
 }

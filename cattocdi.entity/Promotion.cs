@@ -27,6 +27,8 @@ namespace cattocdi.entity
 
         public string Description { get; set; }
 
+        public byte Status { get; set; }
+
         public DateTime? PostDate { get; set; }
 
         public byte? Statis { get; set; }

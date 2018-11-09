@@ -28,20 +28,18 @@ namespace cattocdi.webapi.Controllers
             string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
             var result = _promotionService.GetPromotions(accountId);
             return Json(result);            
-        }   
+        }
         [HttpPost]
-        [Route("Update")]
-        public IHttpActionResult Update(PromotionViewModel model)
+        [Route("Delete")]
+        public IHttpActionResult Cancel(int id)
         {
-            try
+            bool result = _promotionService.CancelPromotion(id);
+            if(result)
             {
-                _promotionService.UpdatePromotion(model);                
+                return Ok("Cancel Promotions Success");
             }
-            catch (Exception ex)
-            {
-                return BadRequest("Update failed");
-            }
-            return Ok("Update Promotions Success");
+            return BadRequest("Update failed");
+
         }
         [HttpPost]        
         public IHttpActionResult Post(PromotionViewModel model)
