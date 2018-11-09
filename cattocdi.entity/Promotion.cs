@@ -27,11 +27,9 @@ namespace cattocdi.entity
 
         public string Description { get; set; }
 
-        public byte Status { get; set; }
-
         public DateTime? PostDate { get; set; }
 
-        public byte? Statis { get; set; }
+        public byte? Status { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointments { get; set; }

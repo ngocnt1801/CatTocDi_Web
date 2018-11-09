@@ -16,7 +16,9 @@ namespace cattocdi.Service.ViewModel.User
         public TimeSpan TimeSlot { get; set; }
         public double DiscountPercent { get; set; }
         public int SalonID { get; set; }
-        List<SalonServiceViewModel> Services { get; set; }
+        public DateTime StartTime { get; set; }
+        public List<SalonServiceViewModel> Services { get; set; }
+        public ReviewViewModel Reviews { get; set; }
 
     }
 }

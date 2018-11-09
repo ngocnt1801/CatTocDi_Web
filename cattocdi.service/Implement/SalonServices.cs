@@ -99,7 +99,7 @@ namespace cattocdi.Service.Implement
                 longtitude = s.Longitude ?? 0,
                 lattitude = s.Latitude ?? 0,
                 SalonName = s.Name,
-                Promotion = s.Promotions.OrderBy(o => o.EndTime).Select(x => new PromotionViewModel
+                Promotion = s.Promotions.Where(v => v.EndTime > DateTime.Now).OrderBy(e => e.StartTime).Select(x => new PromotionViewModel
                 {
                     Description = x.Description,
                     DiscountPercent = x.DiscountPercent,
@@ -183,7 +183,14 @@ namespace cattocdi.Service.Implement
                 IsForWomen = m.IsForWomen ?? false,
                 lattitude = m.Latitude ?? 0,
                 longtitude = m.Longitude ?? 0,
-                Promotions = m.Promotions.Where(x => x.EndTime > DateTime.Now).Select(x => new PromotionViewModel
+                WorkingHours = m.WorkingHours.Select(p => new WorkDayViewModel
+                {
+                    DayOfWeek = p.DayOfWeek,
+                    FromHour = p.StartHour,
+                    ToHour = p.EndHour,
+                    IsClosed = p.IsClosed
+                }).ToList(),
+                Promotions = m.Promotions.Where(x => x.EndTime > DateTime.Now).OrderBy(e => e.StartTime).Select(x => new PromotionViewModel
                 {
                     Description = x.Description,
                     DiscountPercent = x.DiscountPercent,

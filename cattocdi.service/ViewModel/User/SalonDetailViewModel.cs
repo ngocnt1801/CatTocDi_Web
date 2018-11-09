@@ -20,6 +20,6 @@ namespace cattocdi.Service.ViewModel.User
         public List<PromotionViewModel> Promotions { get; set; }
         public List<SalonServiceViewModel> Services { get; set; }
         public List<ReviewViewModel> Reviews { get; set; }
-        public List<TimeSlotViewModel> TimeSlots {get; set;}
+        public List<WorkDayViewModel> WorkingHours { get; set; }
     }
 }

@@ -16,5 +16,6 @@ namespace cattocdi.Service.ViewModel.User
         public string ServiceName { get; set; }
         public string CategoryName { get;  set;}
         public int CategoryId { get; set; }
+       
     }
 }

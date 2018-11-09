@@ -37,20 +37,18 @@ namespace cattocdi.Service.Implement
             _reviewRepo = reviewRepo;
             _slotTimeRepo = slotTimeRepo;
         }
-        public bool Addreview(string content, byte rate, int appointmentId)
+        public void AddReview(ReviewViewModel model)
         {
-            
-                var newReview = new Review
-                {
-                    AppointmentId = appointmentId,
-                    Comment = content,
-                    Date = DateTime.Now,
-                    RateNumber = rate,
-                };
-            _reviewRepo.Insert(newReview);
-            return _unitOfWork.SaveChanges() > 0;
-            
 
+            var newReview = new Review
+            {
+                AppointmentId = model.AppointmentId,
+                Comment = model.Comment,
+                Date = DateTime.Now,
+                RateNumber = (byte)model.RateNumber,
+            };
+            _reviewRepo.Insert(newReview);
+            _unitOfWork.SaveChanges();
         }
 
         public bool CancelAppointment(int appointmentId)
@@ -63,23 +61,41 @@ namespace cattocdi.Service.Implement
 
         }
 
-        public List<AppointmentViewModel> GetAllAppointment(string username)
+        public List<AppointmentViewModel> GetAllAppointment(string accountId)
         {
-            var customer = _customerRepo.Gets().Where(x => x.AspNetUser.UserName.Equals(username)).FirstOrDefault();
-            var apms = customer.Appointments.Select(p => new AppointmentViewModel
+            var customer = _customerRepo.Gets().Where(c => c.AccountId == accountId).FirstOrDefault();
+            if (customer != null)
             {
-                AppointmentId = p.Id,
-                BookDate = p.BookedDate,
-                DiscountPercent = _promotionRepo.Gets().Where(n => n.Id == p.PromotionId).Select(k => k.DiscountPercent).FirstOrDefault(),
-                Duration = p.Duration,
-                Status = p.Status,
-                //TimeSlot = p.TimeSlot,
-                SalonID = p.ServiceAppointments.Where(n => n.AppointmentId == p.Id)
-                                                .Select(k => k.SalonService)
-                                                .Select(l => l.SalonId).FirstOrDefault(),
+                var apms = customer.Appointments.OrderBy(w => w.Status).ThenByDescending(q => q.StartTime).Select(p => new AppointmentViewModel
+                {
+                    AppointmentId = p.Id,
+                    BookDate = p.BookedDate,
+                    DiscountPercent = _promotionRepo.Gets().Where(n => n.Id == p.PromotionId).Select(k => k.DiscountPercent).FirstOrDefault(),
+                    Duration = p.Duration,
+                    Status = p.Status,
+                    Reviews = p.Reviews.Select(v => new ReviewViewModel
+                    {
+                        AppointmentId = v.AppointmentId,
+                        Comment = v.Comment,
+                        Date = v.Date,
+                        RateNumber = v.RateNumber,
+                        ReviewId = v.Id
+                    }).FirstOrDefault(),
+                    StartTime = p.StartTime,
+                    SalonID = p.ServiceAppointments.Select(m => m.SalonService).Select(q => q.SalonId).FirstOrDefault(),
+                    Services = p.ServiceAppointments.Select(m => m.SalonService).Select(q => new SalonServiceViewModel
+                    {
+                        AverageTime = q.AvarageTime ?? 0,
+                        Price = q.Price ?? 0,
+                        ServiceId = q.ServiceId,
+                        ServiceName = q.Service.Name
 
-            }).OrderByDescending(x => x.AppointmentId).ToList();
-            return apms;
+                    }).ToList()
+
+                }).ToList();
+                return apms;
+            }
+            return null;
         }
 
         public void BookAppoint(NewAppointmentViewModel model)

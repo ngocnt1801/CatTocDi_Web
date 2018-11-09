@@ -11,7 +11,7 @@ namespace cattocdi.Service.Interface
     {
         List<AppointmentViewModel> GetAllAppointment(string Username);
         bool CancelAppointment(int appointmentId);
-        bool Addreview(string content, byte rate, int appointmentId);
+        void AddReview(ReviewViewModel model);
 
         void BookAppoint(NewAppointmentViewModel model);
         

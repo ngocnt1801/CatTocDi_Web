@@ -56,7 +56,7 @@ namespace cattocdi.salonservice.Implement
                         Id = s.Id,
                         StartTime = s.StartTime,
                         EndTime = s.EndTime,
-                        Status = s.Status,
+                        Status = s.Status?? 0,
                         Description = s.Description,
                         DiscountPercent = s.DiscountPercent
                     }).ToList();

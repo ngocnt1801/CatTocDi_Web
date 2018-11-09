@@ -23,11 +23,21 @@ namespace cattocdi.userapi.Controllers
         [HttpGet]
         public IHttpActionResult Get()
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            string username = identity.Claims.FirstOrDefault(c => c.Type.Equals("Username")).Value;
-            return Json(_apmServices.GetAllAppointment(username));
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
+                var result =_apmServices.GetAllAppointment(accountId);
+                return Json(result);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest("Get Appointment FAiled");
+            }
+          
         }
-        [HttpDelete]
+        [HttpPost]
+        [Route("Delete")]
         public IHttpActionResult CancelAppointment(int id)
         {
             var result = _apmServices.CancelAppointment(id);
@@ -40,20 +50,7 @@ namespace cattocdi.userapi.Controllers
                 return BadRequest();
             }
         }
-        [HttpPost]
-        [Route("Review")]
-         public IHttpActionResult Review(int id, string content, byte rateNumber)
-        {
-            var result = _apmServices.Addreview(content, rateNumber, id);
-            if (result)
-            {
-                return Ok("Review success");
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
+      
 
         [HttpPost]        
         public IHttpActionResult Book(NewAppointmentViewModel model)

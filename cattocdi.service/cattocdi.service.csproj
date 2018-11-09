@@ -69,6 +69,7 @@
     <Compile Include="ViewModel\User\SlotDateViewModel.cs" />
     <Compile Include="ViewModel\User\SlotTimeViewModel.cs" />
     <Compile Include="ViewModel\User\TimeSlotViewModel.cs" />
+    <Compile Include="ViewModel\User\WorkDayViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cattocdi.entity\cattocdi.entity.csproj">
