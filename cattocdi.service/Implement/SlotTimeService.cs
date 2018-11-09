@@ -40,7 +40,7 @@ namespace cattocdi.Service.Implement
                 foreach (var slotdate in salonSlots)
                 {
                     var convertedSlots = ParseToSlotList(slotdate);
-                    var availableSlots = GetAvailableSlot(convertedSlots, numberOfSlot);                    
+                    var availableSlots = GetAvailableSlot(convertedSlots, numberOfSlot, salonCapacity);                    
                     slotDateList.Add(new SlotDateViewModel
                     {
                         date = slotdate.SlotDate,
@@ -51,16 +51,16 @@ namespace cattocdi.Service.Implement
             }           
             return slotDateList;
         }
-        private List<SlotTimeViewModel> GetAvailableSlot(List<SlotTimeViewModel> list, int totalSlot)
+        private List<SlotTimeViewModel> GetAvailableSlot(List<SlotTimeViewModel> list, int totalSlot, int salonCapacity)
         {
             var availables = new List<SlotTimeViewModel>();
             for (int i = 0; i <= list.Count - totalSlot; i++)
             {
                 
                 if (list[i].Capacity != -1 && list[i + 1].Capacity != -1 && list[i + 2].Capacity != -1 &&
-                    list[i].Capacity < totalSlot && 
-                    list[i + 1].Capacity < totalSlot && 
-                    list[i + 2].Capacity < totalSlot)
+                    list[i].Capacity < salonCapacity && 
+                    list[i + 1].Capacity < salonCapacity && 
+                    list[i + 2].Capacity < salonCapacity)
                 {
                     availables.Add(list[i]);
                 }

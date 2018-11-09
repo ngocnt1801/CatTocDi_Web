@@ -66,12 +66,9 @@ namespace cattocdi.Service.Implement
                                         .ToList();
                 var reviews = _reviewRepo.Gets().Where(r => aptIds.Contains(r.AppointmentId)).Count();
                 item.ReviewCount = reviews;
-
             }
-
             return salons;
         }
-
         public void RegisterSalonAccount(SalonViewModel newSalon)
         {
             if (newSalon != null)
@@ -89,10 +86,8 @@ namespace cattocdi.Service.Implement
                 _unitOfWork.SaveChanges();
             }
         }
-
         public IEnumerable<SalonViewModel> SearchSalon(string nameAndAddress, string servicename)
         {
-
             var salons = _salonRepo.Gets().Select(s => new SalonViewModel
             {
                 SalonId = s.Id,

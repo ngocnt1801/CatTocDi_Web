@@ -13,7 +13,7 @@ namespace cattocdi.Service.Interface
         bool CancelAppointment(int appointmentId);
         bool Addreview(string content, byte rate, int appointmentId);
 
-        bool BookAppoint(NewAppointmentViewModel model);
+        void BookAppoint(NewAppointmentViewModel model);
         
     }
 }

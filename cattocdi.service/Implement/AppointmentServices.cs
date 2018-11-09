@@ -16,16 +16,26 @@ namespace cattocdi.Service.Implement
         private IRepository<Customer> _customerRepo;
         private IRepository<Appointment> _apmRepo;
         private IRepository<Review> _reviewRepo;
+        private IRepository<SalonService> _salonServiceRepo;
+        private IRepository<SlotTime> _slotTimeRepo;
         private IUnitOfWork _unitOfWork;
         private IRepository<Promotion> _promotionRepo;
 
-        public AppointmentServices(IUnitOfWork unitOfWork, IRepository<Review> reviewRepo, IRepository<Customer> customerRepo, IRepository<Appointment> apmRepo, IRepository<Promotion> promotionRepo)
+        public AppointmentServices(IUnitOfWork unitOfWork, 
+                                IRepository<Review> reviewRepo, 
+                                IRepository<Customer> customerRepo, 
+                                IRepository<Appointment> apmRepo, 
+                                IRepository<Promotion> promotionRepo,
+                                IRepository<SlotTime> slotTimeRepo,
+                                IRepository<SalonService> salonServiceRepo)
         {
             _promotionRepo = promotionRepo;
             _unitOfWork = unitOfWork;
             _customerRepo = customerRepo;
             _apmRepo = apmRepo;
+            _salonServiceRepo = salonServiceRepo;
             _reviewRepo = reviewRepo;
+            _slotTimeRepo = slotTimeRepo;
         }
         public bool Addreview(string content, byte rate, int appointmentId)
         {
@@ -72,26 +82,38 @@ namespace cattocdi.Service.Implement
             return apms;
         }
 
-        public bool BookAppoint(NewAppointmentViewModel model)
+        public void BookAppoint(NewAppointmentViewModel model)
         {
             var customerId = _customerRepo.Gets().Where(p => p.AccountId == model.AccountId).Select(x => x.CustomerId).FirstOrDefault();
             model.CustomerId = customerId;
+            var bookedServices = _salonServiceRepo.Gets().Where(s => model.Services.Contains(s.Id))
+                         .Select(x => new ServiceAppointment
+                         {
+                             Price = x.Price ?? 0,
+                             ServiceId = x.Id,
+                         }).ToList();
             var apm = new Appointment
             {
-                BookedDate = model.BookedDate,
+                BookedDate = DateTime.Now,
                 CustomerId = model.CustomerId,
                 PromotionId = model.PromotionId,
                 Duration = model.Duration,
-                Status = AppointmentStatusConstant.NOTAPPROVE,
-                //TimeSlot = model.TimeSlot,
-                ServiceAppointments = model.Services.Select(x => new ServiceAppointment
-                {
-                    Price = x.Price,
-                    ServiceId = x.SalonServiceID,
-                }).ToList(),
+                Status = AppointmentStatusConstant.NOTAPPROVE,                
+                StartTime = model.StartTime,
+                ServiceAppointments = bookedServices
             };
+            // UPDATE SLOTS TO SLOT TIME 
+            var slot = _slotTimeRepo.GetByID(model.SlotId);
+            foreach (var index in model.Indexes)
+            {
+                var capacity = slot.GetType().GetProperty($"Slot{index}").GetValue(slot);
+                byte cap = Convert.ToByte(capacity);
+                cap += 1;
+                slot.GetType().GetProperty($"Slot{index}").SetValue(slot, cap);
+            }
+            _slotTimeRepo.Edit(slot);                        
             _apmRepo.Insert(apm);
-            return _unitOfWork.SaveChanges() > 0;
+            _unitOfWork.SaveChanges();            
         }
     }
 }

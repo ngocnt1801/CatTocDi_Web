@@ -55,20 +55,22 @@ namespace cattocdi.userapi.Controllers
             }
         }
 
+        [HttpPost]        
         public IHttpActionResult Book(NewAppointmentViewModel model)
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
-            model.AccountId = accountId;
-            bool result = _apmServices.BookAppoint(model);
-            if (result)
+            try
             {
-                return Ok("Book success");
+                var identity = (ClaimsIdentity)User.Identity;
+                string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
+                model.AccountId = accountId;
+                _apmServices.BookAppoint(model);
+                return Ok("Book Success");
             }
-            else
+            catch(Exception ex)
             {
-                return BadRequest();
+                return BadRequest("Book Failed");
             }
+            return Ok("HIHI");
         }
 
     }
