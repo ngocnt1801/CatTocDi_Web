@@ -1,5 +1,6 @@
 ﻿using cattocdi.entity;
 using cattocdi.repository;
+using cattocdi.Service.Constant;
 using cattocdi.Service.Interface;
 using cattocdi.Service.ViewModel.User;
 using System;
@@ -190,15 +191,17 @@ namespace cattocdi.Service.Implement
                     ToHour = p.EndHour,
                     IsClosed = p.IsClosed
                 }).ToList(),
-                Promotions = m.Promotions.Where(x => x.EndTime > DateTime.Now).OrderBy(e => e.StartTime).Select(x => new PromotionViewModel
-                {
-                    Description = x.Description,
-                    DiscountPercent = x.DiscountPercent,
-                    EndTime = x.EndTime,
-                    StartTime = x.StartTime,
-                    PromotionId = x.Id,
-                    SalonId = x.SalonId
-                }).ToList(),
+                Promotions = m.Promotions.Where(x => x.EndTime > DateTime.Now && x.Status != (byte)PromotionEnum.CANCELED)
+                    .OrderBy(e => e.StartTime)
+                    .Select(x => new PromotionViewModel
+                    {
+                        Description = x.Description,
+                        DiscountPercent = x.DiscountPercent,
+                        EndTime = x.EndTime,
+                        StartTime = x.StartTime,
+                        PromotionId = x.Id,
+                        SalonId = x.SalonId
+                    }).ToList(),
                 RatingAvarage = m.RatingAverage ?? 0,
                 SalonName = m.Name,
                 Services = m.SalonServices.Where(q => q.SalonId == m.Id).ToList().Select(x => new SalonServiceViewModel

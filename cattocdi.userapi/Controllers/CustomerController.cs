@@ -22,10 +22,18 @@ namespace cattocdi.userapi.Controllers
         // GET: api/Customer
         public IHttpActionResult Get()
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            string username = identity.Claims.FirstOrDefault(c => c.Type.Equals("Username")).Value;
-            var profile = _cusService.getCustomerProfile(username);
-            return Json(profile);
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                string username = identity.Claims.FirstOrDefault(c => c.Type.Equals("Username")).Value;
+                var profile = _cusService.getCustomerProfile(username);
+                return Json(profile);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest("Get Salon Failed");
+            }
+            
         }
 
         [HttpPost]

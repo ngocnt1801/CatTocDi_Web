@@ -54,9 +54,7 @@ namespace cattocdi.salonservice.Implement
                    return _unitOfWork.SaveChanges() > 0;
                 }
             }
-
-            return false;
-            
+            return false;            
         }
 
         public AppointmentSeprationViewModel getAllAppoitment(string AccountId)
@@ -81,7 +79,6 @@ namespace cattocdi.salonservice.Implement
                         Lastname = m.Customer.LastName,
                         Gender = m.Customer.Gender ?? false,
                         Phone = m.Customer.Phone
-
                     },
                     Promotion = m.Promotion != null ? new PromotionViewModel
                     {

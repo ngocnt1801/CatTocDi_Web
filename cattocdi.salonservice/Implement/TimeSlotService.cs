@@ -77,6 +77,7 @@ namespace cattocdi.salonservice.Implement
                     for (int i = 1; i <= 96; i++)
                     {
                         existedSalon.GetType().GetProperty($"Slot{i}").SetValue(existedSalon, null);
+                        _slotRepo.Edit(existedSalon);                        
                     }
                     _unitOfWork.SaveChanges();
                 }

@@ -66,8 +66,7 @@ namespace cattocdi.userapi.Controllers
             catch(Exception ex)
             {
                 return BadRequest("Book Failed");
-            }
-            return Ok("HIHI");
+            }            
         }
 
     }

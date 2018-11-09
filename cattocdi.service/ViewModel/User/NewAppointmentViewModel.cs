@@ -12,7 +12,7 @@ namespace cattocdi.Service.ViewModel.User
         public int SlotId { get; set; }
         public int Duration { get; set; }
         public List<int> Services { get; set; }
-        public DateTime StartTime { get; set; }
+        public string StartTime { get; set; }
         public int? PromotionId { get; set; }        
     }
 }
