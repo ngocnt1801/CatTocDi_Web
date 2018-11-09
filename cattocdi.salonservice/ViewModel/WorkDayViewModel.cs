@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace cattocdi.salonservice.ViewModel
 {
     public class WorkDayViewModel
-    {    
-        public DateTime DateSlot { get; set; }
+    {
         public int DayOfWeek { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }        
+        public TimeSpan FromHour { get; set; }
+        public TimeSpan ToHour { get; set; }
+        public bool IsClosed { get; set; }
     }
 }

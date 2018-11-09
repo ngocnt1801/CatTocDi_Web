@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
 
@@ -19,10 +20,13 @@ namespace cattocdi.webapi.Controllers
     {
         private ISalonServices _salonService;
         private IWorkingHourService _workingHourService;
-        public SalonsController(ISalonServices salonService, IWorkingHourService workingHourService)
+        private ITimeSlotService _slotService;
+        public SalonsController(ISalonServices salonService, IWorkingHourService workingHourService,
+            ITimeSlotService slotService)
         {
             _salonService = salonService;
-            _workingHourService = workingHourService;                
+            _workingHourService = workingHourService;
+            _slotService = slotService;
         }
         public IHttpActionResult Get()
         {
@@ -59,13 +63,14 @@ namespace cattocdi.webapi.Controllers
                 var identity = (ClaimsIdentity)User.Identity;
                 string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
                 _workingHourService.Update(accountId, workingHours);
+                _slotService.GenerateSlotForSalon(accountId);                
             }
             catch(Exception ex)
             {
                 ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest("Update Profile Failed");
             }
-                       
+                        
             return Json("Update Working Hour Success");
         }       
     }

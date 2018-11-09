@@ -1,7 +1,7 @@
 ﻿using cattocdi.entity;
 using cattocdi.repository;
-using cattocdi.taskscheduler.Services.Interface;
-using cattocdi.taskscheduler.Ultility;
+using cattocdi.salonservice.Interface;
+using cattocdi.salonservice.Ultility;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace cattocdi.taskscheduler.Services.Implement
+namespace cattocdi.salonservice.Implement
 {
     public class TimeSlotService : ITimeSlotService
     {
@@ -41,8 +41,7 @@ namespace cattocdi.taskscheduler.Services.Implement
                         if (workday.IsClosed == false)
                         {
                             GenerateSlot(salon.Id, workday.DayOfWeek, start, end);
-                        }
-                            
+                        }                            
                     }
                 }                
             }
@@ -52,7 +51,7 @@ namespace cattocdi.taskscheduler.Services.Implement
         {
             if (start > end) return;
             // Get next month
-            var nextMonth = DateTime.Now.Month + 1;
+            var nextMonth = DateTime.Now.Month; // UPDATE CURRENT MONTH
             var currYear = DateTime.Now.Year;            
             var startSlot = (int)start.TotalMinutes / 15;
             var endSlot = (int)end.TotalMinutes / 15;         
@@ -100,6 +99,13 @@ namespace cattocdi.taskscheduler.Services.Implement
                 _unitOfWork.SaveChanges();
             }
         }
+
+        public void GenerateSlotForSalon(string AccountId)
+        {
+            var salon = _salonRepo.Gets().Where(s => s.AccountId == AccountId).FirstOrDefault();
+            CreateTimeSlot(salon);
+        }
+
         public void ScheduleTimeSlot()
         {
             var salons = _salonRepo.Gets().Select(s => s).ToList();

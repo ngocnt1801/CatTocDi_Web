@@ -91,7 +91,7 @@ namespace cattocdi.salonservice.Implement
                         SalonId = m.Promotion.SalonId,
                         StartTime = m.Promotion.StartTime,
                         Id = m.Promotion.Id,
-                        Status = m.Promotion.Status,
+                        Status = m.Promotion.Status ?? 0,
                     } : null,
                     Services = m.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
                     {
@@ -136,7 +136,7 @@ namespace cattocdi.salonservice.Implement
                         SalonId = m.Promotion.SalonId,
                         StartTime = m.Promotion.StartTime,
                         Id = m.Promotion.Id,
-                        Status = m.Promotion.Status
+                        Status = m.Promotion.Status ?? 0
                     } : null
                 }).ToList(),
             };
@@ -174,7 +174,7 @@ namespace cattocdi.salonservice.Implement
                     SalonId = m.Promotion.SalonId,
                     StartTime = m.Promotion.StartTime,
                     Id = m.Promotion.Id,
-                    Status = m.Promotion.Status,
+                    Status = m.Promotion.Status ?? 0,
                 } : null,
                 Services = m.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
                 {

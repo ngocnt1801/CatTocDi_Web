@@ -90,7 +90,7 @@ namespace cattocdi.salonservice.Implement
                         EndTime = x.Promotion.EndTime,
                         StartTime = x.Promotion.StartTime,
                         Id = x.PromotionId ?? 0,
-                        Status = x.Promotion.Status
+                        Status = x.Promotion.Status ?? 0
                     } : null,
                     Services = x.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
                     {
