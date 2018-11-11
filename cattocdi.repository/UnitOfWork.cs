@@ -13,8 +13,8 @@ namespace cattocdi.repository
         private CatTocDiContext dbContext;
         public UnitOfWork(CatTocDiContext _dbContext)
         {
-            dbContext = _dbContext;
-        }
+            dbContext = _dbContext;            
+        }        
         public void Dispose()
         {
             Dispose(true);

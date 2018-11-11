@@ -45,11 +45,14 @@ namespace cattocdi.webapi.Controllers
         public IHttpActionResult Post(PromotionViewModel model)
         {
             try
-            { 
+            {
+                if (_promotionService.IsAvailableForCreate(model) == false)
+                    return BadRequest("Another promotion existed at the same period");
+
                 var identity = (ClaimsIdentity)User.Identity;
                 string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
                 model.AccountId = accountId;
-                _promotionService.CreatePromotion(model);
+                _promotionService.CreatePromotion(model);                
             }
             catch(Exception ex)
             {

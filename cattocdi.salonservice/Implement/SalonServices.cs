@@ -13,38 +13,43 @@ namespace cattocdi.salonservice.Implement
     public class SalonServices : ISalonServices
     {
         private IRepository<Salon> _salonRepo;
-        private IRepository<Promotion> _promotionRepo;
-        private IRepository<TimeSlot> _slotRepo;
+        private IRepository<Promotion> _promotionRepo;        
         private IUnitOfWork _unitOfWork;
+        private IRepository<AspNetUser> _accountRepo;
 
         public SalonServices(IRepository<Salon> salonRepo, IUnitOfWork unitOfWork, 
-            IRepository<Promotion> promotionRepo,IRepository<TimeSlot> slotRepo
+            IRepository<Promotion> promotionRepo,
+            IRepository<AspNetUser> accountRepo
             )
         {
             _salonRepo = salonRepo;
             _unitOfWork = unitOfWork;
             _promotionRepo = promotionRepo;
-            _slotRepo = slotRepo;
+            _accountRepo = accountRepo;         
         }     
         public void RegisterSalonAccount(SalonViewModel newSalon)
         {
             if (newSalon != null)
             {
-                var salon = new Salon
-                {                    
-                    Name = newSalon.SalonName,
-                    AccountId = newSalon.AccountId,
-                    Address = newSalon.Address,
-                    Email = newSalon.Email,
-                    Latitude = 0,
-                    Longitude = 0,
-                    RatingAverage = 0,
-                    Phone = newSalon.Phone,
-                    IsForMen = newSalon.IsForMen,                    
-                    IsForWomen = newSalon.IsForWomen,                                        
-                };
-                _salonRepo.Insert(salon);
-                _unitOfWork.SaveChanges();
+                var account = _accountRepo.Gets().Where(c => c.Id.Equals(newSalon.AccountId)).FirstOrDefault();
+                if (account != null)
+                {
+                    var salon = new Salon
+                    {
+                        Name = newSalon.SalonName,
+                        AspNetUser = account,
+                        Address = newSalon.Address,
+                        Email = newSalon.Email,
+                        Latitude = 0,
+                        Longitude = 0,
+                        RatingAverage = 0,
+                        Phone = newSalon.Phone,
+                        IsForMen = newSalon.IsForMen,
+                        IsForWomen = newSalon.IsForWomen,
+                    };
+                    _salonRepo.Insert(salon);
+                    _unitOfWork.SaveChanges();
+                }               
             }
         }
 
@@ -87,7 +92,8 @@ namespace cattocdi.salonservice.Implement
                             FromHour = w.StartHour,
                             ToHour = w.EndHour,
                             IsClosed = w.IsClosed
-                        }).ToList()
+                        }).ToList(),
+                        ImageUrl = s.Images.Select(i => i.Url).LastOrDefault()
                     }).FirstOrDefault();           
             return salons; 
         }

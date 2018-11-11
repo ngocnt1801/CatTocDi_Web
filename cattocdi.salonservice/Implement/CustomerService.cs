@@ -16,10 +16,13 @@ namespace cattocdi.salonservice.Implement
         private IRepository<Customer> _customerRepo;
         private IRepository<Appointment> _apmRepo;
         private IRepository<Salon> _salonRepo;
+        private IRepository<SalonService> _salonServiceRepo;
         private IUnitOfWork _unitOfWork;
-        public CustomerService(IRepository<Customer> customerRepo, IUnitOfWork unitOfWork, IRepository<Appointment> apmRepo, IRepository<Salon> salonRepo)
+        public CustomerService(IRepository<Customer> customerRepo, IUnitOfWork unitOfWork, IRepository<Appointment> apmRepo, IRepository<Salon> salonRepo,
+            IRepository<SalonService> salonServiceRepo)
         {
             _customerRepo = customerRepo;
+            _salonServiceRepo = salonServiceRepo;
             _unitOfWork = unitOfWork;
             _apmRepo = apmRepo;
             _salonRepo = salonRepo;
@@ -43,19 +46,26 @@ namespace cattocdi.salonservice.Implement
             }
         }
 
-        public List<CustomerViewModel> GetAllCustomer(string AccountId)
+        public List<CustomerViewModel> GetAllCustomer(string accountId)
         {
-            List<int> salonServices = _salonRepo.Gets().Where(p => p.AccountId.Equals(AccountId))
-                .Select(x => x.SalonServices.Where(v => v.SalonId == x.Id)
-                .Select(l => l.Id)).FirstOrDefault().ToList();
-            var customers = _apmRepo.Gets().Where(p => p.ServiceAppointments.Where(x => salonServices.Contains(x.ServiceId)).Count() > 0).Select(m => m.Customer).Select(q => new CustomerViewModel {
-                    CustomerId = q.CustomerId,
-                    Firstname = q.FirstName,
-                    Lastname = q.LastName,
-                    Gender = q.Gender ?? false,
-                    Phone = q.Phone
-            }).ToList();
-            return customers;
+            var salon = _salonRepo.Gets().Where(s => s.AccountId == accountId).FirstOrDefault();
+            if (salon != null)
+            {
+                var salonCustomers = _salonServiceRepo.Gets().Where(s => s.Salon.Id == salon.Id && s.ServiceAppointments.Any())
+                    .SelectMany(s => s.ServiceAppointments.Select(p => p.Appointment.Customer))
+                    .Distinct()
+                    .Select(q => new CustomerViewModel
+                    {
+                        CustomerId = q.CustomerId,
+                        Firstname = q.FirstName,
+                        Lastname = q.LastName,
+                        Gender = q.Gender ?? false,
+                        Phone = q.Phone
+                    })                    
+                    .ToList();
+                return salonCustomers;
+            }                     
+            return null;
         }
 
         public CustomerDetailViewModel GetById(int id)

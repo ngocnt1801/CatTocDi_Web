@@ -14,8 +14,8 @@ namespace cattocdi.entity
         [Required]
         public string Url { get; set; }
 
-        public bool Type { get; set; }
-
         public int? SalonId { get; set; }
+
+        public virtual Salon Salon { get; set; }
     }
 }

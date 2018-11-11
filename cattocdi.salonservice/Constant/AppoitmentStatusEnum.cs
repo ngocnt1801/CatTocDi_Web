@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace cattocdi.salonservice.Constant
 {
-    public enum AppoitmentStatusEnum
+    public enum AppointmentStatusEnum
     {
         NOTAPPROVE = 0,
         APPROVE = 1,

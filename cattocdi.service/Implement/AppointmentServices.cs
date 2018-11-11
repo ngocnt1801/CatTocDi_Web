@@ -64,15 +64,16 @@ namespace cattocdi.Service.Implement
             var customer = _customerRepo.Gets().Where(c => c.AccountId == accountId).FirstOrDefault();
             if (customer != null)
             {
-                var apms = _apmRepo.Gets().Where(a => a.CustomerId == customer.CustomerId)
-                    .OrderBy(t => t.Status)
-                    .ThenByDescending(t => t.StartTime)
+                var apms = _apmRepo.Gets().Where(a => a.CustomerId == customer.CustomerId)                    
+                    .OrderByDescending(t => t.StartTime.Date)
+                    .ThenBy(t => t.StartTime.TimeOfDay)
                     .Select(p => new AppointmentViewModel {
                         AppointmentId = p.Id,
                         BookDate = p.BookedDate,
                         DiscountPercent = _promotionRepo.Gets().Where(n => n.Id == p.PromotionId).Select(k => k.DiscountPercent).FirstOrDefault(),
                         Duration = p.Duration,
                         Status = p.Status,
+                        CancelledReason = p.CancelledReason,
                         Reviews = p.Reviews.Select(v => new ReviewViewModel
                         {
                             AppointmentId = v.AppointmentId,

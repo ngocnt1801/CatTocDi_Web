@@ -19,6 +19,7 @@ namespace cattocdi.Service.ViewModel.User
         public DateTime StartTime { get; set; }
         public List<SalonServiceViewModel> Services { get; set; }
         public ReviewViewModel Reviews { get; set; }
+        public string CancelledReason { get; set; }
 
     }
 }

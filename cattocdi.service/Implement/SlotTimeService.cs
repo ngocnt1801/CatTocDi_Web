@@ -34,11 +34,11 @@ namespace cattocdi.Service.Implement
                 int currSlot = (int)Math.Ceiling(currTime.TotalMinutes / 15);
                 var timeMask = TimeSpan.FromMinutes(currSlot * 15);
 
-                var salonSlots = _slotRepo.Gets()
+                var salonSlots = _slotRepo.GetsAsNoTracking()
                         .Where(s => s.SlotDate >= date.Date && s.SlotDate <= endDate)
-                        .AsQueryable()
+                        .AsQueryable()                        
                         .ToList();
-                salonSlots = salonSlots.Where(s => s.SalonId == salonId).ToList();
+                salonSlots = salonSlots.Where(s => s.SalonId == salonId).OrderBy(s => s.SlotDate).ToList();
 
                 foreach (var slotdate in salonSlots)
                 {

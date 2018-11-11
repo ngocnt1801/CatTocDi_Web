@@ -11,6 +11,7 @@ namespace cattocdi.salonservice.Interface
     {
         List<PromotionViewModel> GetPromotions(string accountId);
         bool CancelPromotion(int id);
-        void CreatePromotion(PromotionViewModel model);        
+        void CreatePromotion(PromotionViewModel model);
+        bool IsAvailableForCreate(PromotionViewModel model);
     }
 }

@@ -12,7 +12,6 @@ namespace cattocdi.entity
         {
         }
 
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Appointment> Appointments { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
@@ -31,7 +30,6 @@ namespace cattocdi.entity
         public virtual DbSet<SlotAppointment> SlotAppointments { get; set; }
         public virtual DbSet<SlotTime> SlotTimes { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<TimeSlot> TimeSlots { get; set; }
         public virtual DbSet<WorkingHour> WorkingHours { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -63,6 +61,12 @@ namespace cattocdi.entity
 
             modelBuilder.Entity<AspNetUser>()
                 .HasMany(e => e.Customers)
+                .WithRequired(e => e.AspNetUser)
+                .HasForeignKey(e => e.AccountId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<AspNetUser>()
+                .HasMany(e => e.Salons)
                 .WithRequired(e => e.AspNetUser)
                 .HasForeignKey(e => e.AccountId)
                 .WillCascadeOnDelete(false);

@@ -9,11 +9,11 @@ namespace cattocdi.salonservice.Interface
 {
     public interface IAppointmentServices
     {
-        AppointmentSeprationViewModel getAllAppoitment(string AccountId);
+        AppointmentSeprationViewModel GetAllAppointment(string AccountId);
 
-        List<AppointmentViewmodel> getBydate(DateTime date, string accountId);
+        List<AppointmentViewmodel> GetByDate(DateTime date, string accountId);
 
-        bool cancelAppoitment(int appointmentId);
-        bool approveAppointment(int appointmentId);
+        void CancelAppointment(int appointmentId, string reason);
+        void ApproveAppointment(int appointmentId);
     }
 }

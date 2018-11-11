@@ -24,13 +24,19 @@ namespace cattocdi.salonservice.Implement
             _unitOfWork = unitOfWork;
             _apmRepo = apmRepo;
         }
+        public bool IsAvailableForCreate(PromotionViewModel model)
+        {
+            var existedPromotions = _promotionRepo.Gets()
+                .Where(p => p.Status == (byte)PromotionEnum.NORMAL && p.EndTime <= model.EndTime && p.EndTime >= model.StartTime).Count();            
+            return (existedPromotions > 0) ? false : true;
+        }
 
         public void CreatePromotion(PromotionViewModel model)
         {
             var salonId = _salonRepo.Gets()
                 .Where(s => s.AccountId == model.AccountId)
                 .Select(s => s.Id).FirstOrDefault();
-
+            
             var newPromotion = new Promotion
             {
                 SalonId = salonId,

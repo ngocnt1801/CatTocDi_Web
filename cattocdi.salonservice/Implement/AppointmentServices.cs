@@ -14,146 +14,221 @@ namespace cattocdi.salonservice.Implement
     
     public class AppointmentServices : IAppointmentServices
     {
-        IRepository<Appointment> _apmRepo;
-        IRepository<Salon> _salonRepo;
-        IUnitOfWork _unitOfWork;
-        public AppointmentServices(IRepository<Appointment> apmRepo, IRepository<Salon> salonRepo, IUnitOfWork unitOfWork)
+        private IRepository<Appointment> _apmRepo;
+        private IRepository<Salon> _salonRepo;
+        private IRepository<ServiceAppointment> _serviceAppointmentRepo;
+        private IRepository<SlotTime> _slotTimeRepo;        
+        private IUnitOfWork _unitOfWork;
+        public AppointmentServices(IRepository<Appointment> apmRepo, 
+            IRepository<Salon> salonRepo,
+            IRepository<ServiceAppointment> serviceAppointmentRepo,
+            IRepository<SlotTime> slotTimeRepo,
+            IUnitOfWork unitOfWork)
         {
             _apmRepo = apmRepo;
             _salonRepo = salonRepo;
+            _serviceAppointmentRepo = serviceAppointmentRepo;
+            _slotTimeRepo = slotTimeRepo;
             _unitOfWork = unitOfWork;
         }
 
-        public bool approveAppointment(int appointmentId)
+        public void ApproveAppointment(int appointmentId)
         {
-            var apm = _apmRepo.Gets().Where(p => p.Id == appointmentId).FirstOrDefault(); ;
-            if (apm != null)
-            {
-                if (apm.BookedDate < DateTime.Today)
-                {
-                    apm.Status = (int)AppoitmentStatusEnum.APPROVE;
-                    _apmRepo.Edit(apm);
-                    _apmRepo.Save();
-                    return _unitOfWork.SaveChanges() > 0;
-                }
-            }
+            var apm = _apmRepo.GetByID(appointmentId); 
 
-            return false;
+
+            if (apm != null)
+            {                                
+                apm.Status = (int)AppointmentStatusEnum.APPROVE;                
+                _apmRepo.Edit(apm);
+                _unitOfWork.SaveChanges();
+            }          
         }
 
-        public bool cancelAppoitment(int appoitmentId)
+        public void CancelAppointment(int appoitmentId, string reason)
         {
-            var apm = _apmRepo.Gets().Where(p => p.Id == appoitmentId).FirstOrDefault(); ;
+            var apm = _apmRepo.Gets().Where(p => p.Id == appoitmentId).FirstOrDefault(); 
             if(apm != null)
             {
-                if(apm.BookedDate < DateTime.Today)
+                var salonId = _serviceAppointmentRepo.Gets()
+                    .Where(s => s.AppointmentId == apm.Id).Select(s => s.SalonService.SalonId).Distinct().FirstOrDefault();
+
+                var slot = _slotTimeRepo.Gets()
+                                        .Where(s => s.SlotDate == apm.StartTime.Date && s.SalonId == salonId)
+                                        .FirstOrDefault();                
+                if (slot != null)
                 {
-                    apm.Status = (int)AppoitmentStatusEnum.CANCEL;
-                    _apmRepo.Edit(apm);
-                    _apmRepo.Save();
-                   return _unitOfWork.SaveChanges() > 0;
+                    // Reset Capacity 
+                    var startSlot = Convert.ToInt32(apm.StartTime.TimeOfDay.TotalMinutes / 15);
+                    var totalSlot = Convert.ToInt32(apm.Duration / 15);
+                    for (int i = 0; i < totalSlot; i++)
+                    {
+                        var currentCapacity = (byte)slot.GetType().GetProperty($"Slot{startSlot}").GetValue(slot);
+                        currentCapacity -= 1;
+                        slot.GetType().GetProperty($"Slot{startSlot}").SetValue(slot, currentCapacity);                        
+                        startSlot++;
+
+                        _slotTimeRepo.Edit(slot);
+                        _unitOfWork.SaveChanges();
+                    }                                        
                 }
-            }
-            return false;            
+
+                apm.Status = (int)AppointmentStatusEnum.CANCEL;
+                apm.CancelledReason = reason;
+                _apmRepo.Edit(apm);                    
+                _unitOfWork.SaveChanges();                
+            }         
         }
 
-        public AppointmentSeprationViewModel getAllAppoitment(string AccountId)
+        public AppointmentSeprationViewModel GetAllAppointment(string AccountId)
         {
             var salon = _salonRepo.Gets().Where(p => p.AccountId.Equals(AccountId)).FirstOrDefault();
             List<int> salonServices = salon.SalonServices.Where(v => v.SalonId == salon.Id).Select(l => l.Id).ToList();
-            var apms = _apmRepo.Gets();
-            var result = new AppointmentSeprationViewModel {
+            var appointments = _serviceAppointmentRepo.Gets()                
+                .Where(s => s.SalonService.SalonId == salon.Id)
+                .Select(s => s.Appointment)                
+                .Distinct()                
+                .AsQueryable();
+
+            var listToday = appointments.Where(a => a.StartTime >= DateTime.Now && a.Status != (byte)AppointmentStatusEnum.CANCEL)
+                                        .OrderBy(a => a.StartTime)
+                                        .Select(m => new AppointmentViewmodel
+                                        {
+                                            AppointmentId = m.Id,
+                                            BookedDate = m.BookedDate,
+                                            CustomerId = m.CustomerId,
+                                            Duration = m.Duration,
+                                            Status = m.Status,
+                                            StartTime = m.StartTime,
+                                            Customer = new CustomerViewModel
+                                            {
+                                                CustomerId = m.Customer.CustomerId,
+                                                Firstname = m.Customer.FirstName,
+                                                Lastname = m.Customer.LastName,
+                                                Gender = m.Customer.Gender ?? false,
+                                                Phone = m.Customer.Phone
+                                            },
+                                            Promotion = m.Promotion != null ? new PromotionViewModel
+                                            {
+                                                Description = m.Promotion.Description,
+                                                DiscountPercent = m.Promotion.DiscountPercent,
+                                                EndTime = m.Promotion.EndTime,
+                                                SalonId = m.Promotion.SalonId,
+                                                StartTime = m.Promotion.StartTime,
+                                                Id = m.Promotion.Id,
+                                                Status = m.Promotion.Status ?? 0,
+                                            } : null,
+                                            Services = m.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
+                                            {
+                                                AvarageTime = q.AvarageTime ?? 0,
+                                                Price = q.Price ?? 0,
+                                                ServiceId = q.ServiceId,
+                                                ServiceName = q.Service.Name
+                                            }).ToList()
+                                        }).ToList();
+
+            var historyList = appointments.Where(a => a.StartTime < DateTime.Now && a.Status != (byte)PromotionEnum.CANCELED)
+                                               .Select(m => new AppointmentViewmodel
+                                               {
+                                                   AppointmentId = m.Id,
+                                                   BookedDate = m.BookedDate,
+                                                   CustomerId = m.CustomerId,
+                                                   Duration = m.Duration,
+                                                   Status = m.Status,
+                                                   StartTime = m.StartTime,
+                                                   Customer = new CustomerViewModel
+                                                   {
+                                                       CustomerId = m.Customer.CustomerId,
+                                                       Firstname = m.Customer.FirstName,
+                                                       Lastname = m.Customer.LastName,
+                                                       Gender = m.Customer.Gender ?? false,
+                                                       Phone = m.Customer.Phone
+                                                   },
+                                                   Services = m.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
+                                                   {
+                                                       AvarageTime = q.AvarageTime ?? 0,
+                                                       Price = q.Price ?? 0,
+                                                       ServiceId = q.ServiceId,
+                                                       ServiceName = q.Service.Name
+
+                                                   }).ToList(),
+                                                   Promotion = m.Promotion != null ? new PromotionViewModel
+                                                   {
+                                                       Description = m.Promotion.Description,
+                                                       DiscountPercent = m.Promotion.DiscountPercent,
+                                                       EndTime = m.Promotion.EndTime,
+                                                       SalonId = m.Promotion.SalonId,
+                                                       StartTime = m.Promotion.StartTime,
+                                                       Id = m.Promotion.Id,
+                                                       Status = m.Promotion.Status ?? 0
+                                                   } : null
+                                               }) 
+                                               .OrderByDescending(s => s.StartTime)
+                                               .ToList();
+            var listCancel = appointments.Where(a => a.Status == (byte)AppointmentStatusEnum.CANCEL)
+                                               .Select(m => new AppointmentViewmodel
+                                               {
+                                                   AppointmentId = m.Id,
+                                                   BookedDate = m.BookedDate,
+                                                   CustomerId = m.CustomerId,
+                                                   Duration = m.Duration,
+                                                   Status = m.Status,
+                                                   StartTime = m.StartTime,
+                                                   Customer = new CustomerViewModel
+                                                   {
+                                                       CustomerId = m.Customer.CustomerId,
+                                                       Firstname = m.Customer.FirstName,
+                                                       Lastname = m.Customer.LastName,
+                                                       Gender = m.Customer.Gender ?? false,
+                                                       Phone = m.Customer.Phone
+                                                   },
+                                                   Services = m.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
+                                                   {
+                                                       AvarageTime = q.AvarageTime ?? 0,
+                                                       Price = q.Price ?? 0,
+                                                       ServiceId = q.ServiceId,
+                                                       ServiceName = q.Service.Name
+                                                   }).ToList(),
+                                                   Promotion = m.Promotion != null ? new PromotionViewModel
+                                                   {
+                                                       Description = m.Promotion.Description,
+                                                       DiscountPercent = m.Promotion.DiscountPercent,
+                                                       EndTime = m.Promotion.EndTime,
+                                                       SalonId = m.Promotion.SalonId,
+                                                       StartTime = m.Promotion.StartTime,
+                                                       Id = m.Promotion.Id,
+                                                       Status = m.Promotion.Status ?? 0
+                                                   } : null
+                                               })
+                                               .OrderByDescending(s => s.StartTime)
+                                               .ToList();
+
+            var result = new AppointmentSeprationViewModel
+            {
                 Capacity = salon.Capacity ?? 0,
-                ListToday  = apms.Where(p => p.ServiceAppointments.Where(x => salonServices.Contains(x.ServiceId)).Count() > 0 && p.BookedDate == DateTime.Now  && p.Status != 2).Select(m => new AppointmentViewmodel
-                {
-                    AppointmentId = m.Id,
-                    BookedDate = m.BookedDate,
-                    CustomerId = m.CustomerId,
-                    Duration = m.Duration,
-                    Status = m.Status,    
-                    StartTime = m.StartTime,
-                    //TimeSlot = m.TimeSlot,
-                    Customer = new CustomerViewModel
-                    {
-                        CustomerId = m.Customer.CustomerId,
-                        Firstname = m.Customer.FirstName,
-                        Lastname = m.Customer.LastName,
-                        Gender = m.Customer.Gender ?? false,
-                        Phone = m.Customer.Phone
-                    },
-                    Promotion = m.Promotion != null ? new PromotionViewModel
-                    {
-                        Description = m.Promotion.Description,
-                        DiscountPercent = m.Promotion.DiscountPercent,
-                        EndTime = m.Promotion.EndTime,
-                        SalonId = m.Promotion.SalonId,
-                        StartTime = m.Promotion.StartTime,
-                        Id = m.Promotion.Id,
-                        Status = m.Promotion.Status ?? 0,
-                    } : null,
-                    Services = m.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
-                    {
-                        AvarageTime = q.AvarageTime ?? 0,
-                        Price = q.Price ?? 0,
-                        ServiceId = q.ServiceId,
-                        ServiceName = q.Service.Name
-                    }).ToList()
-                }).ToList(),
-
-                ListNotApprove = apms.Where(p => p.ServiceAppointments.Where(x => salonServices.Contains(x.ServiceId)).Count() > 0 && p.Status == 0).Select(m => new AppointmentViewmodel
-                {
-                    AppointmentId = m.Id,
-                    BookedDate = m.BookedDate,
-                    CustomerId = m.CustomerId,
-                    Duration = m.Duration,
-                    Status = m.Status,
-                    StartTime = m.StartTime,
-                    //TimeSlot = m.TimeSlot,
-                    Customer = new CustomerViewModel
-                    {
-                        CustomerId = m.Customer.CustomerId,
-                        Firstname = m.Customer.FirstName,
-                        Lastname = m.Customer.LastName,
-                        Gender = m.Customer.Gender ?? false,
-                        Phone = m.Customer.Phone                            
-                    },
-                    Services = m.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
-                    {
-                        AvarageTime = q.AvarageTime ?? 0,
-                        Price = q.Price ?? 0,
-                        ServiceId = q.ServiceId,
-                        ServiceName = q.Service.Name
-
-                    }).ToList(),
-                    Promotion = m.Promotion != null ? new PromotionViewModel
-                    {
-                        Description = m.Promotion.Description,
-                        DiscountPercent = m.Promotion.DiscountPercent,
-                        EndTime = m.Promotion.EndTime,
-                        SalonId = m.Promotion.SalonId,
-                        StartTime = m.Promotion.StartTime,
-                        Id = m.Promotion.Id,
-                        Status = m.Promotion.Status ?? 0
-                    } : null
-                }).ToList(),
+                ListToday = listToday,
+                ListNotApprove = historyList,
+                ListCancel = listCancel
             };
-
+            
             return result;
         }
 
-        public List<AppointmentViewmodel> getBydate(DateTime date, string accountId)
+        public List<AppointmentViewmodel> GetByDate(DateTime date, string accountId)
         {
             var salon = _salonRepo.Gets().Where(p => p.AccountId.Equals(accountId)).FirstOrDefault();
             List<int> salonServices = salon.SalonServices.Where(v => v.SalonId == salon.Id).Select(l => l.Id).ToList();
-            var apms = _apmRepo.Gets();
-            var result = apms.Where(p => p.ServiceAppointments.Where(x => salonServices.Contains(x.ServiceId)).Count() > 0 && p.BookedDate == date && p.Status != 2).Select(m => new AppointmentViewmodel
+            
+            var result = _apmRepo.Gets().Where(p => p.ServiceAppointments
+            .Where(x => salonServices.Contains(x.ServiceId)).Count() > 0 && p.BookedDate == date && p.Status != (byte)AppointmentStatusEnum.CANCEL)
+            .Select(m => new AppointmentViewmodel
             {
                 AppointmentId = m.Id,
                 BookedDate = m.BookedDate,
                 CustomerId = m.CustomerId,
                 Duration = m.Duration,
-                Status = m.Status,
-                //TimeSlot = m.TimeSlot,
+                Status = m.Status,               
+                StartTime = m.StartTime,
                 Customer = new CustomerViewModel
                 {
                     CustomerId = m.Customer.CustomerId,
@@ -161,7 +236,6 @@ namespace cattocdi.salonservice.Implement
                     Lastname = m.Customer.LastName,
                     Gender = m.Customer.Gender ?? false,
                     Phone = m.Customer.Phone
-
                 },
                 Promotion = m.Promotion != null ? new PromotionViewModel
                 {
@@ -179,7 +253,6 @@ namespace cattocdi.salonservice.Implement
                     Price = q.Price ?? 0,
                     ServiceId = q.ServiceId,
                     ServiceName = q.Service.Name
-
                 }).ToList()
             }).ToList();
             return result;

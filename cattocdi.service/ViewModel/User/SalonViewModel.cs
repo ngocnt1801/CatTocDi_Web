@@ -10,7 +10,7 @@ namespace cattocdi.Service.ViewModel.User
     {
         public int SalonId { get; set; }
         public string SalonName { get; set; }
-        public string Address { get; set; }
+        public string Address { get; set; }       
         public double longtitude { get; set; }
         public double lattitude { get; set; }
         public string AccountId { get; set; }

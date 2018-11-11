@@ -47,7 +47,7 @@ namespace cattocdi.Service.Implement
                 IsForMen = s.IsForMen ?? false,
                 IsForWomen = s.IsForWomen ?? false,
                 RatingAvarage = s.RatingAverage ?? 0,
-                SalonName = s.Name,
+                SalonName = s.Name,                
                 Promotion = s.Promotions.OrderBy(o => o.EndTime).Select(x => new PromotionViewModel {
                     Description = x.Description,
                     DiscountPercent = x.DiscountPercent,
@@ -174,12 +174,14 @@ namespace cattocdi.Service.Implement
             var aptIds = _serviceAptRepo.Gets().Where(s => s.SalonService.SalonId == id)
                                         .Select(p => p.AppointmentId)
                                         .Distinct()
-                                        .ToList();
+                                        .ToList();           
             var salon = _salonRepo.Gets().Where(p => p.Id == id).Select(m => new SalonDetailViewModel
             {
                 SalonId = m.Id,
                 AccountId = m.AccountId,
                 Address = m.Address,
+                Email = m.Email,
+                Phone = m.Phone,
                 IsForMen = m.IsForMen ?? false,
                 IsForWomen = m.IsForWomen ?? false,
                 lattitude = m.Latitude ?? 0,
@@ -216,7 +218,6 @@ namespace cattocdi.Service.Implement
                     CategoryId = x.Service.ServiceCategory.Id,
 
                 }).ToList(),
-
                 Reviews = _reviewRepo.Gets().Where(r => aptIds.Contains(r.AppointmentId))
                             .Select(x => new ReviewViewModel {
                                 AppointmentId = x.AppointmentId,

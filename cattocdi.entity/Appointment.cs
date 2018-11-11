@@ -32,6 +32,8 @@ namespace cattocdi.entity
 
         public DateTime StartTime { get; set; }
 
+        public string CancelledReason { get; set; }
+
         public virtual Customer Customer { get; set; }
 
         public virtual Promotion Promotion { get; set; }

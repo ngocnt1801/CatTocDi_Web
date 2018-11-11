@@ -46,6 +46,7 @@
     <Compile Include="Constant\RoleEnum.cs" />
     <Compile Include="Implement\AppointmentServices.cs" />
     <Compile Include="Implement\CustomerService.cs" />
+    <Compile Include="Implement\ImageService.cs" />
     <Compile Include="Implement\PromotionService.cs" />
     <Compile Include="Implement\ReviewServices.cs" />
     <Compile Include="Implement\SalonServices.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Implement\WorkingHourService.cs" />
     <Compile Include="Interface\IAppointmentServices.cs" />
     <Compile Include="Interface\ICustomerService.cs" />
+    <Compile Include="Interface\IImageService.cs" />
     <Compile Include="Interface\IPromotionService.cs" />
     <Compile Include="Interface\IReviewServices.cs" />
     <Compile Include="Interface\ISalonServices.cs" />
@@ -69,10 +71,13 @@
     <Compile Include="ViewModel\CustomerViewModel.cs" />
     <Compile Include="ViewModel\PromotionViewModel.cs" />
     <Compile Include="ViewModel\ReviewViewModel.cs" />
+    <Compile Include="ViewModel\SalonImageViewModel.cs" />
     <Compile Include="ViewModel\SalonProfileViewModel.cs" />
     <Compile Include="ViewModel\SalonServiceViewModel.cs" />
     <Compile Include="ViewModel\SalonViewModel.cs" />
     <Compile Include="ViewModel\ServiceViewModel.cs" />
+    <Compile Include="ViewModel\SlotDateViewModel.cs" />
+    <Compile Include="ViewModel\SlotTimeViewModel.cs" />
     <Compile Include="ViewModel\UpdateServiceViewModel.cs" />
     <Compile Include="ViewModel\WorkDayViewModel.cs" />
     <Compile Include="ViewModel\WorkingHourViewModel.cs" />

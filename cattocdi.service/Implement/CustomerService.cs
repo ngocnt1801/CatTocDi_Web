@@ -13,27 +13,32 @@ namespace cattocdi.Service.Implement
     public class CustomerService : ICustomerService
     {
         private IRepository<Customer> _customerRepo;
+        private IRepository<AspNetUser> _accountRepo;
         private IUnitOfWork _unitOfWork;
-        public CustomerService(IRepository<Customer> customerRepo, IUnitOfWork unitOfWork)
+        public CustomerService(IRepository<Customer> customerRepo, IUnitOfWork unitOfWork, IRepository<AspNetUser> accountRepo)
         {
             _customerRepo = customerRepo;
             _unitOfWork = unitOfWork;
+            _accountRepo = accountRepo;
         }
         public void CreateCustomerAccount(CustomerViewModel model)
         {
             if (model != null)
             {
-                Customer newCustomer = new Customer
+                var account = _accountRepo.Gets().Where(c => c.Id.Equals(model.AccountId)).FirstOrDefault();
+                if (account != null)
                 {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Gender = model.Gender,
-                    AccountId = model.AccountId,
-                    Email = model.Email,
-                    Phone = model.Phone                    
-                };
-               _customerRepo.Insert(newCustomer);
-               int n = _unitOfWork.SaveChanges();             
+                    Customer newCustomer = new Customer
+                    {
+                        FirstName = model.FirstName,                        
+                        Gender = model.Gender,                        
+                        Email = model.Email,
+                        Phone = model.Phone,
+                        AspNetUser = account
+                    };
+                    _customerRepo.Insert(newCustomer);
+                    _unitOfWork.SaveChanges();                   
+                }                
             }
         }
 

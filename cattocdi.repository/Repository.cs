@@ -17,7 +17,7 @@ namespace cattocdi.repository
         {
             context = _context;
             dbSet = context.Set<T>();
-        }
+        }        
 
         public void Delete(int id)
         {
@@ -29,25 +29,24 @@ namespace cattocdi.repository
         {
             return dbSet.Find(id);
         }
-
-        public IEnumerable<T> Gets()
+        public IEnumerable<T> GetsAsNoTracking()
         {
+            return dbSet.AsNoTracking().ToList();
+        }        
+        public IEnumerable<T> Gets()
+        {            
             return dbSet.ToList();
         }
 
         public void Insert(T model)
         {
+            //context.Entry(model).State = EntityState.Added;
             dbSet.Add(model);
-        }
-
-        public void Save()
-        {
-            context.SaveChanges();
-        }
+        }    
 
         public void Edit(T model)
-        {
-            context.Entry<T>(model).State = EntityState.Modified;
+        {            
+            context.Entry<T>(model).State = EntityState.Modified;            
         }
     }
 }

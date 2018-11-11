@@ -11,6 +11,6 @@ namespace cattocdi.salonservice.ViewModel
         public int Capacity { get; set; }
         public List<AppointmentViewmodel> ListToday { get; set; }
         public List<AppointmentViewmodel> ListNotApprove { get; set; }
-
+        public List<AppointmentViewmodel> ListCancel{ get; set; }
     }
 }

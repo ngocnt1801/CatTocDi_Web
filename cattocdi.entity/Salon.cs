@@ -13,6 +13,7 @@ namespace cattocdi.entity
         public Salon()
         {
             ClosedDays = new HashSet<ClosedDay>();
+            Images = new HashSet<Image>();
             Promotions = new HashSet<Promotion>();
             SalonServices = new HashSet<SalonService>();
             SlotTimes = new HashSet<SlotTime>();
@@ -50,8 +51,13 @@ namespace cattocdi.entity
 
         public int? Capacity { get; set; }
 
+        public virtual AspNetUser AspNetUser { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClosedDay> ClosedDays { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Image> Images { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Promotion> Promotions { get; set; }

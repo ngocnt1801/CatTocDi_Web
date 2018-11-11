@@ -22,5 +22,6 @@ namespace cattocdi.salonservice.ViewModel
         public List<SalonServiceViewModel> Services { get; set; }
         public List<PromotionViewModel> CurrentPromotions { get; set; }
         public List<WorkDayViewModel> WorkingHours { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
