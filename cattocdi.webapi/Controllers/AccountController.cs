@@ -68,7 +68,8 @@ namespace cattocdi.webapi.Controllers
             }
             catch(Exception ex)
             {
-                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);                               
+                Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return new IdentityResult("Cannot create salon account");
             }          
             return result;
         }

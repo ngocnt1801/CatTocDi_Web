@@ -57,7 +57,6 @@ namespace cattocdi.webapi.Controllers
             }
         }
 
-
         [HttpPost]
         [Route("{id}/Approve")]
         public IHttpActionResult ApproveAppointment(int id)

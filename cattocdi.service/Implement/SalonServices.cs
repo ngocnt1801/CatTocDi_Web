@@ -37,7 +37,7 @@ namespace cattocdi.Service.Implement
 
         public IEnumerable<SalonViewModel> GetAllSalon()
         {
-            var salons = _salonRepo.Gets().Select(s => new SalonViewModel
+            var salons = _salonRepo.GetsAsNoTracking().Select(s => new SalonViewModel
             {
                 SalonId = s.Id,
                 AccountId = s.AccountId,
@@ -48,6 +48,7 @@ namespace cattocdi.Service.Implement
                 IsForWomen = s.IsForWomen ?? false,
                 RatingAvarage = s.RatingAverage ?? 0,
                 SalonName = s.Name,                
+                ImageUrl = s.Images.Select(i => i.Url).LastOrDefault(),
                 Promotion = s.Promotions.OrderBy(o => o.EndTime).Select(x => new PromotionViewModel {
                     Description = x.Description,
                     DiscountPercent = x.DiscountPercent,
@@ -100,6 +101,7 @@ namespace cattocdi.Service.Implement
                 longtitude = s.Longitude ?? 0,
                 lattitude = s.Latitude ?? 0,
                 SalonName = s.Name,
+                ImageUrl = s.Images.Select(i => i.Url).LastOrDefault(),
                 Promotion = s.Promotions.Where(v => v.EndTime > DateTime.Now).OrderBy(e => e.StartTime).Select(x => new PromotionViewModel
                 {
                     Description = x.Description,
@@ -175,7 +177,7 @@ namespace cattocdi.Service.Implement
                                         .Select(p => p.AppointmentId)
                                         .Distinct()
                                         .ToList();           
-            var salon = _salonRepo.Gets().Where(p => p.Id == id).Select(m => new SalonDetailViewModel
+            var salon = _salonRepo.GetsAsNoTracking().Where(p => p.Id == id).Select(m => new SalonDetailViewModel
             {
                 SalonId = m.Id,
                 AccountId = m.AccountId,
@@ -185,7 +187,8 @@ namespace cattocdi.Service.Implement
                 IsForMen = m.IsForMen ?? false,
                 IsForWomen = m.IsForWomen ?? false,
                 lattitude = m.Latitude ?? 0,
-                longtitude = m.Longitude ?? 0,
+                longtitude = m.Longitude ?? 0,    
+                ImageUrl = m.Images.Select(i => i.Url).LastOrDefault(),
                 WorkingHours = m.WorkingHours.Select(p => new WorkDayViewModel
                 {
                     DayOfWeek = p.DayOfWeek,

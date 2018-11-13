@@ -48,7 +48,7 @@ namespace cattocdi.salonservice.Implement
         public void CancelAppointment(int appoitmentId, string reason)
         {
             var apm = _apmRepo.Gets().Where(p => p.Id == appoitmentId).FirstOrDefault(); 
-            if(apm != null)
+            if(apm != null && apm.Status != (int)AppointmentStatusEnum.CANCEL)
             {
                 var salonId = _serviceAppointmentRepo.Gets()
                     .Where(s => s.AppointmentId == apm.Id).Select(s => s.SalonService.SalonId).Distinct().FirstOrDefault();
@@ -100,6 +100,7 @@ namespace cattocdi.salonservice.Implement
                                             Duration = m.Duration,
                                             Status = m.Status,
                                             StartTime = m.StartTime,
+                                            CancelledReason = m.CancelledReason,
                                             Customer = new CustomerViewModel
                                             {
                                                 CustomerId = m.Customer.CustomerId,
@@ -136,6 +137,7 @@ namespace cattocdi.salonservice.Implement
                                                    Duration = m.Duration,
                                                    Status = m.Status,
                                                    StartTime = m.StartTime,
+                                                   CancelledReason = m.CancelledReason,
                                                    Customer = new CustomerViewModel
                                                    {
                                                        CustomerId = m.Customer.CustomerId,
@@ -174,6 +176,7 @@ namespace cattocdi.salonservice.Implement
                                                    Duration = m.Duration,
                                                    Status = m.Status,
                                                    StartTime = m.StartTime,
+                                                   CancelledReason = m.CancelledReason,
                                                    Customer = new CustomerViewModel
                                                    {
                                                        CustomerId = m.Customer.CustomerId,
@@ -216,11 +219,11 @@ namespace cattocdi.salonservice.Implement
 
         public List<AppointmentViewmodel> GetByDate(DateTime date, string accountId)
         {
-            var salon = _salonRepo.Gets().Where(p => p.AccountId.Equals(accountId)).FirstOrDefault();
-            List<int> salonServices = salon.SalonServices.Where(v => v.SalonId == salon.Id).Select(l => l.Id).ToList();
+            var salon = _salonRepo.Gets().Where(p => p.AccountId.Equals(accountId)).FirstOrDefault();            
+            List<int> salonServices = salon.SalonServices.Where(v => v.SalonId == salon.Id).Select(l => l.Id).ToList();            
             
             var result = _apmRepo.Gets().Where(p => p.ServiceAppointments
-            .Where(x => salonServices.Contains(x.ServiceId)).Count() > 0 && p.BookedDate == date && p.Status != (byte)AppointmentStatusEnum.CANCEL)
+            .Where(x => salonServices.Contains(x.ServiceId)).Count() > 0 && p.StartTime.Date == date && p.Status != (byte)AppointmentStatusEnum.CANCEL)
             .Select(m => new AppointmentViewmodel
             {
                 AppointmentId = m.Id,

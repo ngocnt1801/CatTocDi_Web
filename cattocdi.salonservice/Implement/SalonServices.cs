@@ -55,7 +55,7 @@ namespace cattocdi.salonservice.Implement
 
         public SalonProfileViewModel GetSalonProfile(string accountId)
         {
-            var salons = _salonRepo.Gets()
+            var salons = _salonRepo.GetsAsNoTracking()
                     .Where(s => s.AccountId == accountId)
                     .Select(s => new SalonProfileViewModel
                     {
@@ -96,11 +96,7 @@ namespace cattocdi.salonservice.Implement
                         ImageUrl = s.Images.Select(i => i.Url).LastOrDefault()
                     }).FirstOrDefault();           
             return salons; 
-        }
-        public List<WorkDayViewModel> GetSalonTimeTable(int salonId)
-        {
-            return null;
-        }
+        }       
 
         public void UpdateProfile(SalonProfileViewModel model)
         {
@@ -124,11 +120,9 @@ namespace cattocdi.salonservice.Implement
                     salon.Address = model.Address;
                 }
                 
-                salon.Capacity = model.Capacity;
-                
+                salon.Capacity = model.Capacity;                
                 salon.Longitude = model.Longitude;
                 salon.Latitude = model.Latitude;
-
                 _salonRepo.Edit(salon);
                 _unitOfWork.SaveChanges();
             }

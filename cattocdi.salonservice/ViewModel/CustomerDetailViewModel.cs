@@ -13,7 +13,7 @@ namespace cattocdi.salonservice.ViewModel
         public string Lastname { get; set; }
         public string Phone { get; set; }
         public bool Gender { get; set; }
-        public string Email { get; set; }
+        public string Email { get; set; }        
         public List<AppointmentViewmodel> Appointments{get; set;}
 
     }

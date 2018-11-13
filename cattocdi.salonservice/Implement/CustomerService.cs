@@ -77,13 +77,15 @@ namespace cattocdi.salonservice.Implement
                 Firstname = cus.FirstName,
                 Lastname = cus.LastName,
                 Gender = cus.Gender ?? false,
-                Phone = cus.Phone,
-                Appointments = cus.Appointments.Select(x => new AppointmentViewmodel
+                Phone = cus.Phone,                
+                Appointments = cus.Appointments.OrderByDescending(a => a.StartTime).Select(x => new AppointmentViewmodel
                 {
                     AppointmentId = x.Id,
                     BookedDate = x.BookedDate,
                     CustomerId = x.CustomerId,
-                    Duration =x.Duration,
+                    Duration = x.Duration,
+                    StartTime = x.StartTime,
+                    CancelledReason = x.CancelledReason,
                     Customer = new CustomerViewModel
                     {
                         CustomerId = x.Customer.CustomerId,
