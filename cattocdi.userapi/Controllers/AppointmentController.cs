@@ -35,8 +35,8 @@ namespace cattocdi.userapi.Controllers
             }
           
         }
-        [HttpPost]
-        [Route("Delete")]
+        [HttpDelete]      
+        [Route("{id}")]
         public IHttpActionResult CancelAppointment(int id)
         {
             try

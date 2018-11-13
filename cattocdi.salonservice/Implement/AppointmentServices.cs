@@ -84,6 +84,7 @@ namespace cattocdi.salonservice.Implement
         {
             var salon = _salonRepo.Gets().Where(p => p.AccountId.Equals(AccountId)).FirstOrDefault();
             List<int> salonServices = salon.SalonServices.Where(v => v.SalonId == salon.Id).Select(l => l.Id).ToList();
+
             var appointments = _serviceAppointmentRepo.Gets()                
                 .Where(s => s.SalonService.SalonId == salon.Id)
                 .Select(s => s.Appointment)                
@@ -91,7 +92,7 @@ namespace cattocdi.salonservice.Implement
                 .AsQueryable();
 
             var listToday = appointments.Where(a => a.StartTime >= DateTime.Now && a.Status != (byte)AppointmentStatusEnum.CANCEL)
-                                        .OrderBy(a => a.StartTime)
+                                        .OrderBy(a => a.StartTime)                                        
                                         .Select(m => new AppointmentViewmodel
                                         {
                                             AppointmentId = m.Id,
