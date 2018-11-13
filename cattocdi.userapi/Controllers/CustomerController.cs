@@ -1,10 +1,8 @@
 ﻿using cattocdi.Service.Interface;
 using cattocdi.Service.ViewModel.User;
+using Elmah;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
 
@@ -31,27 +29,29 @@ namespace cattocdi.userapi.Controllers
             }
             catch(Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest("Get Salon Failed");
             }
-            
         }
 
-        [HttpPost]
-        [Route("Profile")]
-        public IHttpActionResult Update(ProfileViewModel profile)
+        // POST : api/Customer
+        [HttpPost]        
+        public IHttpActionResult Post(ProfileViewModel profile)
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            var accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
-            profile.AccountId = accountId;
-            
-            bool result = _cusService.UpdateCustomerProfile(profile);
-            if(result)
+            try
             {
-                return Ok("Update Success");
-            } else
-            {
-                return BadRequest();
+                var identity = (ClaimsIdentity)User.Identity;
+                var accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
+                profile.AccountId = accountId;
+
+                _cusService.UpdateCustomerProfile(profile);
+                return Ok("Update Profile Success");
             }
+            catch(Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Update Profile Failed");
+            }                        
         }
     }
 }

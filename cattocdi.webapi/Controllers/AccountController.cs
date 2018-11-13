@@ -6,9 +6,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
 
@@ -63,7 +60,11 @@ namespace cattocdi.webapi.Controllers
                             RatingAvarage = 0                            
                         };
                         _salonService.RegisterSalonAccount(newSalon);
-                    }                                  
+                    } 
+                    else
+                    {
+                        manager.Delete(user);
+                    }
                 }
             }
             catch(Exception ex)
@@ -89,12 +90,13 @@ namespace cattocdi.webapi.Controllers
                     UserName = identityClaims.FindFirst("Username").Value,
                     LoggedOn = identityClaims.FindFirst("LoggedOn").Value
                 };
+                return model;
             }
             catch(Exception ex)
             {
                 Elmah.ErrorSignal.FromCurrentContext().Raise(ex);
+                return null;
             }            
-            return model; 
         }
     }
 }

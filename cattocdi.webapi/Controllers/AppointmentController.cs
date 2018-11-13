@@ -1,10 +1,7 @@
-﻿using cattocdi.salonservice.Implement;
-using cattocdi.salonservice.Interface;
+﻿using cattocdi.salonservice.Interface;
+using Elmah;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
 
@@ -31,17 +28,28 @@ namespace cattocdi.webapi.Controllers
             }
             catch(Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest("Get Appointments Failed");
             }            
         }
-
+        
+        // GET: api/Appointment?date
         public IHttpActionResult GetByDate(DateTime date)
-        {
-            var identity = (ClaimsIdentity)User.Identity;
-            string accountId = identity.Claims.FirstOrDefault(p => p.Type.Equals("AccountId")).Value;
-            var result  = _apmServices.GetByDate(date, accountId);
-            return Json(result);
+        {            
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                string accountId = identity.Claims.FirstOrDefault(p => p.Type.Equals("AccountId")).Value;
+                var result = _apmServices.GetByDate(date, accountId);
+                return Json(result);
+            }
+            catch(Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Get Appointment Failed");
+            }            
         }
+
         [HttpPost]
         [Route("{id}/Cancel")]
         public IHttpActionResult CancelAppointment(int id, [FromBody] string reason)
@@ -53,6 +61,7 @@ namespace cattocdi.webapi.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest("Cancelling Failed");
             }
         }
@@ -68,6 +77,7 @@ namespace cattocdi.webapi.Controllers
             }
             catch(Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest("Confirm Failed");
             }           
         }

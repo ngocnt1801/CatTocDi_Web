@@ -121,17 +121,13 @@ namespace cattocdi.Service.Implement
                     ServiceName = x.Service.Name,
                     CategoryName = x.Service.ServiceCategory.Name,
                     CategoryId = x.Service.ServiceCategory.Id,
-
                 }).ToList(),
-
                 ClosedDays = s.ClosedDays.Select(c => new ClosedDayViewModel {
                     ClosedDayId = c.Id,
                     Date = c.Date ?? DateTime.Now,
                     Description = c.Description,
                     SalonId = c.SalonId
                 }).ToList()
-
-
             });
             foreach (var item in salons)
             {
@@ -142,10 +138,7 @@ namespace cattocdi.Service.Implement
                                         .ToList();
                 var reviews = _reviewRepo.Gets().Where(r => aptIds.Contains(r.AppointmentId)).Count();
                 item.ReviewCount = reviews;
-
             }
-
-
            
             IEnumerable<SalonViewModel> result = salons;
             if(nameAndAddress != null && nameAndAddress.Length > 0)
@@ -171,7 +164,7 @@ namespace cattocdi.Service.Implement
             return result;
         }
 
-        public SalonDetailViewModel getSalonById(int id)
+        public SalonDetailViewModel GetSalonById(int id)
         {
             var aptIds = _serviceAptRepo.Gets().Where(s => s.SalonService.SalonId == id)
                                         .Select(p => p.AppointmentId)
@@ -209,7 +202,7 @@ namespace cattocdi.Service.Implement
                     }).ToList(),
                 RatingAvarage = m.RatingAverage ?? 0,
                 SalonName = m.Name,
-                Services = m.SalonServices.Where(q => q.SalonId == m.Id).ToList().Select(x => new SalonServiceViewModel
+                Services = m.SalonServices.Where(q => q.SalonId == m.Id && q.Disabled == false).ToList().Select(x => new SalonServiceViewModel
                 {
                     SalonServiceId = x.Id,
                     AverageTime = x.AvarageTime ?? 0,

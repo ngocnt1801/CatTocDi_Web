@@ -1,9 +1,7 @@
 ﻿using cattocdi.salonservice.Implement;
+using Elmah;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
 
@@ -21,10 +19,18 @@ namespace cattocdi.webapi.Controllers
         }
         public IHttpActionResult Get()
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
-            var revs = _reviewServices.GetAllReviews(accountId);
-            return Json(revs);
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
+                var revs = _reviewServices.GetAllReviews(accountId);
+                return Json(revs);
+            }
+            catch (Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Get Review Failed");
+            }            
         }
         
     }

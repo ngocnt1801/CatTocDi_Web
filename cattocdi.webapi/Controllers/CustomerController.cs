@@ -1,10 +1,7 @@
 ﻿using cattocdi.salonservice.Implement;
-using cattocdi.salonservice.ViewModel;
+using Elmah;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
 
@@ -19,18 +16,37 @@ namespace cattocdi.webapi.Controllers
         {
             _cusRepo = cusRepo;
         } 
+
+        //GET : api/Customer
         public IHttpActionResult Get()
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            string acountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
-            var customers = _cusRepo.GetAllCustomer(acountId);
-            return Json(customers);
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;
+                string acountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
+                var customers = _cusRepo.GetAllCustomer(acountId);
+                return Json(customers);
+            }
+            catch(Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Get Customer Failed");
+            }            
         }
 
+        // GET : api/Customer/{id}
         public IHttpActionResult Get(int id)
         {
-            var cus = _cusRepo.GetById(id);
-            return Json(cus);
+            try
+            {
+                var cus = _cusRepo.GetById(id);
+                return Json(cus);
+            }
+            catch(Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Get Customer Failed");
+            }            
         }
     }
 }

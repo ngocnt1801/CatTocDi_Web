@@ -1,5 +1,6 @@
 ﻿using cattocdi.entity;
 using cattocdi.repository;
+using cattocdi.salonservice.Constant;
 using cattocdi.salonservice.Interface;
 using cattocdi.salonservice.ViewModel;
 using System;
@@ -69,15 +70,17 @@ namespace cattocdi.salonservice.Implement
                         IsForWomen = s.IsForWomen ?? false,
                         Longitude = s.Longitude ?? 0,
                         Latitude = s.Latitude ?? 0,
-                        Services = s.SalonServices.Select(se => new SalonServiceViewModel {
-                            Id = se.Id,
-                            ServiceId = se.ServiceId,
-                            CategoryId = se.Service.CategoryId,
-                            CategoryName = se.Service.ServiceCategory.Name,
-                            Price = se.Price ?? 0,
-                            AvarageTime = se.AvarageTime ?? 0,
-                            ServiceName = se.Service.Name
-                        }).ToList(),
+                        Services = s.SalonServices
+                            .Where(se => se.Disabled == false)
+                            .Select(se => new SalonServiceViewModel {
+                                Id = se.Id,
+                                ServiceId = se.ServiceId,
+                                CategoryId = se.Service.CategoryId,
+                                CategoryName = se.Service.ServiceCategory.Name,
+                                Price = se.Price ?? 0,
+                                AvarageTime = se.AvarageTime ?? 0,
+                                ServiceName = se.Service.Name
+                            }).ToList(),
                         CurrentPromotions = s.Promotions.Where(p => p.EndTime >= DateTime.Now)
                                                     .Select(pro => new PromotionViewModel {
                                                         Id = pro.Id,

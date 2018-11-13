@@ -2,13 +2,11 @@
 using cattocdi.Service.Interface;
 using cattocdi.Service.ViewModel.User;
 using cattocdi.userapi.Models;
+using Elmah;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
 
@@ -71,29 +69,33 @@ namespace cattocdi.userapi.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error IN Customer Registter " + ex.Message);               
+                ErrorSignal.FromCurrentContext().Raise(ex);                
                 return new IdentityResult("Create Account Failed");
             }
             return new IdentityResult("Create Account Failed");
         }
-
-
       
         [HttpGet]
         [Route("~/api/GetUserClaims")]
         public AccountModel GetUserClaims()
         {
-            var identityClaims = (ClaimsIdentity)User.Identity;
-            IEnumerable<Claim> claims = identityClaims.Claims;
-            AccountModel model = new AccountModel
+            try
             {
-                Email = identityClaims.FindFirst("Email").Value,
-                UserName = identityClaims.FindFirst("Username").Value,
-                LoggedOn = identityClaims.FindFirst("LoggedOn").Value
-            };
-            return model;
-        }
-
-        
+                var identityClaims = (ClaimsIdentity)User.Identity;
+                IEnumerable<Claim> claims = identityClaims.Claims;
+                AccountModel model = new AccountModel
+                {
+                    Email = identityClaims.FindFirst("Email").Value,
+                    UserName = identityClaims.FindFirst("Username").Value,
+                    LoggedOn = identityClaims.FindFirst("LoggedOn").Value
+                };
+                return model;
+            }
+            catch (Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return null; 
+            }                
+        }        
     }
 }

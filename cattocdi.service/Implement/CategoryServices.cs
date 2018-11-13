@@ -17,7 +17,7 @@ namespace cattocdi.Service.Implement
         {
             _categoryRepo = categoryRepo;
         }
-        public IEnumerable<CategoryViewModel> getAllCategory()
+        public IEnumerable<CategoryViewModel> GetAllCategory()
         {
             var cateGories = _categoryRepo.Gets().Select(s => new CategoryViewModel
             {

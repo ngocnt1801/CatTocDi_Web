@@ -1,9 +1,6 @@
 ﻿using cattocdi.salonservice.Interface;
+using Elmah;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace cattocdi.webapi.Controllers
@@ -20,8 +17,16 @@ namespace cattocdi.webapi.Controllers
         
         public IHttpActionResult Get()
         {
-            var salons = _serviceSalonService.GetCategories();
-            return Json(salons);
+            try
+            {
+                var salons = _serviceSalonService.GetCategories();
+                return Json(salons);
+            }
+            catch(Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Get Category Failed");
+            }            
         }
 
     }

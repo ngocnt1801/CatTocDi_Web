@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using cattocdi.Service.Interface;
+using Elmah;
+using System;
 using System.Web.Http;
-using cattocdi.Service.Interface;
 
 namespace cattocdi.userapi.Controllers
 {
@@ -18,10 +19,17 @@ namespace cattocdi.userapi.Controllers
         [HttpGet]
         public IHttpActionResult Gets()
         {
-            var category = _categoryService.getAllCategory();
-            return Json(category);
+            try
+            {
+                var category = _categoryService.GetAllCategory();
+                return Json(category);
+            }
+            catch(Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Get Categories Failed");
+            }            
         }
-
         // GET: api/ServiceCategory/5
     }
 }

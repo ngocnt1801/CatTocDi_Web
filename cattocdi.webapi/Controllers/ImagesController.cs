@@ -1,10 +1,7 @@
 ﻿using cattocdi.salonservice.Interface;
-using cattocdi.salonservice.ViewModel;
+using Elmah;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
 
@@ -19,6 +16,7 @@ namespace cattocdi.webapi.Controllers
         {
             _imageService = imageService;
         }
+
         [HttpPost]
         public IHttpActionResult Post([FromBody]string imageUrl)
         {
@@ -31,6 +29,7 @@ namespace cattocdi.webapi.Controllers
             }
             catch(Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest("Add Image Failed");
             }            
         }

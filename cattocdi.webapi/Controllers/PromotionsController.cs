@@ -2,10 +2,7 @@
 using cattocdi.salonservice.ViewModel;
 using Elmah;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
 
@@ -21,6 +18,7 @@ namespace cattocdi.webapi.Controllers
             _promotionService = promotionService;
         }
 
+        // GET : api/Promotions
         [HttpGet]        
         public IHttpActionResult Get()
         {
@@ -29,17 +27,21 @@ namespace cattocdi.webapi.Controllers
             var result = _promotionService.GetPromotions(accountId);
             return Json(result);            
         }
+        // POST: api/Cancel
         [HttpPost]
-        [Route("Delete")]
+        [Route("{id}/Cancel")]
         public IHttpActionResult Cancel(int id)
         {
-            bool result = _promotionService.CancelPromotion(id);
-            if(result)
+            try
             {
+                _promotionService.CancelPromotion(id);
                 return Ok("Cancel Promotions Success");
             }
-            return BadRequest("Update failed");
-
+            catch(Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Update failed");
+            }                    
         }
         [HttpPost]        
         public IHttpActionResult Post(PromotionViewModel model)

@@ -9,6 +9,6 @@ namespace cattocdi.Service.Interface
 {
    public interface ICategoryServices
     {
-        IEnumerable<CategoryViewModel> getAllCategory();
+        IEnumerable<CategoryViewModel> GetAllCategory();
     }
 }

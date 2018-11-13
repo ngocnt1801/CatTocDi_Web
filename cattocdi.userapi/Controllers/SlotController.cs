@@ -1,9 +1,6 @@
 ﻿using cattocdi.Service.Interface;
+using Elmah;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace cattocdi.userapi.Controllers
@@ -17,8 +14,8 @@ namespace cattocdi.userapi.Controllers
         {
             _slotService = slotService;
         }
-        [HttpGet]   
-        [Route("Available")]
+        //GET: api/Slot?salonId&duration
+        [HttpGet]           
         public IHttpActionResult AvailableSlot(int salonId, int duration)
         {
             try
@@ -28,6 +25,7 @@ namespace cattocdi.userapi.Controllers
             }
             catch (Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest("Get Available Slot Failed");
             }            
         }

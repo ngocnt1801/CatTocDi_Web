@@ -1,5 +1,6 @@
 ﻿
 using cattocdi.Service.Interface;
+using Elmah;
 using System;
 using System.Web.Http;
 
@@ -19,29 +20,48 @@ namespace cattocdi.userapi.Controllers
         [HttpGet]
         public IHttpActionResult Gets()
         {
-        var salons = _salonService.GetAllSalon();
-            return Json(salons);
+            try
+            {
+                var salons = _salonService.GetAllSalon();
+                return Json(salons);
+            }
+            catch(Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Get Salons Failed");
+            }            
         }
         
+        //GET: api/Salon?name=&service=
         [HttpGet]
         public IHttpActionResult SearchSalon(string nameAndAddress, string service)
         { 
-            var salons = _salonService.SearchSalon(nameAndAddress, service);
-            return Json(salons);
+            try
+            {
+                var salons = _salonService.SearchSalon(nameAndAddress, service);                
+                return Json(salons);
+            }
+            catch(Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Search Failed");
+            }            
         }
 
-        public IHttpActionResult getSalonDetail(int id)
+        // GET: api/Salon/{id}
+        [HttpGet]        
+        public IHttpActionResult SalonDetail(int id)
         {
             try
             {
-                var salon = _salonService.getSalonById(id);
+                var salon = _salonService.GetSalonById(id);
                 return Json(salon);
             }
             catch(Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest("Get Salon Detail Failed");
             }            
         }
-
     }
 }

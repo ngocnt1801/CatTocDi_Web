@@ -1,16 +1,10 @@
 ﻿using cattocdi.salonservice.Interface;
 using cattocdi.salonservice.ViewModel;
 using Elmah;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace cattocdi.webapi.Controllers
 {
@@ -18,60 +12,43 @@ namespace cattocdi.webapi.Controllers
     [RoutePrefix("api/Salons")]
     public class SalonsController : ApiController
     {
-        private ISalonServices _salonService;
-        private IWorkingHourService _workingHourService;
-        private ITimeSlotService _slotService;
-        public SalonsController(ISalonServices salonService, IWorkingHourService workingHourService,
-            ITimeSlotService slotService)
+        private ISalonServices _salonService;       
+        public SalonsController(ISalonServices salonService)
         {
-            _salonService = salonService;
-            _workingHourService = workingHourService;
-            _slotService = slotService;
+            _salonService = salonService;           
         }
         public IHttpActionResult Get()
         {
-            var identity = (ClaimsIdentity)User.Identity;
-            string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
-            var profile = _salonService.GetSalonProfile(accountId);            
-            return Json(profile);
+            try
+            {
+                var identity = (ClaimsIdentity)User.Identity;                
+                string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
+                var profile = _salonService.GetSalonProfile(accountId);
+                return Json(profile);                
+            }
+            catch (Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Get Salon Profile Failed");
+            }            
         }    
-
-        [HttpPost]
-        [Route("Profile")]
-        public IHttpActionResult Profile(SalonProfileViewModel model)
+                
+        [HttpPost]        
+        public IHttpActionResult Post(SalonProfileViewModel model)
         {
             try
             {
                 var identity = (ClaimsIdentity)User.Identity;
                 string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
                 model.AccountId = accountId;
-                _salonService.UpdateProfile(model); 
-
+                _salonService.UpdateProfile(model);
+                return Ok("Update Profile Success");
             } catch (Exception ex)
             {
                 ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest("Update Profile Failed");
-            }
-            return Ok("Update Profile Success");
+            }           
         }
-        [HttpPost] 
-        [Route("WorkingHour")]
-        public IHttpActionResult WorkingHour(List<WorkingHourViewModel> workingHours)
-        {
-            try
-            {
-                var identity = (ClaimsIdentity)User.Identity;
-                string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
-                _workingHourService.Update(accountId, workingHours);
-                _slotService.GenerateSlotForSalon(accountId);                
-            }
-            catch(Exception ex)
-            {
-                ErrorSignal.FromCurrentContext().Raise(ex);
-                return BadRequest("Update Profile Failed");
-            }
-                        
-            return Json("Update Working Hour Success");
-        }       
+        
     }
 }

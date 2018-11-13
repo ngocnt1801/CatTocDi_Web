@@ -27,7 +27,7 @@ namespace cattocdi.salonservice.Implement
         public bool IsAvailableForCreate(PromotionViewModel model)
         {
             var existedPromotions = _promotionRepo.Gets()
-                .Where(p => p.Status == (byte)PromotionEnum.NORMAL && p.EndTime <= model.EndTime && p.EndTime >= model.StartTime).Count();            
+                .Where(p => p.SalonId == model.SalonId && p.Status == (byte)PromotionEnum.NORMAL && p.EndTime <= model.EndTime && p.EndTime >= model.StartTime).Count();            
             return (existedPromotions > 0) ? false : true;
         }
 

@@ -1,10 +1,8 @@
 ﻿using cattocdi.Service.Interface;
 using cattocdi.Service.ViewModel.User;
+using Elmah;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Web.Http;
 
@@ -32,6 +30,7 @@ namespace cattocdi.userapi.Controllers
             }
             catch(Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest("Get Appointment FAiled");
             }
           
@@ -40,15 +39,16 @@ namespace cattocdi.userapi.Controllers
         [Route("Delete")]
         public IHttpActionResult CancelAppointment(int id)
         {
-            var result = _apmServices.CancelAppointment(id);
-            if(result)
+            try
             {
-                return Ok("Canceled");
+                _apmServices.CancelAppointment(id);
+                return Ok("Cancel Success");
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest();
-            }
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Cancel Failed");
+            }            
         }
       
 
@@ -65,6 +65,7 @@ namespace cattocdi.userapi.Controllers
             }
             catch(Exception ex)
             {
+                ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest("Book Failed");
             }            
         }
