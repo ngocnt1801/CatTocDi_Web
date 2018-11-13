@@ -64,7 +64,7 @@ namespace cattocdi.Service.Implement
             var customer = _customerRepo.Gets().Where(c => c.AccountId == accountId).FirstOrDefault();
             if (customer != null)
             {
-                var apms = _apmRepo.Gets().Where(a => a.CustomerId == customer.CustomerId)                    
+                var apms = _apmRepo.GetsAsNoTracking().Where(a => a.CustomerId == customer.CustomerId)                    
                     .OrderByDescending(t => t.StartTime.Date)
                     .ThenBy(t => t.StartTime.TimeOfDay)
                     .Select(p => new AppointmentViewModel {
