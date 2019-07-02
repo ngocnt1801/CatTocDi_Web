@@ -342,3 +342,26 @@ ASALocalRun/
 /cattocdi.webapi/App_Data/error-2018-11-13130518Z-d744e3c9-57d8-4382-9988-a6191c899e34.xml
 /cattocdi.webapi/App_Data/error-2018-11-13130442Z-08fa2c06-a53c-4666-a8aa-1a1c0b375153.xml
 /cattocdi.webapi/App_Data/error-2018-11-13130425Z-64e30ab2-cc29-4876-8977-ff75481d627d.xml
+
+/webadmin/.DS_Store
+/webadmin/node_modules
+/webadmin/dist
+/webadmin/package-lock.json
+/webadmin/docs/.vuepress/dist
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*

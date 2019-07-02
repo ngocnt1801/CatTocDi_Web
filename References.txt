@@ -1,0 +1,2 @@
+Vuetify Admin template doc
+https://demos.creative-tim.com/vuetify-material-dashboard/documentation/#getting-started
