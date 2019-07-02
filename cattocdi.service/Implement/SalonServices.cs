@@ -48,8 +48,8 @@ namespace cattocdi.Service.Implement
                 IsForWomen = s.IsForWomen ?? false,
                 RatingAvarage = s.RatingAverage ?? 0,
                 SalonName = s.Name,                
-                ImageUrl = s.Images.Select(i => i.Url).LastOrDefault(),
-                Promotion = s.Promotions.OrderBy(o => o.EndTime).Select(x => new PromotionViewModel {
+                ImageUrl = s.Image.Select(i => i.Url).LastOrDefault(),
+                Promotion = s.Promotion.OrderBy(o => o.EndTime).Select(x => new PromotionViewModel {
                     Description = x.Description,
                     DiscountPercent = x.DiscountPercent,
                     EndTime = x.EndTime,
@@ -101,8 +101,8 @@ namespace cattocdi.Service.Implement
                 longtitude = s.Longitude ?? 0,
                 lattitude = s.Latitude ?? 0,
                 SalonName = s.Name,
-                ImageUrl = s.Images.Select(i => i.Url).LastOrDefault(),
-                Promotion = s.Promotions.Where(v => v.EndTime > DateTime.Now).OrderBy(e => e.StartTime).Select(x => new PromotionViewModel
+                ImageUrl = s.Image.Select(i => i.Url).LastOrDefault(),
+                Promotion = s.Promotion.Where(v => v.EndTime > DateTime.Now).OrderBy(e => e.StartTime).Select(x => new PromotionViewModel
                 {
                     Description = x.Description,
                     DiscountPercent = x.DiscountPercent,
@@ -111,7 +111,7 @@ namespace cattocdi.Service.Implement
                     PromotionId = x.Id,
                     SalonId = x.SalonId
                 }).FirstOrDefault(),
-                Services = s.SalonServices.Where(q => q.SalonId == s.Id && q.Disabled == false).ToList().Select(x => new SalonServiceViewModel
+                Services = s.SalonService.Where(q => q.SalonId == s.Id && q.Disabled == false).ToList().Select(x => new SalonServiceViewModel
                 {
                     SalonServiceId = x.Id,
                     AverageTime = x.AvarageTime ?? 0,
@@ -122,7 +122,7 @@ namespace cattocdi.Service.Implement
                     CategoryName = x.Service.ServiceCategory.Name,
                     CategoryId = x.Service.ServiceCategory.Id,
                 }).ToList(),
-                ClosedDays = s.ClosedDays.Select(c => new ClosedDayViewModel {
+                ClosedDays = s.ClosedDay.Select(c => new ClosedDayViewModel {
                     ClosedDayId = c.Id,
                     Date = c.Date ?? DateTime.Now,
                     Description = c.Description,
@@ -181,15 +181,15 @@ namespace cattocdi.Service.Implement
                 IsForWomen = m.IsForWomen ?? false,
                 lattitude = m.Latitude ?? 0,
                 longtitude = m.Longitude ?? 0,    
-                ImageUrl = m.Images.Select(i => i.Url).LastOrDefault(),
-                WorkingHours = m.WorkingHours.Select(p => new WorkDayViewModel
+                ImageUrl = m.Image.Select(i => i.Url).LastOrDefault(),
+                WorkingHours = m.WorkingHour.Select(p => new WorkDayViewModel
                 {
                     DayOfWeek = p.DayOfWeek,
                     FromHour = p.StartHour,
                     ToHour = p.EndHour,
                     IsClosed = p.IsClosed 
                 }).ToList(),
-                Promotions = m.Promotions.Where(x => x.EndTime > DateTime.Now && x.Status != (byte)PromotionEnum.CANCELED)
+                Promotions = m.Promotion.Where(x => x.EndTime > DateTime.Now && x.Status != (byte)PromotionEnum.CANCELED)
                     .OrderBy(e => e.StartTime)
                     .Select(x => new PromotionViewModel
                     {
@@ -202,7 +202,7 @@ namespace cattocdi.Service.Implement
                     }).ToList(),
                 RatingAvarage = m.RatingAverage ?? 0,
                 SalonName = m.Name,
-                Services = m.SalonServices.Where(q => q.SalonId == m.Id && q.Disabled == false).ToList().Select(x => new SalonServiceViewModel
+                Services = m.SalonService.Where(q => q.SalonId == m.Id && q.Disabled == false).ToList().Select(x => new SalonServiceViewModel
                 {
                     SalonServiceId = x.Id,
                     AverageTime = x.AvarageTime ?? 0,

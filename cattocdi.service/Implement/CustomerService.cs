@@ -13,9 +13,9 @@ namespace cattocdi.Service.Implement
     public class CustomerService : ICustomerService
     {
         private IRepository<Customer> _customerRepo;
-        private IRepository<AspNetUser> _accountRepo;
+        private IRepository<AspNetUsers> _accountRepo;
         private IUnitOfWork _unitOfWork;
-        public CustomerService(IRepository<Customer> customerRepo, IUnitOfWork unitOfWork, IRepository<AspNetUser> accountRepo)
+        public CustomerService(IRepository<Customer> customerRepo, IUnitOfWork unitOfWork, IRepository<AspNetUsers> accountRepo)
         {
             _customerRepo = customerRepo;
             _unitOfWork = unitOfWork;
@@ -34,7 +34,7 @@ namespace cattocdi.Service.Implement
                         Gender = model.Gender,                        
                         Email = model.Email,
                         Phone = model.Phone,
-                        AspNetUser = account
+                        AspNetUsers = account
                     };
                     _customerRepo.Insert(newCustomer);
                     _unitOfWork.SaveChanges();                   

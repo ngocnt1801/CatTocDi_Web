@@ -1,0 +1,150 @@
+﻿<error errorId="29082065-b22f-45d7-b2cd-bce6b956c800" application="/LM/W3SVC/1/ROOT/cattocdi.webapi" host="DATTTSE62330" type="System.Data.SqlClient.SqlException" message="New transaction is not allowed because there are other threads running in the session." source=".Net SqlClient Data Provider" detail="System.Data.Entity.Core.EntityException: An error occurred while starting a transaction on the provider connection. See the inner exception for details. ---&gt; System.Data.SqlClient.SqlException: New transaction is not allowed because there are other threads running in the session.&#xD;&#xA;   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)&#xD;&#xA;   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)&#xD;&#xA;   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean&amp; dataReady)&#xD;&#xA;   at System.Data.SqlClient.TdsParser.Run(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj)&#xD;&#xA;   at System.Data.SqlClient.TdsParser.TdsExecuteTransactionManagerRequest(Byte[] buffer, TransactionManagerRequestType request, String transactionName, TransactionManagerIsolationLevel isoLevel, Int32 timeout, SqlInternalTransaction transaction, TdsParserStateObject stateObj, Boolean isDelegateControlRequest)&#xD;&#xA;   at System.Data.SqlClient.SqlInternalConnectionTds.ExecuteTransactionYukon(TransactionRequest transactionRequest, String transactionName, IsolationLevel iso, SqlInternalTransaction internalTransaction, Boolean isDelegateControlRequest)&#xD;&#xA;   at System.Data.SqlClient.SqlInternalConnection.BeginSqlTransaction(IsolationLevel iso, String transactionName, Boolean shouldReconnect)&#xD;&#xA;   at System.Data.SqlClient.SqlConnection.BeginTransaction(IsolationLevel iso, String transactionName)&#xD;&#xA;   at System.Data.SqlClient.SqlConnection.BeginDbTransaction(IsolationLevel isolationLevel)&#xD;&#xA;   at System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)&#xD;&#xA;   at System.Data.Entity.Infrastructure.Interception.DbConnectionDispatcher.BeginTransaction(DbConnection connection, BeginTransactionInterceptionContext interceptionContext)&#xD;&#xA;   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)&#xD;&#xA;   at System.Data.Entity.Core.EntityClient.EntityConnection.BeginDbTransaction(IsolationLevel isolationLevel)&#xD;&#xA;   --- End of inner exception stack trace ---&#xD;&#xA;   at System.Data.Entity.Core.EntityClient.EntityConnection.BeginDbTransaction(IsolationLevel isolationLevel)&#xD;&#xA;   at System.Data.Entity.Core.EntityClient.EntityConnection.BeginTransaction()&#xD;&#xA;   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)&#xD;&#xA;   at System.Data.Entity.Core.Objects.ObjectContext.&lt;&gt;c__DisplayClass59.&lt;ExecuteStoreCommand&gt;b__57()&#xD;&#xA;   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)&#xD;&#xA;   at cattocdi.repository.UnitOfWork.ExecuteSqlCommand(String sql, Object[] parameters) in C:\Users\MyPC\Documents\PRC391\cattocdi.repository\UnitOfWork.cs:line 48&#xD;&#xA;   at cattocdi.salonservice.Implement.TimeSlotService.GenerateSlot(Int32 salonId, Byte dayOfWeek, TimeSpan start, TimeSpan end) in C:\Users\MyPC\Documents\PRC391\cattocdi.salonservice\Implement\TimeSlotService.cs:line 98&#xD;&#xA;   at cattocdi.salonservice.Implement.TimeSlotService.CreateTimeSlot(Salon salon) in C:\Users\MyPC\Documents\PRC391\cattocdi.salonservice\Implement\TimeSlotService.cs:line 43&#xD;&#xA;   at cattocdi.salonservice.Implement.TimeSlotService.GenerateSlotForSalon(String AccountId) in C:\Users\MyPC\Documents\PRC391\cattocdi.salonservice\Implement\TimeSlotService.cs:line 107&#xD;&#xA;   at cattocdi.webapi.Controllers.WorkingHoursController.WorkingHour(List`1 workingHours) in C:\Users\MyPC\Documents\PRC391\cattocdi.webapi\Controllers\WorkingHoursController.cs:line 33" time="2019-07-02T06:42:11.4654764Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:Keep-Alive&#xD;&#xA;HTTP_CONTENT_LENGTH:524&#xD;&#xA;HTTP_CONTENT_TYPE:application/json; charset=UTF-8&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip&#xD;&#xA;HTTP_AUTHORIZATION:Bearer v2wMiKmWjD91n4bsmfRhqRHcN39qI6xML35MURJn0gdRQnxk4JcS-Av95doWSPjzKISblJWZ8RhjqzXtyew6bXlDxjoNbJLtFIS15zlDYtzxGhgJ-GwVewjyxNssVXU6l6upRuPd18nIZXrLvBrdiwtnhTePsZlf5x9cDHjc0rfcfcan8psSL9unY7p_8DlkVNXM1qGX6K4hxFlS0KQQQNcbLUPTC33q4criZ-F3LgNuo7X8Af8a_43ERCN1Y6zVemevZEJKb40VWsPgGqNMlYHeO6jmmaR0QnRY3mc5mLgVi69jBDSFbKDp56LatM78cZuoJYiOillBYMGWKQ_a2GxpbzONJbeBtrPETbRft4_q55LRI8ZoIaBNqgsQthO_C_pR9qlqj-03uN4pW8xRhU6rOjasLp5lvYsA-MgPUA8&#xD;&#xA;HTTP_HOST:192.168.43.217&#xD;&#xA;HTTP_USER_AGENT:okhttp/3.10.0&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: Keep-Alive&#xD;&#xA;Content-Length: 524&#xD;&#xA;Content-Type: application/json; charset=UTF-8&#xD;&#xA;Accept-Encoding: gzip&#xD;&#xA;Authorization: Bearer v2wMiKmWjD91n4bsmfRhqRHcN39qI6xML35MURJn0gdRQnxk4JcS-Av95doWSPjzKISblJWZ8RhjqzXtyew6bXlDxjoNbJLtFIS15zlDYtzxGhgJ-GwVewjyxNssVXU6l6upRuPd18nIZXrLvBrdiwtnhTePsZlf5x9cDHjc0rfcfcan8psSL9unY7p_8DlkVNXM1qGX6K4hxFlS0KQQQNcbLUPTC33q4criZ-F3LgNuo7X8Af8a_43ERCN1Y6zVemevZEJKb40VWsPgGqNMlYHeO6jmmaR0QnRY3mc5mLgVi69jBDSFbKDp56LatM78cZuoJYiOillBYMGWKQ_a2GxpbzONJbeBtrPETbRft4_q55LRI8ZoIaBNqgsQthO_C_pR9qlqj-03uN4pW8xRhU6rOjasLp5lvYsA-MgPUA8&#xD;&#xA;Host: 192.168.43.217&#xD;&#xA;User-Agent: okhttp/3.10.0&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/1/ROOT/cattocdi.webapi" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\Users\MyPC\Documents\PRC391\cattocdi.webapi\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Bearer" />
+    </item>
+    <item name="AUTH_USER" />
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="" />
+    </item>
+    <item name="REMOTE_USER" />
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="524" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="application/json; charset=UTF-8" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="1" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/1" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="192.168.43.217" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/cattocdi.webapi/api/WorkingHours" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\Users\MyPC\Documents\PRC391\cattocdi.webapi\api\WorkingHours" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="192.168.43.43" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="192.168.43.43" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="44958" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="POST" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/cattocdi.webapi/api/WorkingHours" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="192.168.43.217" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="80" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/cattocdi.webapi/api/WorkingHours" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="Keep-Alive" />
+    </item>
+    <item name="HTTP_CONTENT_LENGTH">
+      <value string="524" />
+    </item>
+    <item name="HTTP_CONTENT_TYPE">
+      <value string="application/json; charset=UTF-8" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip" />
+    </item>
+    <item name="HTTP_AUTHORIZATION">
+      <value string="Bearer v2wMiKmWjD91n4bsmfRhqRHcN39qI6xML35MURJn0gdRQnxk4JcS-Av95doWSPjzKISblJWZ8RhjqzXtyew6bXlDxjoNbJLtFIS15zlDYtzxGhgJ-GwVewjyxNssVXU6l6upRuPd18nIZXrLvBrdiwtnhTePsZlf5x9cDHjc0rfcfcan8psSL9unY7p_8DlkVNXM1qGX6K4hxFlS0KQQQNcbLUPTC33q4criZ-F3LgNuo7X8Af8a_43ERCN1Y6zVemevZEJKb40VWsPgGqNMlYHeO6jmmaR0QnRY3mc5mLgVi69jBDSFbKDp56LatM78cZuoJYiOillBYMGWKQ_a2GxpbzONJbeBtrPETbRft4_q55LRI8ZoIaBNqgsQthO_C_pR9qlqj-03uN4pW8xRhU6rOjasLp5lvYsA-MgPUA8" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="192.168.43.217" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="okhttp/3.10.0" />
+    </item>
+  </serverVariables>
+</error>

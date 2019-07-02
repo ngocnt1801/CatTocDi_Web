@@ -12,12 +12,12 @@ namespace cattocdi.entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Salon()
         {
-            ClosedDays = new HashSet<ClosedDay>();
-            Images = new HashSet<Image>();
-            Promotions = new HashSet<Promotion>();
-            SalonServices = new HashSet<SalonService>();
-            SlotTimes = new HashSet<SlotTime>();
-            WorkingHours = new HashSet<WorkingHour>();
+            ClosedDay = new HashSet<ClosedDay>();
+            Image = new HashSet<Image>();
+            Promotion = new HashSet<Promotion>();
+            SalonService = new HashSet<SalonService>();
+            SlotTime = new HashSet<SlotTime>();
+            WorkingHour = new HashSet<WorkingHour>();
         }
 
         public int Id { get; set; }
@@ -51,24 +51,24 @@ namespace cattocdi.entity
 
         public int? Capacity { get; set; }
 
-        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ClosedDay> ClosedDays { get; set; }
+        public virtual ICollection<ClosedDay> ClosedDay { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Image> Images { get; set; }
+        public virtual ICollection<Image> Image { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Promotion> Promotions { get; set; }
+        public virtual ICollection<Promotion> Promotion { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SalonService> SalonServices { get; set; }
+        public virtual ICollection<SalonService> SalonService { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SlotTime> SlotTimes { get; set; }
+        public virtual ICollection<SlotTime> SlotTime { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WorkingHour> WorkingHours { get; set; }
+        public virtual ICollection<WorkingHour> WorkingHour { get; set; }
     }
 }

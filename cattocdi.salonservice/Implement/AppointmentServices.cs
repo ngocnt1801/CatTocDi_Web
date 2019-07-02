@@ -83,7 +83,7 @@ namespace cattocdi.salonservice.Implement
         public AppointmentSeprationViewModel GetAllAppointment(string AccountId)
         {
             var salon = _salonRepo.Gets().Where(p => p.AccountId.Equals(AccountId)).FirstOrDefault();
-            List<int> salonServices = salon.SalonServices.Where(v => v.SalonId == salon.Id).Select(l => l.Id).ToList();
+            List<int> salonServices = salon.SalonService.Where(v => v.SalonId == salon.Id).Select(l => l.Id).ToList();
 
             var appointments = _serviceAppointmentRepo.Gets()                
                 .Where(s => s.SalonService.SalonId == salon.Id)
@@ -120,7 +120,7 @@ namespace cattocdi.salonservice.Implement
                                                 Id = m.Promotion.Id,
                                                 Status = m.Promotion.Status ?? 0,
                                             } : null,
-                                            Services = m.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
+                                            Services = m.ServiceAppointment.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
                                             {
                                                 AvarageTime = q.AvarageTime ?? 0,
                                                 Price = q.Price ?? 0,
@@ -147,7 +147,7 @@ namespace cattocdi.salonservice.Implement
                                                        Gender = m.Customer.Gender ?? false,
                                                        Phone = m.Customer.Phone
                                                    },
-                                                   Services = m.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
+                                                   Services = m.ServiceAppointment.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
                                                    {
                                                        AvarageTime = q.AvarageTime ?? 0,
                                                        Price = q.Price ?? 0,
@@ -186,7 +186,7 @@ namespace cattocdi.salonservice.Implement
                                                        Gender = m.Customer.Gender ?? false,
                                                        Phone = m.Customer.Phone
                                                    },
-                                                   Services = m.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
+                                                   Services = m.ServiceAppointment.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
                                                    {
                                                        AvarageTime = q.AvarageTime ?? 0,
                                                        Price = q.Price ?? 0,
@@ -221,9 +221,9 @@ namespace cattocdi.salonservice.Implement
         public List<AppointmentViewmodel> GetByDate(DateTime date, string accountId)
         {
             var salon = _salonRepo.Gets().Where(p => p.AccountId.Equals(accountId)).FirstOrDefault();            
-            List<int> salonServices = salon.SalonServices.Where(v => v.SalonId == salon.Id).Select(l => l.Id).ToList();            
+            List<int> salonServices = salon.SalonService.Where(v => v.SalonId == salon.Id).Select(l => l.Id).ToList();            
             
-            var result = _apmRepo.Gets().Where(p => p.ServiceAppointments
+            var result = _apmRepo.Gets().Where(p => p.ServiceAppointment
             .Where(x => salonServices.Contains(x.ServiceId)).Count() > 0 && p.StartTime.Date == date && p.Status != (byte)AppointmentStatusEnum.CANCEL)
             .Select(m => new AppointmentViewmodel
             {
@@ -251,7 +251,7 @@ namespace cattocdi.salonservice.Implement
                     Id = m.Promotion.Id,
                     Status = m.Promotion.Status ?? 0,
                 } : null,
-                Services = m.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
+                Services = m.ServiceAppointment.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
                 {
                     AvarageTime = q.AvarageTime ?? 0,
                     Price = q.Price ?? 0,

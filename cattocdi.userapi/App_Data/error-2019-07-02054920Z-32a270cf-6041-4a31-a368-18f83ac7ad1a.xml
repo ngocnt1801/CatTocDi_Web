@@ -1,0 +1,144 @@
+﻿<error errorId="32a270cf-6041-4a31-a368-18f83ac7ad1a" application="/LM/W3SVC/1/ROOT/cattocdi.userapi" host="DATTTSE62330" type="System.InvalidOperationException" message="Unexpected connection state. When using a wrapping provider ensure that the StateChange event is implemented on the wrapped DbConnection." source="EntityFramework" detail="System.InvalidOperationException: Unexpected connection state. When using a wrapping provider ensure that the StateChange event is implemented on the wrapped DbConnection.&#xD;&#xA;   at System.Data.Entity.Core.Objects.ObjectContext.EnsureContextIsEnlistedInCurrentTransaction[T](Transaction currentTransaction, Func`1 openConnection, T defaultValue)&#xD;&#xA;   at System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)&#xD;&#xA;   at System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)&#xD;&#xA;   at System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()&#xD;&#xA;   at System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)&#xD;&#xA;   at System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)&#xD;&#xA;   at System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()&#xD;&#xA;   at System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()&#xD;&#xA;   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)&#xD;&#xA;   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)&#xD;&#xA;   at cattocdi.repository.Repository`1.GetsAsNoTracking() in C:\Users\MyPC\Documents\PRC391\cattocdi.repository\Repository.cs:line 34&#xD;&#xA;   at cattocdi.Service.Implement.AppointmentServices.GetAllAppointment(String accountId) in C:\Users\MyPC\Documents\PRC391\cattocdi.Service\Implement\AppointmentServices.cs:line 67&#xD;&#xA;   at cattocdi.userapi.Controllers.AppointmentController.Get() in C:\Users\MyPC\Documents\PRC391\cattocdi.userapi\Controllers\AppointmentController.cs:line 28" time="2019-07-02T05:49:20.6724076Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:Keep-Alive&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip&#xD;&#xA;HTTP_AUTHORIZATION:Bearer HLoAZWMdQKJoQA1qZ_LS1C1TOY65raSOCf2OmCQsYL0GLLdyoClmCSuSwRo07g8CZNGmpEQV87RbCMyWdMWfkFe_kR9Kj8jP6ewiXd6VdZqse4NHoLbuVYMhJLAj_YraKNg5JmIYTsTrb3P7Bw5e6SRILupcFrRav3nj1DGT7Z1i8FIfI39rwwdyb2E0XVvIhxI_6RGLkmZh9n2GzYDhHnQVQ08bz5_FVVTAGqsmz7VIqY9dh5Md6XiTk0aTtlf5xNyZuv4CSMGD8DqZjZEZ6s_gXrVhCYXl9isart6MS5NxwExXsXZwAZqv1dT-7R0yJ1U0a3OVspbMUqA2PaZ7QOM_XYKvC1gvRKAIRhcCM18QqRlZJjgZ-J_q31LPiduF59y5M3GKn3znjKKqN90jJQ&#xD;&#xA;HTTP_HOST:192.168.43.217&#xD;&#xA;HTTP_USER_AGENT:okhttp/3.10.0&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: Keep-Alive&#xD;&#xA;Accept-Encoding: gzip&#xD;&#xA;Authorization: Bearer HLoAZWMdQKJoQA1qZ_LS1C1TOY65raSOCf2OmCQsYL0GLLdyoClmCSuSwRo07g8CZNGmpEQV87RbCMyWdMWfkFe_kR9Kj8jP6ewiXd6VdZqse4NHoLbuVYMhJLAj_YraKNg5JmIYTsTrb3P7Bw5e6SRILupcFrRav3nj1DGT7Z1i8FIfI39rwwdyb2E0XVvIhxI_6RGLkmZh9n2GzYDhHnQVQ08bz5_FVVTAGqsmz7VIqY9dh5Md6XiTk0aTtlf5xNyZuv4CSMGD8DqZjZEZ6s_gXrVhCYXl9isart6MS5NxwExXsXZwAZqv1dT-7R0yJ1U0a3OVspbMUqA2PaZ7QOM_XYKvC1gvRKAIRhcCM18QqRlZJjgZ-J_q31LPiduF59y5M3GKn3znjKKqN90jJQ&#xD;&#xA;Host: 192.168.43.217&#xD;&#xA;User-Agent: okhttp/3.10.0&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/1/ROOT/cattocdi.userapi" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\Users\MyPC\Documents\PRC391\cattocdi.userapi\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Bearer" />
+    </item>
+    <item name="AUTH_USER" />
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="" />
+    </item>
+    <item name="REMOTE_USER" />
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="1" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/1" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="192.168.43.217" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/cattocdi.userapi/api/appointment" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\Users\MyPC\Documents\PRC391\cattocdi.userapi\api\appointment" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="192.168.43.43" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="192.168.43.43" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="44804" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/cattocdi.userapi/api/appointment" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="192.168.43.217" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="80" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/cattocdi.userapi/api/appointment" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="Keep-Alive" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip" />
+    </item>
+    <item name="HTTP_AUTHORIZATION">
+      <value string="Bearer HLoAZWMdQKJoQA1qZ_LS1C1TOY65raSOCf2OmCQsYL0GLLdyoClmCSuSwRo07g8CZNGmpEQV87RbCMyWdMWfkFe_kR9Kj8jP6ewiXd6VdZqse4NHoLbuVYMhJLAj_YraKNg5JmIYTsTrb3P7Bw5e6SRILupcFrRav3nj1DGT7Z1i8FIfI39rwwdyb2E0XVvIhxI_6RGLkmZh9n2GzYDhHnQVQ08bz5_FVVTAGqsmz7VIqY9dh5Md6XiTk0aTtlf5xNyZuv4CSMGD8DqZjZEZ6s_gXrVhCYXl9isart6MS5NxwExXsXZwAZqv1dT-7R0yJ1U0a3OVspbMUqA2PaZ7QOM_XYKvC1gvRKAIRhcCM18QqRlZJjgZ-J_q31LPiduF59y5M3GKn3znjKKqN90jJQ" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="192.168.43.217" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="okhttp/3.10.0" />
+    </item>
+  </serverVariables>
+</error>

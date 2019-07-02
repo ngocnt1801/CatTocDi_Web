@@ -12,9 +12,9 @@ namespace cattocdi.entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Appointment()
         {
-            Reviews = new HashSet<Review>();
-            ServiceAppointments = new HashSet<ServiceAppointment>();
-            SlotAppointments = new HashSet<SlotAppointment>();
+            Review = new HashSet<Review>();
+            ServiceAppointment = new HashSet<ServiceAppointment>();
+            SlotAppointment = new HashSet<SlotAppointment>();
         }
 
         public int Id { get; set; }
@@ -39,12 +39,12 @@ namespace cattocdi.entity
         public virtual Promotion Promotion { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<Review> Review { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ServiceAppointment> ServiceAppointments { get; set; }
+        public virtual ICollection<ServiceAppointment> ServiceAppointment { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SlotAppointment> SlotAppointments { get; set; }
+        public virtual ICollection<SlotAppointment> SlotAppointment { get; set; }
     }
 }

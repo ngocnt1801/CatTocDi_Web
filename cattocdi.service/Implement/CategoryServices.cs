@@ -23,7 +23,7 @@ namespace cattocdi.Service.Implement
             {
                 CategoryName = s.Name,
                 CategoryId = s.Id,
-                Services = s.Services.Select(p => new ServiceViewModel
+                Services = s.Service.Select(p => new ServiceViewModel
                 {
                     CategoryId = p.CategoryId,
                     ServiceName = p.Name,

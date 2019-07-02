@@ -28,7 +28,7 @@ namespace cattocdi.salonservice.Implement
             if (salon != null)
             {
                 Console.WriteLine($"SALON: {salon.Id}");
-                var workingHours = salon.WorkingHours.Select(w => w)
+                var workingHours = salon.WorkingHour.Select(w => w)
                     .OrderBy(w => w.DayOfWeek)
                     .ToList();
                 if (workingHours.Count > 0)

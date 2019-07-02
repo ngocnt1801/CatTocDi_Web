@@ -51,8 +51,8 @@ namespace cattocdi.salonservice.Implement
             var salon = _salonRepo.Gets().Where(s => s.AccountId == accountId).FirstOrDefault();
             if (salon != null)
             {
-                var salonCustomers = _salonServiceRepo.Gets().Where(s => s.Salon.Id == salon.Id && s.ServiceAppointments.Any())
-                    .SelectMany(s => s.ServiceAppointments.Select(p => p.Appointment.Customer))
+                var salonCustomers = _salonServiceRepo.Gets().Where(s => s.Salon.Id == salon.Id && s.ServiceAppointment.Any())
+                    .SelectMany(s => s.ServiceAppointment.Select(p => p.Appointment.Customer))
                     .Distinct()
                     .Select(q => new CustomerViewModel
                     {
@@ -78,7 +78,7 @@ namespace cattocdi.salonservice.Implement
                 Lastname = cus.LastName,
                 Gender = cus.Gender ?? false,
                 Phone = cus.Phone,                
-                Appointments = cus.Appointments.OrderByDescending(a => a.StartTime).Select(x => new AppointmentViewmodel
+                Appointments = cus.Appointment.OrderByDescending(a => a.StartTime).Select(x => new AppointmentViewmodel
                 {
                     AppointmentId = x.Id,
                     BookedDate = x.BookedDate,
@@ -104,7 +104,7 @@ namespace cattocdi.salonservice.Implement
                         Id = x.PromotionId ?? 0,
                         Status = x.Promotion.Status ?? 0
                     } : null,
-                    Services = x.ServiceAppointments.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
+                    Services = x.ServiceAppointment.Select(p => p.SalonService).Select(q => new SalonServiceViewModel
                     {
                         AvarageTime = q.AvarageTime ?? 0,
                         Price = q.Price ?? 0,

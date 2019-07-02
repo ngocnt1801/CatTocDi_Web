@@ -45,7 +45,7 @@ namespace cattocdi.salonservice.Implement
             {
                 CategoryId = c.Id,
                 CategoryName = c.Name,
-                Services = c.Services.Select(s => new ServiceViewModel {
+                Services = c.Service.Select(s => new ServiceViewModel {
                     ServiceId = s.Id,
                     ServiceName = s.Name
                 }).ToList()

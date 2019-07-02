@@ -74,7 +74,7 @@ namespace cattocdi.Service.Implement
                         Duration = p.Duration,
                         Status = p.Status,
                         CancelledReason = p.CancelledReason,
-                        Reviews = p.Reviews.Select(v => new ReviewViewModel
+                        Reviews = p.Review.Select(v => new ReviewViewModel
                         {
                             AppointmentId = v.AppointmentId,
                             Comment = v.Comment,
@@ -83,8 +83,8 @@ namespace cattocdi.Service.Implement
                             ReviewId = v.Id
                         }).FirstOrDefault(),
                         StartTime = p.StartTime,
-                        SalonID = p.ServiceAppointments.Select(m => m.SalonService).Select(q => q.SalonId).FirstOrDefault(),
-                        Services = p.ServiceAppointments.Select(m => m.SalonService).Select(q => new SalonServiceViewModel
+                        SalonID = p.ServiceAppointment.Select(m => m.SalonService).Select(q => q.SalonId).FirstOrDefault(),
+                        Services = p.ServiceAppointment.Select(m => m.SalonService).Select(q => new SalonServiceViewModel
                         {
                             AverageTime = q.AvarageTime ?? 0,
                             Price = q.Price ?? 0,
@@ -118,7 +118,7 @@ namespace cattocdi.Service.Implement
                 Duration = model.Duration,
                 Status = AppointmentStatusConstant.NOTAPPROVE,                
                 StartTime = startTime,
-                ServiceAppointments = bookedServices
+                ServiceAppointment = bookedServices
             };
             // UPDATE SLOTS TO SLOT TIME 
             var slot = _slotTimeRepo.GetByID(model.SlotId);

@@ -28,7 +28,7 @@ namespace cattocdi.salonservice.Implement
                 Image newImage = new Image
                 {
                     SalonId = salon.Id,
-                    Url = url
+                    Url = url,                    
                 };
                 _imageRepo.Insert(newImage);
                 _unitOfWork.SaveChanges();

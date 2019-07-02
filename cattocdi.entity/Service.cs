@@ -12,7 +12,7 @@ namespace cattocdi.entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Service()
         {
-            SalonServices = new HashSet<SalonService>();
+            SalonService = new HashSet<SalonService>();
         }
 
         public int Id { get; set; }
@@ -24,7 +24,7 @@ namespace cattocdi.entity
         public int CategoryId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SalonService> SalonServices { get; set; }
+        public virtual ICollection<SalonService> SalonService { get; set; }
 
         public virtual ServiceCategory ServiceCategory { get; set; }
     }

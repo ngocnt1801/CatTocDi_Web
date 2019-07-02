@@ -21,6 +21,8 @@ namespace cattocdi.entity
 
         public double Price { get; set; }
 
+        public string CancelledReason { get; set; }
+
         public virtual Appointment Appointment { get; set; }
 
         public virtual SalonService SalonService { get; set; }

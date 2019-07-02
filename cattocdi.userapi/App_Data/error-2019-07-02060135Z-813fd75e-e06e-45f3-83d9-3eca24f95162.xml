@@ -1,0 +1,152 @@
+﻿<error errorId="813fd75e-e06e-45f3-83d9-3eca24f95162" application="/LM/W3SVC/1/ROOT/cattocdi.userapi" host="DATTTSE62330" type="System.InvalidOperationException" message="Invalid attempt to call Read when reader is closed." source="System.Data" detail="System.Data.Entity.Core.EntityCommandExecutionException: Calling 'Read' when the data reader is closed is not a valid operation. ---&gt; System.InvalidOperationException: Invalid attempt to call Read when reader is closed.&#xD;&#xA;   at System.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean&amp; more)&#xD;&#xA;   at System.Data.SqlClient.SqlDataReader.Read()&#xD;&#xA;   at System.Data.Entity.Core.Common.Internal.Materialization.Shaper`1.StoreRead()&#xD;&#xA;   --- End of inner exception stack trace ---&#xD;&#xA;   at System.Data.Entity.Core.Common.Internal.Materialization.Shaper`1.HandleReaderException(Exception e)&#xD;&#xA;   at System.Data.Entity.Core.Common.Internal.Materialization.Shaper`1.StoreRead()&#xD;&#xA;   at System.Data.Entity.Core.Common.Internal.Materialization.Shaper`1.SimpleEnumerator.MoveNext()&#xD;&#xA;   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)&#xD;&#xA;   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)&#xD;&#xA;   at cattocdi.repository.Repository`1.Gets() in C:\Users\MyPC\Documents\PRC391\cattocdi.repository\Repository.cs:line 38&#xD;&#xA;   at cattocdi.Service.Implement.SalonServices.SearchSalon(String nameAndAddress, String servicename) in C:\Users\MyPC\Documents\PRC391\cattocdi.Service\Implement\SalonServices.cs:line 135&#xD;&#xA;   at cattocdi.userapi.Controllers.SalonController.SearchSalon(String nameAndAddress, String service) in C:\Users\MyPC\Documents\PRC391\cattocdi.userapi\Controllers\SalonController.cs:line 41" time="2019-07-02T06:01:35.4678279Z">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:Keep-Alive&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip&#xD;&#xA;HTTP_AUTHORIZATION:Bearer -Nj3VOjpClvQVan3NsUi5QhzYxsOFd5kppSn39aAGGwB5loVfQHv3AE7IP0ICS3NRKBJHyCNdJfsdz0st7ZZGThaDvlSjl8AAyn64llOffxSbrsYp5yl73z1HW0PSV8c8sOHVLBaNIAXNpd0lUN7oVYGFZDnfjlaGKkonmw_FwOR9w5dcocpPqFeb08oMr-F3yqqb6gGsBbp9NAOKlgGWwkdsSCWQ7OIQASP7ieVq0oVKLYnecf0ajJMYcCO7tKU0K2oIYdC1jidOtC6yZ_qPOFe-YcdEACr_ET-b7HcQAJeQ2upE2dzVN3NVUNSZUTizriMr3gTeyULLzAIAawlQcDjRtZ0DunGoM3IFcubwVTrkIDq26FlqrhZq8w-mdXC2Og9Pc9l1lctEZPUSYjKoQ&#xD;&#xA;HTTP_HOST:192.168.43.217&#xD;&#xA;HTTP_USER_AGENT:okhttp/3.10.0&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: Keep-Alive&#xD;&#xA;Accept-Encoding: gzip&#xD;&#xA;Authorization: Bearer -Nj3VOjpClvQVan3NsUi5QhzYxsOFd5kppSn39aAGGwB5loVfQHv3AE7IP0ICS3NRKBJHyCNdJfsdz0st7ZZGThaDvlSjl8AAyn64llOffxSbrsYp5yl73z1HW0PSV8c8sOHVLBaNIAXNpd0lUN7oVYGFZDnfjlaGKkonmw_FwOR9w5dcocpPqFeb08oMr-F3yqqb6gGsBbp9NAOKlgGWwkdsSCWQ7OIQASP7ieVq0oVKLYnecf0ajJMYcCO7tKU0K2oIYdC1jidOtC6yZ_qPOFe-YcdEACr_ET-b7HcQAJeQ2upE2dzVN3NVUNSZUTizriMr3gTeyULLzAIAawlQcDjRtZ0DunGoM3IFcubwVTrkIDq26FlqrhZq8w-mdXC2Og9Pc9l1lctEZPUSYjKoQ&#xD;&#xA;Host: 192.168.43.217&#xD;&#xA;User-Agent: okhttp/3.10.0&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/1/ROOT/cattocdi.userapi" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\Users\MyPC\Documents\PRC391\cattocdi.userapi\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Bearer" />
+    </item>
+    <item name="AUTH_USER" />
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="" />
+    </item>
+    <item name="REMOTE_USER" />
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="1" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/1" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="192.168.43.217" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/cattocdi.userapi/api/Salon" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\Users\MyPC\Documents\PRC391\cattocdi.userapi\api\Salon" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="nameAndAddress=&amp;service=C%E1%BA%AFt%20t%C3%B3c%2C%20G%E1%BB%99i%20%C4%91%E1%BA%A7u%2C%20" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="192.168.43.43" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="192.168.43.43" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="44842" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/cattocdi.userapi/api/Salon" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="192.168.43.217" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="80" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/10.0" />
+    </item>
+    <item name="URL">
+      <value string="/cattocdi.userapi/api/Salon" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="Keep-Alive" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip" />
+    </item>
+    <item name="HTTP_AUTHORIZATION">
+      <value string="Bearer -Nj3VOjpClvQVan3NsUi5QhzYxsOFd5kppSn39aAGGwB5loVfQHv3AE7IP0ICS3NRKBJHyCNdJfsdz0st7ZZGThaDvlSjl8AAyn64llOffxSbrsYp5yl73z1HW0PSV8c8sOHVLBaNIAXNpd0lUN7oVYGFZDnfjlaGKkonmw_FwOR9w5dcocpPqFeb08oMr-F3yqqb6gGsBbp9NAOKlgGWwkdsSCWQ7OIQASP7ieVq0oVKLYnecf0ajJMYcCO7tKU0K2oIYdC1jidOtC6yZ_qPOFe-YcdEACr_ET-b7HcQAJeQ2upE2dzVN3NVUNSZUTizriMr3gTeyULLzAIAawlQcDjRtZ0DunGoM3IFcubwVTrkIDq26FlqrhZq8w-mdXC2Og9Pc9l1lctEZPUSYjKoQ" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="192.168.43.217" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="okhttp/3.10.0" />
+    </item>
+  </serverVariables>
+  <queryString>
+    <item name="nameAndAddress">
+      <value string="" />
+    </item>
+    <item name="service">
+      <value string="Cắt tóc, Gội đầu, " />
+    </item>
+  </queryString>
+</error>

@@ -12,62 +12,64 @@ namespace cattocdi.entity
         {
         }
 
-        public virtual DbSet<Appointment> Appointments { get; set; }
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<ClosedDay> ClosedDays { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<Image> Images { get; set; }
-        public virtual DbSet<Promotion> Promotions { get; set; }
-        public virtual DbSet<Review> Reviews { get; set; }
-        public virtual DbSet<Salon> Salons { get; set; }
-        public virtual DbSet<SalonService> SalonServices { get; set; }
-        public virtual DbSet<Service> Services { get; set; }
-        public virtual DbSet<ServiceAppointment> ServiceAppointments { get; set; }
-        public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
-        public virtual DbSet<SlotAppointment> SlotAppointments { get; set; }
-        public virtual DbSet<SlotTime> SlotTimes { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<WorkingHour> WorkingHours { get; set; }
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<Appointment> Appointment { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<ClosedDay> ClosedDay { get; set; }
+        public virtual DbSet<Customer> Customer { get; set; }
+        public virtual DbSet<Image> Image { get; set; }
+        public virtual DbSet<Promotion> Promotion { get; set; }
+        public virtual DbSet<Review> Review { get; set; }
+        public virtual DbSet<Salon> Salon { get; set; }
+        public virtual DbSet<SalonService> SalonService { get; set; }
+        public virtual DbSet<Service> Service { get; set; }
+        public virtual DbSet<ServiceAppointment> ServiceAppointment { get; set; }
+        public virtual DbSet<ServiceCategory> ServiceCategory { get; set; }
+        public virtual DbSet<SlotAppointment> SlotAppointment { get; set; }
+        public virtual DbSet<SlotTime> SlotTime { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<TimeSlot> TimeSlot { get; set; }
+        public virtual DbSet<WorkingHour> WorkingHour { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Appointment>()
-                .HasMany(e => e.Reviews)
+                .HasMany(e => e.Review)
                 .WithRequired(e => e.Appointment)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Appointment>()
-                .HasMany(e => e.ServiceAppointments)
+                .HasMany(e => e.ServiceAppointment)
                 .WithRequired(e => e.Appointment)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<AspNetRole>()
+            modelBuilder.Entity<AspNetRoles>()
                 .HasMany(e => e.AspNetUsers)
                 .WithMany(e => e.AspNetRoles)
                 .Map(m => m.ToTable("AspNetUserRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
 
-            modelBuilder.Entity<AspNetUser>()
+            modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.AspNetUserClaims)
-                .WithRequired(e => e.AspNetUser)
+                .WithRequired(e => e.AspNetUsers)
                 .HasForeignKey(e => e.UserId);
 
-            modelBuilder.Entity<AspNetUser>()
+            modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.AspNetUserLogins)
-                .WithRequired(e => e.AspNetUser)
+                .WithRequired(e => e.AspNetUsers)
                 .HasForeignKey(e => e.UserId);
 
-            modelBuilder.Entity<AspNetUser>()
-                .HasMany(e => e.Customers)
-                .WithRequired(e => e.AspNetUser)
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.Customer)
+                .WithRequired(e => e.AspNetUsers)
                 .HasForeignKey(e => e.AccountId)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<AspNetUser>()
-                .HasMany(e => e.Salons)
-                .WithRequired(e => e.AspNetUser)
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.Salon)
+                .WithRequired(e => e.AspNetUsers)
                 .HasForeignKey(e => e.AccountId)
                 .WillCascadeOnDelete(false);
 
@@ -80,7 +82,7 @@ namespace cattocdi.entity
                 .IsUnicode(false);
 
             modelBuilder.Entity<Customer>()
-                .HasMany(e => e.Appointments)
+                .HasMany(e => e.Appointment)
                 .WithRequired(e => e.Customer)
                 .WillCascadeOnDelete(false);
 
@@ -97,49 +99,49 @@ namespace cattocdi.entity
                 .IsUnicode(false);
 
             modelBuilder.Entity<Salon>()
-                .HasMany(e => e.ClosedDays)
+                .HasMany(e => e.ClosedDay)
                 .WithRequired(e => e.Salon)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Salon>()
-                .HasMany(e => e.Promotions)
+                .HasMany(e => e.Promotion)
                 .WithRequired(e => e.Salon)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Salon>()
-                .HasMany(e => e.SalonServices)
+                .HasMany(e => e.SalonService)
                 .WithRequired(e => e.Salon)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Salon>()
-                .HasMany(e => e.SlotTimes)
+                .HasMany(e => e.SlotTime)
                 .WithRequired(e => e.Salon)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Salon>()
-                .HasMany(e => e.WorkingHours)
+                .HasMany(e => e.WorkingHour)
                 .WithRequired(e => e.Salon)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<SalonService>()
-                .HasMany(e => e.ServiceAppointments)
+                .HasMany(e => e.ServiceAppointment)
                 .WithRequired(e => e.SalonService)
                 .HasForeignKey(e => e.ServiceId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Service>()
-                .HasMany(e => e.SalonServices)
+                .HasMany(e => e.SalonService)
                 .WithRequired(e => e.Service)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ServiceCategory>()
-                .HasMany(e => e.Services)
+                .HasMany(e => e.Service)
                 .WithRequired(e => e.ServiceCategory)
                 .HasForeignKey(e => e.CategoryId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<SlotTime>()
-                .HasMany(e => e.SlotAppointments)
+                .HasMany(e => e.SlotAppointment)
                 .WithOptional(e => e.SlotTime)
                 .HasForeignKey(e => e.SlotId);
         }

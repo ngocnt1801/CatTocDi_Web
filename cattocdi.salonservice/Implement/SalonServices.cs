@@ -16,11 +16,11 @@ namespace cattocdi.salonservice.Implement
         private IRepository<Salon> _salonRepo;
         private IRepository<Promotion> _promotionRepo;        
         private IUnitOfWork _unitOfWork;
-        private IRepository<AspNetUser> _accountRepo;
+        private IRepository<AspNetUsers> _accountRepo;
 
         public SalonServices(IRepository<Salon> salonRepo, IUnitOfWork unitOfWork, 
             IRepository<Promotion> promotionRepo,
-            IRepository<AspNetUser> accountRepo
+            IRepository<AspNetUsers> accountRepo
             )
         {
             _salonRepo = salonRepo;
@@ -38,7 +38,7 @@ namespace cattocdi.salonservice.Implement
                     var salon = new Salon
                     {
                         Name = newSalon.SalonName,
-                        AspNetUser = account,
+                        AspNetUsers = account,
                         Address = newSalon.Address,
                         Email = newSalon.Email,
                         Latitude = 0,
@@ -70,7 +70,7 @@ namespace cattocdi.salonservice.Implement
                         IsForWomen = s.IsForWomen ?? false,
                         Longitude = s.Longitude ?? 0,
                         Latitude = s.Latitude ?? 0,
-                        Services = s.SalonServices
+                        Services = s.SalonService
                             .Where(se => se.Disabled == false)
                             .Select(se => new SalonServiceViewModel {
                                 Id = se.Id,
@@ -81,7 +81,7 @@ namespace cattocdi.salonservice.Implement
                                 AvarageTime = se.AvarageTime ?? 0,
                                 ServiceName = se.Service.Name
                             }).ToList(),
-                        CurrentPromotions = s.Promotions.Where(p => p.EndTime >= DateTime.Now)
+                        CurrentPromotions = s.Promotion.Where(p => p.EndTime >= DateTime.Now)
                                                     .Select(pro => new PromotionViewModel {
                                                         Id = pro.Id,
                                                         StartTime = pro.StartTime,
@@ -90,13 +90,13 @@ namespace cattocdi.salonservice.Implement
                                                         Status = pro.Status ?? 0,
                                                         DiscountPercent = pro.DiscountPercent
                                                     }).ToList(),
-                        WorkingHours = s.WorkingHours.Select(w => new WorkDayViewModel {
+                        WorkingHours = s.WorkingHour.Select(w => new WorkDayViewModel {
                             DayOfWeek = w.DayOfWeek,
                             FromHour = w.StartHour,
                             ToHour = w.EndHour,
                             IsClosed = w.IsClosed
                         }).ToList(),
-                        ImageUrl = s.Images.Select(i => i.Url).LastOrDefault()
+                        ImageUrl = s.Image.Select(i => i.Url).LastOrDefault()
                     }).FirstOrDefault();           
             return salons; 
         }       

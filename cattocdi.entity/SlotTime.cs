@@ -12,7 +12,7 @@ namespace cattocdi.entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SlotTime()
         {
-            SlotAppointments = new HashSet<SlotAppointment>();
+            SlotAppointment = new HashSet<SlotAppointment>();
         }
 
         public int Id { get; set; }
@@ -216,6 +216,6 @@ namespace cattocdi.entity
         public virtual Salon Salon { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SlotAppointment> SlotAppointments { get; set; }
+        public virtual ICollection<SlotAppointment> SlotAppointment { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace cattocdi.salonservice.Implement
         public List<ReviewViewModel> GetAllReviews(string accountId)
         {
             var salonId = _salonRepo.Gets().Where(s => s.AccountId == accountId).Select(s => s.Id).FirstOrDefault();
-            var appointmentIds = _saserRepo.Gets().Where(p => p.SalonId == salonId).Select(v => v.ServiceAppointments.Select(c => c.AppointmentId)).FirstOrDefault();
+            var appointmentIds = _saserRepo.Gets().Where(p => p.SalonId == salonId).Select(v => v.ServiceAppointment.Select(c => c.AppointmentId)).FirstOrDefault();
             var reviews = _reviewRepo.Gets().Where(p => appointmentIds.Contains(p.AppointmentId)).Select(v => new ReviewViewModel
             {
                 AppointmentId = v.AppointmentId,
