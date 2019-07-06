@@ -13,10 +13,19 @@ namespace cattocdi.Service.Implement
    public class CategoryServices : ICategoryServices
     {
         private IRepository<ServiceCategory> _categoryRepo;
-        public CategoryServices(IRepository<ServiceCategory> categoryRepo)
+        private IUnitOfWork _unitOfWork;
+        public CategoryServices(IRepository<ServiceCategory> categoryRepo, IUnitOfWork unitOfWork)
         {
             _categoryRepo = categoryRepo;
+            _unitOfWork = unitOfWork;
         }
+
+        public void Delete(int id)
+        {
+            _categoryRepo.Delete(id);
+            _unitOfWork.SaveChanges();
+        }
+
         public IEnumerable<CategoryViewModel> GetAllCategory()
         {
             var cateGories = _categoryRepo.Gets().Select(s => new CategoryViewModel
@@ -32,6 +41,23 @@ namespace cattocdi.Service.Implement
             }).ToList();
 
             return cateGories;
+        }
+
+        public void Insert(CategoryViewModel model)
+        {
+            _categoryRepo.Insert(new ServiceCategory
+            {
+                Name = model.CategoryName
+            });
+            _unitOfWork.SaveChanges();
+        }
+
+        public void Update(CategoryViewModel model)
+        {
+            var entity = _categoryRepo.GetByID(model.CategoryId);
+            entity.Name = model.CategoryName;
+            _categoryRepo.Edit(entity);
+            _unitOfWork.SaveChanges();
         }
     }
 }

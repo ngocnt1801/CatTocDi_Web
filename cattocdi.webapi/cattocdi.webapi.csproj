@@ -248,6 +248,7 @@
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\SalonsController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
+    <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\WorkingHoursController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -312,6 +313,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Statistic\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -338,6 +340,10 @@
     <ProjectReference Include="..\cattocdi.salonservice\cattocdi.salonservice.csproj">
       <Project>{2859108b-c0d5-4782-b903-04d09b0d7686}</Project>
       <Name>cattocdi.salonservice</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\cattocdi.Service\cattocdi.service.csproj">
+      <Project>{9E6B755A-12C4-4F6C-9770-07A726638564}</Project>
+      <Name>cattocdi.service</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

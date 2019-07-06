@@ -14,5 +14,7 @@ namespace cattocdi.Service.Interface
         ProfileViewModel GetCustomerProfile(string accountId);
 
         bool UpdateCustomerProfile(ProfileViewModel model);
+
+        List<CustomerViewModel> GetAllCustomers();
     }
 }

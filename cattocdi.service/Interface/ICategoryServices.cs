@@ -10,5 +10,11 @@ namespace cattocdi.Service.Interface
    public interface ICategoryServices
     {
         IEnumerable<CategoryViewModel> GetAllCategory();
+
+        void Insert(CategoryViewModel model);
+
+        void Update(CategoryViewModel model);
+
+        void Delete(int id);
     }
 }
