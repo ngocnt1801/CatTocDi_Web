@@ -37,6 +37,8 @@ namespace cattocdi.entity
         [StringLength(150)]
         public string Email { get; set; }
 
+        public DateTime? RegisterDate { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Appointment> Appointment { get; set; }
 

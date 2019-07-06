@@ -42,6 +42,19 @@ namespace cattocdi.Service.Implement
             }
         }
 
+        public List<CustomerViewModel> GetAllCustomers()
+        {
+            return _customerRepo.Gets().Select(c => new CustomerViewModel
+            {
+                CustomerId = c.CustomerId,
+                FirstName = c.FirstName,
+                LastName = c.LastName,
+                Gender = c.Gender.HasValue && c.Gender.Value,
+                Phone = c.Phone,
+                Email = c.Email
+            }).ToList();
+        }
+
         public ProfileViewModel GetCustomerProfile(string accountId)
         {
             var user = _customerRepo.Gets()

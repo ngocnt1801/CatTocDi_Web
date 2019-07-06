@@ -225,5 +225,31 @@ namespace cattocdi.Service.Implement
             }).FirstOrDefault();
             return salon;
         }
+
+        public List<SalonViewModel> GetSalonsForAdmin()
+        {
+            return _salonRepo.Gets().Select(s => new SalonViewModel
+            {
+                SalonId = s.Id,
+                SalonName = s.Name,
+                ImageUrl = s.Image.OrderByDescending(i => i.Id).FirstOrDefault().Url,
+                RatingAvarage = s.RatingAverage.HasValue ? s.RatingAverage.Value : 0.0,
+                Address = s.Address,
+                
+            }).ToList();
+        }
+
+        public List<AppointmentViewModel> GetAppointmentsByMonth(int salonId, int month)
+        {
+            return _serviceAptRepo.Gets().Where(s => s.SalonService.SalonId == salonId && s.Appointment.BookedDate.Month == month)
+                                        .Select(s => new AppointmentViewModel
+                                        {
+                                            AppointmentId = s.AppointmentId,
+                                            BookDate = s.Appointment.BookedDate,
+                                            Duration = s.Appointment.Duration,
+                                            Status = s.Appointment.Status,
+                                            CancelledReason = s.Appointment.CancelledReason
+                                        }).ToList();
+        }
     }
 }

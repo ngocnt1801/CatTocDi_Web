@@ -13,5 +13,8 @@ namespace cattocdi.salonservice.Interface
         void RegisterSalonAccount(SalonViewModel newSalon);        
         SalonProfileViewModel GetSalonProfile(string salonId);      
         void UpdateProfile(SalonProfileViewModel model);
+
+        List<SalonViewModel> GetSalonsForAdmin();
+        List<AppointmentViewmodel> GetAppointmentsByMonth(int salonId, int month);
     }
 }

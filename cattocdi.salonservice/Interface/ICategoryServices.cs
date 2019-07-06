@@ -1,13 +1,9 @@
-﻿using System;
+﻿using cattocdi.salonservice.ViewModel;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using cattocdi.Service.ViewModel.User;
 
-namespace cattocdi.Service.Interface
+namespace cattocdi.salonservice.Interface
 {
-   public interface ICategoryServices
+    public interface ICategoryServices
     {
         IEnumerable<CategoryViewModel> GetAllCategory();
 

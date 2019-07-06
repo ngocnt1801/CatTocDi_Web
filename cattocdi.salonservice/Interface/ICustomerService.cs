@@ -12,5 +12,7 @@ namespace cattocdi.salonservice.Interface
         void CreateCustomerAccount(CustomerViewModel model);
         List<CustomerViewModel> GetAllCustomer(string AccountId);
         CustomerDetailViewModel GetById(int id);
+
+        List<CustomerViewModel> GetAllSalonCustomerForAdmin(int salonId);
     }
 }

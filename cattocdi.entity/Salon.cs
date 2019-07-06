@@ -51,6 +51,8 @@ namespace cattocdi.entity
 
         public int? Capacity { get; set; }
 
+        public DateTime? RegisterDate { get; set; }
+
         public virtual AspNetUsers AspNetUsers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

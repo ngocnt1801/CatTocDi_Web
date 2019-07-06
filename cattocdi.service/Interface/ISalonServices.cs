@@ -16,6 +16,7 @@ namespace cattocdi.Service.Interface
         IEnumerable<SalonViewModel> SearchSalon(string nameAndAddress, string serviceName);
         SalonDetailViewModel GetSalonById(int id);
 
-
+        List<SalonViewModel> GetSalonsForAdmin();
+        List<AppointmentViewModel> GetAppointmentsByMonth(int salonId, int month);
     }
 }

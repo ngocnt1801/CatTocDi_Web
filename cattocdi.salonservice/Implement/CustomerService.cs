@@ -2,11 +2,8 @@
 using cattocdi.repository;
 using cattocdi.salonservice.Interface;
 using cattocdi.salonservice.ViewModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace cattocdi.salonservice.Implement
 {
@@ -39,10 +36,10 @@ namespace cattocdi.salonservice.Implement
                     Gender = model.Gender,
                     AccountId = model.AccountId,
                     Phone = model.Phone
-                                        
+
                 };
                 _customerRepo.Insert(newCustomer);
-                _unitOfWork.SaveChanges(); 
+                _unitOfWork.SaveChanges();
             }
         }
 
@@ -61,23 +58,41 @@ namespace cattocdi.salonservice.Implement
                         Lastname = q.LastName,
                         Gender = q.Gender ?? false,
                         Phone = q.Phone
-                    })                    
+                    })
                     .ToList();
                 return salonCustomers;
-            }                     
+            }
             return null;
+        }
+
+        public List<CustomerViewModel> GetAllSalonCustomerForAdmin(int salonId)
+        {
+            var salonCustomers = _salonServiceRepo.Gets().Where(s => s.Salon.Id == salonId && s.ServiceAppointment.Any())
+                .SelectMany(s => s.ServiceAppointment.Select(p => p.Appointment.Customer))
+                .Distinct()
+                .Select(q => new CustomerViewModel
+                {
+                    CustomerId = q.CustomerId,
+                    Firstname = q.FirstName,
+                    Lastname = q.LastName,
+                    Gender = q.Gender ?? false,
+                    Phone = q.Phone
+                })
+                .ToList();
+            return salonCustomers;
         }
 
         public CustomerDetailViewModel GetById(int id)
         {
             var cus = _customerRepo.GetByID(id);
-            var result = new CustomerDetailViewModel {
+            var result = new CustomerDetailViewModel
+            {
                 CustomerId = cus.CustomerId,
                 Email = cus.Email,
                 Firstname = cus.FirstName,
                 Lastname = cus.LastName,
                 Gender = cus.Gender ?? false,
-                Phone = cus.Phone,                
+                Phone = cus.Phone,
                 Appointments = cus.Appointment.OrderByDescending(a => a.StartTime).Select(x => new AppointmentViewmodel
                 {
                     AppointmentId = x.Id,
@@ -108,16 +123,16 @@ namespace cattocdi.salonservice.Implement
                     {
                         AvarageTime = q.AvarageTime ?? 0,
                         Price = q.Price ?? 0,
-                        ServiceId =q.ServiceId,
-                        ServiceName =q.Service.Name
-                        
+                        ServiceId = q.ServiceId,
+                        ServiceName = q.Service.Name
+
                     }).ToList(),
                     Status = x.Status,
                     //TimeSlot = x.TimeSlot
                 }).ToList()
             };
             return result;
-           
+
         }
     }
 }

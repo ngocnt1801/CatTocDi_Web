@@ -1,16 +1,13 @@
-﻿using cattocdi.Service.Interface;
-using System;
+﻿using cattocdi.entity;
+using cattocdi.repository;
+using cattocdi.salonservice.Interface;
+using cattocdi.salonservice.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using cattocdi.Service.ViewModel.User;
-using cattocdi.repository;
-using cattocdi.entity;
 
-namespace cattocdi.Service.Implement
+namespace cattocdi.salonservice.Implement
 {
-   public class CategoryServices : ICategoryServices
+    public class CategoryServices : ICategoryServices
     {
         private IRepository<ServiceCategory> _categoryRepo;
         private IUnitOfWork _unitOfWork;
@@ -31,13 +28,13 @@ namespace cattocdi.Service.Implement
             var cateGories = _categoryRepo.Gets().Select(s => new CategoryViewModel
             {
                 CategoryName = s.Name,
-                CategoryId = s.Id,
-                Services = s.Service.Select(p => new ServiceViewModel
-                {
-                    CategoryId = p.CategoryId,
-                    ServiceName = p.Name,
-                    ServiceId = p.Id
-                }).ToList()
+                CategoryId = s.Id
+                //Services = s.Service.Select(p => new ServiceViewModel
+                //{
+                //    CategoryId = p.CategoryId,
+                //    ServiceName = p.Name,
+                //    ServiceId = p.Id
+                //}).ToList()
             }).ToList();
 
             return cateGories;

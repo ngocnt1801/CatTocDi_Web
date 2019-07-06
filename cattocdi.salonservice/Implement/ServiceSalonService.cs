@@ -5,20 +5,18 @@ using cattocdi.salonservice.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace cattocdi.salonservice.Implement
 {
     public class ServiceSalonService : IServiceSalonService
     {
         private IRepository<ServiceCategory> _categoryRepo;
-        private IRepository<Service> _serviceRepo;
+        private IRepository<cattocdi.entity.Service> _serviceRepo;
         private IRepository<SalonService> _salonServiceRepo;
         private IRepository<Salon> _salonRepo;
         private IUnitOfWork _unitOfWork;
         public ServiceSalonService(IRepository<ServiceCategory> categoryRepo,
-            IRepository<Service> serviceRepo,
+            IRepository<cattocdi.entity.Service> serviceRepo,
             IRepository<SalonService> salonServiceRepo,
             IRepository<Salon> salonRepo,
             IUnitOfWork unitOfWork
