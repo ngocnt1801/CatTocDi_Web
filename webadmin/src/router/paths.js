@@ -10,6 +10,16 @@ export default [
     view: 'Dashboard'
   },
   {
+    path: '/salons',
+    name: 'Salons',
+    view: 'Salons'
+  },
+  {
+    path: '/services',
+    name: 'Services',
+    view: 'Services'
+  },
+  {
     path: '/user-profile',
     name: 'User Profile',
     view: 'UserProfile'
