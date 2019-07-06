@@ -1,12 +1,12 @@
-﻿using cattocdi.Service.Interface;
+﻿using cattocdi.salonservice.Interface;
 using Elmah;
 using System;
 using System.Web.Http;
 
 namespace cattocdi.webapi.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [RoutePrefix("api/admin/statistic")]
+    [AllowAnonymous]
+    [RoutePrefix("api/Statistic")]
     public class StatisticController : ApiController
     {
         private IStatisticService _statisticService;
@@ -35,5 +35,6 @@ namespace cattocdi.webapi.Controllers
                 return BadRequest("Get Statistic Failed");
             }
         }
+
     }
 }

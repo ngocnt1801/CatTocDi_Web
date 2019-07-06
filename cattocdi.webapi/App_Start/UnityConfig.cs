@@ -53,6 +53,9 @@ namespace cattocdi.webapi
             container.RegisterType<IAppointmentServices, AppointmentServices>();
             container.RegisterType<ITimeSlotService, TimeSlotService>();
             container.RegisterType<IImageService, ImageService>();
+            container.RegisterType<IStatisticService, StatisticService>();
+            container.RegisterType<IServiceService, ServiceService>();
+            container.RegisterType<ICategoryServices, CategoryServices>();
         }
     }
 }

@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace cattocdi.salonservice.ViewModel
 {
     public class SalonViewModel
-    {        
+    {
+        public int SalonId { get; set; }
         public string SalonName { get; set; }
         public string Address { get; set; }    
         public string AccountId { get; set; }
@@ -16,5 +17,6 @@ namespace cattocdi.salonservice.ViewModel
         public float RatingAvarage { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

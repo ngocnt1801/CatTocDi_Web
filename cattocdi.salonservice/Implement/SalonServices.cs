@@ -15,11 +15,13 @@ namespace cattocdi.salonservice.Implement
     {
         private IRepository<Salon> _salonRepo;
         private IRepository<Promotion> _promotionRepo;        
+        private IRepository<ServiceAppointment> _serviceAptRepo;        
         private IUnitOfWork _unitOfWork;
         private IRepository<AspNetUsers> _accountRepo;
 
         public SalonServices(IRepository<Salon> salonRepo, IUnitOfWork unitOfWork, 
             IRepository<Promotion> promotionRepo,
+            IRepository<ServiceAppointment> serviceAptRepo,
             IRepository<AspNetUsers> accountRepo
             )
         {
@@ -27,6 +29,7 @@ namespace cattocdi.salonservice.Implement
             _unitOfWork = unitOfWork;
             _promotionRepo = promotionRepo;
             _accountRepo = accountRepo;         
+            _serviceAptRepo = serviceAptRepo;         
         }     
         public void RegisterSalonAccount(SalonViewModel newSalon)
         {
@@ -129,6 +132,32 @@ namespace cattocdi.salonservice.Implement
                 _salonRepo.Edit(salon);
                 _unitOfWork.SaveChanges();
             }
+        }
+
+        public List<SalonViewModel> GetSalonsForAdmin()
+        {
+            return _salonRepo.Gets().Select(s => new SalonViewModel
+            {
+                SalonId = s.Id,
+                SalonName = s.Name,
+                ImageUrl = s.Image.OrderByDescending(i => i.Id).FirstOrDefault().Url,
+                RatingAvarage = (float)(s.RatingAverage.HasValue ? s.RatingAverage.Value : 0.0),
+                Address = s.Address,
+
+            }).ToList();
+        }
+
+        public List<AppointmentViewmodel> GetAppointmentsByMonth(int salonId, int month)
+        {
+            return _serviceAptRepo.Gets().Where(s => s.SalonService.SalonId == salonId && s.Appointment.BookedDate.Month == month)
+                                        .Select(s => new AppointmentViewmodel
+                                        {
+                                            AppointmentId = s.AppointmentId,
+                                            BookedDate = s.Appointment.BookedDate,
+                                            Duration = s.Appointment.Duration,
+                                            Status = s.Appointment.Status,
+                                            CancelledReason = s.Appointment.CancelledReason
+                                        }).ToList();
         }
     }
 }
