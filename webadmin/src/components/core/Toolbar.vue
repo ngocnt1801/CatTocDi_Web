@@ -17,7 +17,7 @@
           icon
           @click.stop="onClickBtn"
         >
-          <v-icon>mdi-view-list</v-icon>
+          <v-icon>rate_review</v-icon>
         </v-btn>
         {{ title }}
       </v-toolbar-title>
@@ -42,7 +42,7 @@
           class="toolbar-items"
           to="/"
         >
-          <v-icon color="tertiary">mdi-view-dashboard</v-icon>
+          <v-icon color="tertiary">dashboard</v-icon>
         </router-link>
         <v-menu
           bottom
@@ -63,7 +63,7 @@
               <template slot="badge">
                 {{ notifications.length }}
               </template>
-              <v-icon color="tertiary">mdi-bell</v-icon>
+              <v-icon color="tertiary">notifications</v-icon>
             </v-badge>
           </router-link>
           <v-card>
@@ -85,7 +85,7 @@
           class="toolbar-items"
           to="/user-profile"
         >
-          <v-icon color="tertiary">mdi-account</v-icon>
+          <v-icon color="tertiary">account_circle</v-icon>
         </router-link>
       </v-flex>
     </v-toolbar-items>

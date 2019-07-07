@@ -49,47 +49,47 @@ export default {
     links: [
       {
         to: "/dashboard",
-        icon: "mdi-view-dashboard",
+        icon: "dashboard",
         text: "Dashboard"
       },
       {
         to: "/salons",
-        icon: "mdi-store",
+        icon: "store",
         text: "Salons"
       },
       {
         to: "/services",
-        icon: "mdi-shopping",
+        icon: "category",
         text: "Services"
       },
       {
         to: "/user-profile",
-        icon: "mdi-account",
+        icon: "account_box",
         text: "User Profile"
       },
       {
         to: "/table-list",
-        icon: "mdi-clipboard-outline",
+        icon: "clipboard-outline",
         text: "Table List"
       },
       {
         to: "/typography",
-        icon: "mdi-format-font",
+        icon: "format-font",
         text: "Typography"
       },
       {
         to: "/icons",
-        icon: "mdi-chart-bubble",
+        icon: "md-chart-bubble",
         text: "Icons"
       },
       {
         to: "/maps",
-        icon: "mdi-map-marker",
+        icon: "map-marker",
         text: "Maps"
       },
       {
         to: "/notifications",
-        icon: "mdi-bell",
+        icon: "bell",
         text: "Notifications"
       }
     ],
