@@ -4,6 +4,7 @@ using cattocdi.salonservice.Interface;
 using cattocdi.salonservice.ViewModel.Admin;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace cattocdi.salonservice.Implement
@@ -14,6 +15,7 @@ namespace cattocdi.salonservice.Implement
         private IRepository<Salon> _salonRepo;
         private IRepository<Appointment> _appointmentRepo;
         private IRepository<Promotion> _promotionRepo;
+        private readonly string[] MONTH = {"", "Ja", "Fe", "Ma", "Ap", "Mai", "Ju", "Jul", "Au", "Se", "Oc", "No", "De" };
 
         public StatisticService(IRepository<Customer> customerRepo,
                                 IRepository<Salon> salonRepo,
@@ -36,7 +38,7 @@ namespace cattocdi.salonservice.Implement
 
             for (int i = 1; i <= 12; i++)
             {
-                StatisticModel model = new StatisticModel { Month = i };
+                StatisticModel model = new StatisticModel { Month = MONTH[i]};
                 model.Value = _appointmentRepo.Gets().Where(a =>   a.BookedDate.Month == i
                                                                 && a.BookedDate.Year == year)
                                                    .Count();
@@ -68,7 +70,7 @@ namespace cattocdi.salonservice.Implement
 
             for (int i = 1; i <= 12; i++)
             {
-                StatisticModel model = new StatisticModel { Month = i };
+                StatisticModel model = new StatisticModel { Month = MONTH[i] };
                 model.Value = _salonRepo.Gets().Where(s => s.RegisterDate.HasValue
                                                                 && s.RegisterDate.Value.Month == i
                                                                 && s.RegisterDate.Value.Year == year)
@@ -89,7 +91,7 @@ namespace cattocdi.salonservice.Implement
 
             for(int i = 1; i <=12; i++)
             {
-                StatisticModel model = new StatisticModel { Month = i };
+                StatisticModel model = new StatisticModel { Month = MONTH[i] };
                 model.Value = _customerRepo.Gets().Where(c => c.RegisterDate.HasValue
                                                                 && c.RegisterDate.Value.Month == i
                                                                 && c.RegisterDate.Value.Year == year)

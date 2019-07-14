@@ -50,6 +50,7 @@ namespace cattocdi.salonservice.Implement
                         Phone = newSalon.Phone,
                         IsForMen = newSalon.IsForMen,
                         IsForWomen = newSalon.IsForWomen,
+                        RegisterDate = DateTime.Now
                     };
                     _salonRepo.Insert(salon);
                     _unitOfWork.SaveChanges();
@@ -140,8 +141,10 @@ namespace cattocdi.salonservice.Implement
             {
                 SalonId = s.Id,
                 SalonName = s.Name,
-                ImageUrl = s.Image.OrderByDescending(i => i.Id).FirstOrDefault().Url,
+                ImageUrl = s.Image.Any() ? s.Image.OrderByDescending(i => i.Id).FirstOrDefault().Url : "",
                 RatingAvarage = (float)(s.RatingAverage.HasValue ? s.RatingAverage.Value : 0.0),
+                Phone = s.Phone,
+                Email = s.Email,
                 Address = s.Address,
 
             }).ToList();

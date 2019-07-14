@@ -9,10 +9,15 @@ namespace cattocdi.salonservice.Implement
     public class ServiceService : IServiceService
     {
         private IRepository<entity.Service> _serviceRepo;
+        private IRepository<entity.SalonService> _salonServiceRepo;
         private IUnitOfWork _unitOfWork;
-        public ServiceService(IRepository<entity.Service> serviceRepo, IUnitOfWork unitOfWork)
+        public ServiceService(
+            IRepository<entity.Service> serviceRepo, 
+            IRepository<entity.SalonService> salonServiceRepo, 
+            IUnitOfWork unitOfWork)
         {
             _serviceRepo = serviceRepo;
+            _salonServiceRepo = salonServiceRepo;
             _unitOfWork = unitOfWork;
         }
 
@@ -24,11 +29,13 @@ namespace cattocdi.salonservice.Implement
 
         public List<ServiceViewModel> GetAllServices()
         {
-            return _serviceRepo.Gets().Select(s => new ServiceViewModel
+            return _serviceRepo.Gets().ToList().Select(s => new ServiceViewModel
             {
                 ServiceId = s.Id,
                 ServiceName = s.Name,
-                CategoryId = s.CategoryId
+                CategoryId = s.CategoryId,
+                AmountSalon = _salonServiceRepo.Gets().Where(ss => ss.ServiceId == s.Id).Count(),
+                AveragePrice = _salonServiceRepo.Gets().Where(ss => ss.ServiceId == s.Id).Average(ss => ss.Price).HasValue ? _salonServiceRepo.Gets().Where(ss => ss.ServiceId == s.Id).Average(ss => ss.Price).Value : 0
             }).ToList();
         }
 
