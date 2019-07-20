@@ -8,6 +8,7 @@ using cattocdi.Service.ViewModel.User;
 using cattocdi.repository;
 using cattocdi.entity;
 using cattocdi.Service.Constant;
+using System.Globalization;
 
 namespace cattocdi.Service.Implement
 {
@@ -100,7 +101,8 @@ namespace cattocdi.Service.Implement
         public void BookAppoint(NewAppointmentViewModel model)
         {
             var customerId = _customerRepo.Gets().Where(p => p.AccountId == model.AccountId).Select(x => x.CustomerId).FirstOrDefault();
-            var startTime = DateTime.Parse(model.StartTime);
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            var startTime = DateTime.ParseExact(model.StartTime, "yyyy-MM-dd hh:mm tt", provider);
             model.CustomerId = customerId;
             var bookedServices = _salonServiceRepo.Gets()
                     .Where(s => model.Services.Contains(s.Id))
