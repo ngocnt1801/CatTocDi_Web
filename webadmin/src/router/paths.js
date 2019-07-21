@@ -11,12 +11,12 @@ export default [
   },
   {
     path: '/salons',
-    name: 'Salons',
+    name: 'Salons Management',
     view: 'Salons'
   },
   {
     path: '/services',
-    name: 'Services',
+    name: 'Services Management',
     view: 'Services'
   },
   {

@@ -197,7 +197,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://192.168.1.24/cattocdi.webapi/api/statistic?year=2019")
+      .get("http://192.168.1.10/cattocdi.webapi/api/statistic?year=2019")
       .then(response => {
         if (response.data) {
           let general = response.data.General;

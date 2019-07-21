@@ -29,9 +29,11 @@
               <td>{{ item.phone }}</td>
               <td>{{ item.email }}</td>
               <td>{{ item.address }}</td>
-              <td class="justify-center layout px-0">
-                <v-icon small class="mr-2" @click="editItem(item)">edit</v-icon>
-                <v-icon small @click="deleteItem(item)">delete</v-icon>
+              <td>                
+                <v-switch
+                    v-model="item.isActive"                     
+                    @change="changeState(item)"
+                  ></v-switch>
               </td>
             </template>
             <template v-slot:no-data>
@@ -75,8 +77,8 @@ export default {
           },
           {
             sortable: false,
-            text: "Actions",
-            align: "center",
+            text: "Active",
+            align: "left",
             value: "id"
           }
         ],
@@ -90,7 +92,7 @@ export default {
   methods: {
     initialize() {
       axios
-        .get("http://192.168.1.24/cattocdi.webapi/api/adminsalon")
+        .get("http://192.168.1.10/cattocdi.webapi/api/adminsalon")
         .then(response => {
           if (response.data.length > 0) {
             response.data.forEach(ele => {
@@ -98,7 +100,8 @@ export default {
                 name: ele.SalonName,
                 phone: ele.Phone,
                 email: ele.Email,
-                address: ele.Address
+                address: ele.Address,
+                isActive: true
               };
               this.salonDatatable.salons.push(salon);
             });
@@ -107,14 +110,10 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },   
+    changeState(item) {
+      console.log(item.isActive);
     },
-    editItem(item) {      
-      let selectedSalon = Object.assign({}, item);
-      console.log(selectedSalon.name);
-      console.log(selectedSalon.phone);
-      console.log(selectedSalon.address);
-    },
-
     deleteItem(item) {
       let selectedSalon = Object.assign({}, item);
       console.log(selectedSalon.name);
