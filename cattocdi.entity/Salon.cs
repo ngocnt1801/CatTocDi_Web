@@ -53,6 +53,11 @@ namespace cattocdi.entity
 
         public DateTime? RegisterDate { get; set; }
 
+        [StringLength(255)]
+        public string FirebaseToken { get; set; }
+
+        public bool IsActive { get; set; }
+
         public virtual AspNetUsers AspNetUsers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

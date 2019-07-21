@@ -50,7 +50,8 @@ namespace cattocdi.salonservice.Implement
                         Phone = newSalon.Phone,
                         IsForMen = newSalon.IsForMen,
                         IsForWomen = newSalon.IsForWomen,
-                        RegisterDate = DateTime.Now
+                        RegisterDate = DateTime.Now,
+                        FirebaseToken = newSalon.FirebaseToken
                     };
                     _salonRepo.Insert(salon);
                     _unitOfWork.SaveChanges();
@@ -146,7 +147,7 @@ namespace cattocdi.salonservice.Implement
                 Phone = s.Phone,
                 Email = s.Email,
                 Address = s.Address,
-
+                IsActive = s.IsActive
             }).ToList();
         }
 

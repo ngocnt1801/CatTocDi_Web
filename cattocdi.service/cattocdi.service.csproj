@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constant\AppointmentStatusConstant.cs" />
+    <Compile Include="Constant\FirebaseConstant.cs" />
     <Compile Include="Constant\PromotionEnum.cs" />
     <Compile Include="Constant\RoleConstant.cs" />
     <Compile Include="Implement\AppointmentServices.cs" />
