@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constant\AppoitmentStatusEnum.cs" />
+    <Compile Include="Constant\FirebaseConstant.cs" />
     <Compile Include="Constant\PromotionEnum.cs" />
     <Compile Include="Constant\RoleConstant.cs" />
     <Compile Include="Constant\RoleEnum.cs" />

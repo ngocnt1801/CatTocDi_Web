@@ -251,5 +251,10 @@ namespace cattocdi.Service.Implement
                                             CancelledReason = s.Appointment.CancelledReason
                                         }).ToList();
         }
+
+        public string GetFirebaseToken(int salonId)
+        {
+            return _salonRepo.GetByID(salonId).FirebaseToken;
+        }
     }
 }

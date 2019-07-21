@@ -18,5 +18,7 @@ namespace cattocdi.Service.Interface
 
         List<SalonViewModel> GetSalonsForAdmin();
         List<AppointmentViewModel> GetAppointmentsByMonth(int salonId, int month);
+
+        string GetFirebaseToken(int salonId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using cattocdi.Service.Interface;
+﻿using cattocdi.service.Constant;
+using cattocdi.Service.Interface;
 using cattocdi.Service.ViewModel.User;
 using Elmah;
 using System;
@@ -13,9 +14,11 @@ namespace cattocdi.userapi.Controllers
     public class AppointmentController : ApiController
     {
         private IAppointmentServices _apmServices;
-        public AppointmentController(IAppointmentServices apmServices)
+        private ISalonServices _salonService;
+        public AppointmentController(IAppointmentServices apmServices, ISalonServices salonServices)
         {
             _apmServices = apmServices;
+            _salonService = salonServices;
         }
         // GET: api/Appointment
         [HttpGet]
@@ -61,6 +64,13 @@ namespace cattocdi.userapi.Controllers
                 string accountId = identity.Claims.FirstOrDefault(c => c.Type.Equals("AccountId")).Value;
                 model.AccountId = accountId;
                 _apmServices.BookAppoint(model);
+                
+                using (var firebase = new FireBase.Notification.Firebase())
+                {
+                    firebase.ServerKey = FirebaseConstant.SERVER_KEY;
+                    string id = _salonService.GetFirebaseToken(model.SalonId);
+                    firebase.PushNotifyAsync(id, "New appointment", "Ban co mot lich hen vao luc " + model.StartTime.ToString() + " voi " + User.Identity.Name).Wait();
+                }
                 return Ok("Book Success");
             }
             catch(Exception ex)

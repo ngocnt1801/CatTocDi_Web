@@ -57,7 +57,8 @@ namespace cattocdi.webapi.Controllers
                             IsForWomen = model.IsForWomen,     
                             Phone = model.PhoneNumber,
                             Email = model.Email,
-                            RatingAvarage = 0                            
+                            RatingAvarage = 0,
+                            FirebaseToken = model.FirebaseToken
                         };
                         _salonService.RegisterSalonAccount(newSalon);
                     } 

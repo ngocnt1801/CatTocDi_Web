@@ -27,6 +27,7 @@ namespace cattocdi.webapi.Models
         public string Address { get; set; }
         public bool IsForMen { get; set; }
         public bool IsForWomen { get; set; }
+        public string FirebaseToken { get; set; }
     }
 
 }
