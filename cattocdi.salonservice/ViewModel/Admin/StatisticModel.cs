@@ -8,7 +8,7 @@ namespace cattocdi.salonservice.ViewModel.Admin
 {
     public class StatisticModel
     {
-        public int Month { get; set; }
+        public String Month { get; set; }
         public int Value { get; set; }
     }
 }

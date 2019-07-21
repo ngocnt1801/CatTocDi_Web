@@ -46,9 +46,9 @@ namespace cattocdi.webapi.Controllers
             catch (Exception ex)
             {
                 ErrorSignal.FromCurrentContext().Raise(ex);
-                return BadRequest("Create Promotion Failed");
+                return BadRequest("Create Service Failed");
             }
-            return Ok("Create Promotion Sucess");
+            return Ok("Create Service Sucess");
         }
 
         [HttpPut]
@@ -61,9 +61,9 @@ namespace cattocdi.webapi.Controllers
             catch (Exception ex)
             {
                 ErrorSignal.FromCurrentContext().Raise(ex);
-                return BadRequest("Create Promotion Failed");
+                return BadRequest("Update Service Failed");
             }
-            return Ok("Create Promotion Sucess");
+            return Ok("Update Promotion Sucess");
         }
     }
 }

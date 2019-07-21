@@ -30,11 +30,14 @@ namespace cattocdi.Service.Implement
                 {
                     Customer newCustomer = new Customer
                     {
-                        FirstName = model.FirstName,                        
+                        FirstName = model.FirstName,   
+                        LastName = "",
                         Gender = model.Gender,                        
                         Email = model.Email,
                         Phone = model.Phone,
-                        AspNetUsers = account
+                        AccountId = model.AccountId,
+                        AspNetUsers = account,
+                        RegisterDate = DateTime.Now
                     };
                     _customerRepo.Insert(newCustomer);
                     _unitOfWork.SaveChanges();                   

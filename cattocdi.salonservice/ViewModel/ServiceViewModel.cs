@@ -11,5 +11,7 @@ namespace cattocdi.salonservice.ViewModel
         public int ServiceId { get; set; }
         public string ServiceName { get; set; }
         public int CategoryId { get; set; }
+        public int AmountSalon { get; set; }
+        public double AveragePrice { get; set; }
     }
 }

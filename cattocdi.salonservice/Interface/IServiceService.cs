@@ -13,5 +13,6 @@ namespace cattocdi.salonservice.Interface
         void Update(ServiceViewModel model);
 
         void Delete(int id);
+
     }
 }
