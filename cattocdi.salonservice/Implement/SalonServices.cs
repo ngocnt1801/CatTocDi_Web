@@ -163,5 +163,13 @@ namespace cattocdi.salonservice.Implement
                                             CancelledReason = s.Appointment.CancelledReason
                                         }).ToList();
         }
+        public bool ToggleStatus(int salonId, bool isActive)
+        {
+            Salon salon = _salonRepo.GetByID(salonId);
+            salon.IsActive = isActive;
+            _salonRepo.Edit(salon);
+            int result = _unitOfWork.SaveChanges();
+            return result > 0;
+        }
     }
 }

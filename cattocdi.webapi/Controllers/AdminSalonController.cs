@@ -1,4 +1,5 @@
 ﻿using cattocdi.salonservice.Interface;
+using cattocdi.webapi.Models;
 using Elmah;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Web.Http;
 namespace cattocdi.webapi.Controllers
 {
     [AllowAnonymous]
-    [RoutePrefix("api/admin/salon")]
+    [RoutePrefix("api/adminsalon")]
     public class AdminSalonController : ApiController
     {
         private ISalonServices _salonService;
@@ -20,6 +21,7 @@ namespace cattocdi.webapi.Controllers
             _salonService = salonServices;
         }
 
+        [Route("")]
         public IHttpActionResult Get()
         {
             try
@@ -34,6 +36,27 @@ namespace cattocdi.webapi.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("updatestatus/{salonId:int}")]
+        public IHttpActionResult Post([FromUri]int salonId,[FromBody] UpdateSalonModel model)
+        {
+            try
+            {
+                bool success = _salonService.ToggleStatus(salonId, model.IsActive);
+                string msg = "Update Failed";
+                if (success)
+                {
+                    msg = "Update Successful";
+                }
+                return Json(new { Success = success, Msg = msg });
+            }
+            catch (Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Update Failed");
+            }
+        }
+        
         public IHttpActionResult Get(int salonId, int month)
         {
             try

@@ -102,6 +102,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   data: () => ({
     pagination: {},
@@ -158,7 +159,7 @@ export default {
     reloadAfterCreateService() {
       let self = this;
       axios
-        .get("http://192.168.1.10/cattocdi.webapi/api/admincategory")
+        .get("http://localhost/cattocdi.webapi/api/admincategory")
         .then(response => {
           if (response.data.length > 0) {
             let selectedId = self.selectedCategory.id;
@@ -195,7 +196,7 @@ export default {
     },
     initialize() {
       axios
-        .get("http://192.168.1.10/cattocdi.webapi/api/admincategory")
+        .get("http://localhost/cattocdi.webapi/api/admincategory")
         .then(response => {
           if (response.data.length > 0) {
             response.data.forEach(ele => {
@@ -242,7 +243,7 @@ export default {
           console.log(this.editedItem.serviceName);
           let self = this;
           axios
-            .post("http://192.168.1.10/cattocdi.webapi/api/adminservice", {
+            .post("http://localhost/cattocdi.webapi/api/adminservice", {
               ServiceName: this.editedItem.serviceName,
               CategoryId: this.selectedCategory.id
             })

@@ -6,7 +6,7 @@ using System.Web.Http;
 namespace cattocdi.webapi.Controllers
 {
     [AllowAnonymous]
-    [RoutePrefix("api/Statistic")]
+    [RoutePrefix("api/statistic")]
     public class StatisticController : ApiController
     {
         private IStatisticService _statisticService;
@@ -16,7 +16,8 @@ namespace cattocdi.webapi.Controllers
             _statisticService = statisticService;
         }
 
-        public IHttpActionResult Get(int? year)
+        [Route("{year}")]
+        public IHttpActionResult Get(int year)
         {
             try
             {

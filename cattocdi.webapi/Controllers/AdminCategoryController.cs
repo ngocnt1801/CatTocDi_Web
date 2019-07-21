@@ -10,7 +10,7 @@ using System.Web.Http;
 namespace cattocdi.webapi.Controllers
 {
     [AllowAnonymous]
-    [RoutePrefix("api/admin/category")]
+    [RoutePrefix("api/admincategory")]
     public class AdminCategoryController : ApiController
     {
 
@@ -20,6 +20,7 @@ namespace cattocdi.webapi.Controllers
             _categoryService = categoryServices;
         }
 
+        [Route("")]
         public IHttpActionResult Get()
         {
             try

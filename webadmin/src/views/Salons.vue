@@ -29,11 +29,8 @@
               <td>{{ item.phone }}</td>
               <td>{{ item.email }}</td>
               <td>{{ item.address }}</td>
-              <td>                
-                <v-switch
-                    v-model="item.isActive"                     
-                    @change="changeState(item)"
-                  ></v-switch>
+              <td>
+                <v-switch v-model="item.isActive" @change="changeState(item)"></v-switch>
               </td>
             </template>
             <template v-slot:no-data>
@@ -77,7 +74,7 @@ export default {
           },
           {
             sortable: false,
-            text: "Active",
+            text: "Status",
             align: "left",
             value: "id"
           }
@@ -92,16 +89,17 @@ export default {
   methods: {
     initialize() {
       axios
-        .get("http://192.168.1.10/cattocdi.webapi/api/adminsalon")
+        .get("http://localhost/cattocdi.webapi/api/adminsalon")
         .then(response => {
           if (response.data.length > 0) {
             response.data.forEach(ele => {
               let salon = {
+                id: ele.SalonId,
                 name: ele.SalonName,
                 phone: ele.Phone,
                 email: ele.Email,
                 address: ele.Address,
-                isActive: true
+                isActive: ele.IsActive
               };
               this.salonDatatable.salons.push(salon);
             });
@@ -110,9 +108,55 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    },   
-    changeState(item) {
-      console.log(item.isActive);
+    },
+    closeSwal() {
+      this.$swal.close();
+    },
+    changeState(item) {         
+      console.log(item);
+
+      let self = this; 
+      this.$swal
+        .fire({
+          html: `Do you want to ${
+            item.isActive == false ? "disable" : "enable"
+          } this salon?`,
+          type: "info",
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes",
+          cancelButtonText: "No",
+          showCancelButton: true,
+          reverseButtons: true
+        })
+        .then(result => {
+          if (result.value) {
+            let url = `http://localhost/cattocdi.webapi/api/adminsalon/updatestatus/${item.id}`;
+            axios
+              .post(url, {
+                isActive: item.isActive
+              }, 
+              {
+                headers: {
+                'content-type': 'application/json',
+                'data-type': 'json'
+              }})               
+              .then(response => {
+                if (response.data.length > 0) {
+                  if (response.success == true) {                    
+                  } else {
+                    item.isActive = !item.isActive;
+                  }             
+                  self.closeSwal();
+                }
+              })
+              .catch(error => {
+                  item.isActive = !item.isActive;
+              });            
+          } else {
+            item.isActive = !item.isActive;
+          }
+        });
     },
     deleteItem(item) {
       let selectedSalon = Object.assign({}, item);

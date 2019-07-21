@@ -11,7 +11,7 @@ using System.Web.Http;
 namespace cattocdi.webapi.Controllers
 {
     [AllowAnonymous]
-    [RoutePrefix("api/admin/service")]
+    [RoutePrefix("api/adminservice")]
     public class AdminServiceController : ApiController
     {
 
@@ -37,6 +37,7 @@ namespace cattocdi.webapi.Controllers
         }
 
         [HttpPost]
+        [Route("")]
         public IHttpActionResult Post(ServiceViewModel model)
         {
             try
