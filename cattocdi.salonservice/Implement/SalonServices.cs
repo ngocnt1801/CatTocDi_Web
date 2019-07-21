@@ -147,7 +147,7 @@ namespace cattocdi.salonservice.Implement
                 Phone = s.Phone,
                 Email = s.Email,
                 Address = s.Address,
-                
+                IsActive = s.IsActive
             }).ToList();
         }
 
