@@ -184,7 +184,7 @@ export default {
             tension: 0
           }),
           low: 0,
-          high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          high: 115, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: {
             top: 0,
             right: 0,
@@ -196,8 +196,9 @@ export default {
     };
   },
   mounted() {
+    let url = `${this.Domain}/api/statistic/2019`;
     axios
-      .get("http://localhost/cattocdi.webapi/api/statistic/2019")
+      .get(url)
       .then(response => {
         if (response.data) {
           let general = response.data.General;

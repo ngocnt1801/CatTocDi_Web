@@ -15,6 +15,11 @@ export default [
     view: 'Salons'
   },
   {
+    path: '/categories',
+    name: 'Category Management',
+    view: 'Categories'
+  },
+  {
     path: '/services',
     name: 'Services Management',
     view: 'Services'

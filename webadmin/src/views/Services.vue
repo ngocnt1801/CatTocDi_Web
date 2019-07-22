@@ -11,8 +11,9 @@
                   v-model="selectedCategory"
                   v-on:change="chooseCategory"
                   item-text="name"
-                  item-value="id"
+                  item-value="id"                  
                   label="Category"
+                  color="purple"
                   return-object
                 ></v-select>
               </v-flex>
@@ -61,6 +62,7 @@
                   v-model="serviceDatatable.search"
                   append-icon="search"
                   label="search"
+                  color="purple"
                   single-line
                   hide-details
                 ></v-text-field>
@@ -76,7 +78,7 @@
             >
               <template slot="headerCell" slot-scope="{ header }">
                 <span
-                  class="subheading font-weight-light text-success text--darken-3"
+                  class="subheading font-weight-bold text--purple text--darken-3"
                   v-text="header.text"
                 />
               </template>
@@ -158,8 +160,9 @@ export default {
   methods: {
     reloadAfterCreateService() {
       let self = this;
+      let url = `${this.Domain}/api/admincategory`;
       axios
-        .get("http://localhost/cattocdi.webapi/api/admincategory")
+        .get(url)
         .then(response => {
           if (response.data.length > 0) {
             let selectedId = self.selectedCategory.id;
@@ -195,8 +198,9 @@ export default {
         });
     },
     initialize() {
+      let url = `${this.Domain}/api/admincategory`;
       axios
-        .get("http://localhost/cattocdi.webapi/api/admincategory")
+        .get(url)
         .then(response => {
           if (response.data.length > 0) {
             response.data.forEach(ele => {
@@ -242,8 +246,9 @@ export default {
         if (this.validate()) {
           console.log(this.editedItem.serviceName);
           let self = this;
+          let url = `${this.Domain}/api/adminservice`;
           axios
-            .post("http://localhost/cattocdi.webapi/api/adminservice", {
+            .post(url, {
               ServiceName: this.editedItem.serviceName,
               CategoryId: this.selectedCategory.id
             })

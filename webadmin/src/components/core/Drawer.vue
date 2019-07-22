@@ -58,40 +58,35 @@ export default {
         text: "Salons"
       },
       {
-        to: "/services",
+        to: "/categories",
         icon: "category",
+        text: "Categories"
+      },
+      {
+        to: "/services",
+        icon: "menu_open",
         text: "Services"
       },
-      {
-        to: "/user-profile",
-        icon: "account_box",
-        text: "User Profile"
-      },
-      {
-        to: "/table-list",
-        icon: "clipboard-outline",
-        text: "Table List"
-      },
-      {
-        to: "/typography",
-        icon: "format-font",
-        text: "Typography"
-      },
-      {
-        to: "/icons",
-        icon: "md-chart-bubble",
-        text: "Icons"
-      },
-      {
-        to: "/maps",
-        icon: "map-marker",
-        text: "Maps"
-      },
-      {
-        to: "/notifications",
-        icon: "bell",
-        text: "Notifications"
-      }
+      // {
+      //   to: "/user-profile",
+      //   icon: "account_box",
+      //   text: "User Profile"
+      // },
+      // {
+      //   to: "/table-list",
+      //   icon: "clipboard-outline",
+      //   text: "Table List"
+      // },
+      // {
+      //   to: "/typography",
+      //   icon: "format-font",
+      //   text: "Typography"
+      // },      
+      // {
+      //   to: "/notifications",
+      //   icon: "bell",
+      //   text: "Notifications"
+      // }
     ],
     responsive: false
   }),

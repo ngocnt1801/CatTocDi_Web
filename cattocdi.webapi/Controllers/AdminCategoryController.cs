@@ -1,4 +1,5 @@
 ﻿using cattocdi.salonservice.Interface;
+using cattocdi.salonservice.ViewModel;
 using Elmah;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,21 @@ namespace cattocdi.webapi.Controllers
                 ErrorSignal.FromCurrentContext().Raise(ex);
                 return BadRequest("Get Category Failed");
             }
+        }
+        [HttpPost]
+        [Route("")]
+        public IHttpActionResult Post(CategoryViewModel model)
+        {
+            try
+            {
+                _categoryService.Insert(model);
+            }
+            catch (Exception ex)
+            {
+                ErrorSignal.FromCurrentContext().Raise(ex);
+                return BadRequest("Create Service Failed");
+            }
+            return Ok("Create Service Sucess");
         }
     }
 }

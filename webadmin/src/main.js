@@ -22,6 +22,14 @@ sync(store, router)
 
 Vue.config.productionTip = false
 
+const DomainConstant = {
+  'azure-app-service': 'http://cattocdiwebapi.azurewebsites.net',
+  'localhost': 'http://localhost/cattocdi.webapi'
+}
+
+Vue.prototype.Domain = DomainConstant['localhost']
+
+
 /* eslint-disable no-new */
 new Vue({
   i18n,

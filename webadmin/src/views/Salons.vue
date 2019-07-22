@@ -2,13 +2,14 @@
   <v-container fill-height fluid grid-list-xl>
     <v-layout justify-center wrap>
       <v-flex md12>
-        <material-card color="green" title="List of salons" text="Manage account of all salons">
+        <material-card color="purple" title="List of salons" text="Manage account of all salons">
           <v-card-title>
             <v-spacer></v-spacer>
             <v-text-field
               v-model="salonDatatable.search"
               append-icon="search"
               label="search"
+              color="purple"
               single-line
               hide-details
             ></v-text-field>
@@ -16,11 +17,12 @@
           <v-data-table
             :headers="salonDatatable.headers"
             :items="salonDatatable.salons"
-            :search="salonDatatable.search"
+            :search="salonDatatable.search"            
+            class="elevation-1 salon-table">
           >
             <template slot="headerCell" slot-scope="{ header }">
               <span
-                class="subheading font-weight-light text-success text--darken-3"
+                class="subheading font-weight-bold text--purple text--darken-3"
                 v-text="header.text"
               />
             </template>
@@ -30,7 +32,11 @@
               <td>{{ item.email }}</td>
               <td>{{ item.address }}</td>
               <td>
-                <v-switch v-model="item.isActive" @change="changeState(item)"></v-switch>
+                <v-switch 
+                    color="purple"
+                    v-model="item.isActive" 
+                    @change="changeState(item)">
+                  </v-switch>
               </td>
             </template>
             <template v-slot:no-data>
@@ -88,8 +94,9 @@ export default {
   },
   methods: {
     initialize() {
+      let url = `${this.Domain}/api/adminsalon`;
       axios
-        .get("http://localhost/cattocdi.webapi/api/adminsalon")
+        .get(url)
         .then(response => {
           if (response.data.length > 0) {
             response.data.forEach(ele => {
@@ -131,7 +138,7 @@ export default {
         })
         .then(result => {
           if (result.value) {
-            let url = `http://localhost/cattocdi.webapi/api/adminsalon/updatestatus/${item.id}`;
+            let url = `${self.Domain}/api/adminsalon/updatestatus/${item.id}`;
             axios
               .post(url, {
                 isActive: item.isActive
@@ -167,3 +174,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  .v-table thead th{
+
+  }
+</style>
